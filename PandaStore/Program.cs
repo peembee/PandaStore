@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PandaStore.Data;
-
+using PandaStore.Models;
 namespace PandaStore
 {
     public class Program
@@ -15,6 +15,7 @@ namespace PandaStore
             builder.Services.AddDbContext<PandaStoreContext>(options =>
             options.UseSqlServer(
                 builder.Configuration.GetConnectionString("SqlConnection")));
+
 
             var app = builder.Build();
 

@@ -1,3 +1,7 @@
+using AutoMapper;
+using Microsoft.EntityFrameworkCore;
+using PandaStore.Data;
+
 
 namespace PandaStoreAPI
 {
@@ -9,10 +13,17 @@ namespace PandaStoreAPI
 
             // Add services to the container.
 
+            builder.Services.AddDbContext<PandaStoreContext>(options =>
+                options.UseSqlServer(
+                builder.Configuration.GetConnectionString("SqlConnection")));
+
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddAutoMapper(typeof(MappingConfig));
+
 
             var app = builder.Build();
 
