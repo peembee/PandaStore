@@ -10,9 +10,9 @@ namespace PandaStore.Models
 
 
         [Required]
-        [ForeignKey("Users")]
-        public int FK_UserID { get; set; }
-        public virtual User Users { get; set; }
+        [ForeignKey("PandaUsers")]
+        public string FK_PandaUserID { get; set; }
+        public virtual PandaUser PandaUsers { get; set; }
 
 
         [Required]

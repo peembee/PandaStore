@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PandaStore.Data;
 
@@ -11,9 +12,11 @@ using PandaStore.Data;
 namespace PandaStore.Migrations
 {
     [DbContext(typeof(PandaStoreContext))]
-    partial class PandaStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20230522120203_Identity setup")]
+    partial class Identitysetup
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -373,11 +376,15 @@ namespace PandaStore.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
+
+                    b.Property<int>("FK_RoleID")
+                        .HasColumnType("int");
 
                     b.Property<string>("FirstName")
                         .IsRequired()
@@ -404,8 +411,13 @@ namespace PandaStore.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.Property<string>("PandaUserID")
-                        .IsRequired()
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
 
                     b.Property<string>("PasswordHash")
                         .HasColumnType("nvarchar(max)");
@@ -436,6 +448,8 @@ namespace PandaStore.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("FK_RoleID");
+
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
 
@@ -445,6 +459,30 @@ namespace PandaStore.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers", (string)null);
+                });
+
+            modelBuilder.Entity("PandaStore.Models.Phone", b =>
+                {
+                    b.Property<int>("PhoneID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("PhoneID"));
+
+                    b.Property<string>("FK_PandaUserID")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("PhoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.HasKey("PhoneID");
+
+                    b.HasIndex("FK_PandaUserID");
+
+                    b.ToTable("Phones");
                 });
 
             modelBuilder.Entity("PandaStore.Models.Product", b =>
@@ -509,6 +547,24 @@ namespace PandaStore.Migrations
                     b.HasKey("ReceiptID");
 
                     b.ToTable("Receipts");
+                });
+
+            modelBuilder.Entity("PandaStore.Models.Role", b =>
+                {
+                    b.Property<int>("RoleID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoleID"));
+
+                    b.Property<string>("RoleTitel")
+                        .IsRequired()
+                        .HasMaxLength(25)
+                        .HasColumnType("nvarchar(25)");
+
+                    b.HasKey("RoleID");
+
+                    b.ToTable("Roles");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -654,6 +710,28 @@ namespace PandaStore.Migrations
                     b.Navigation("Receipts");
                 });
 
+            modelBuilder.Entity("PandaStore.Models.PandaUser", b =>
+                {
+                    b.HasOne("PandaStore.Models.Role", "Roles")
+                        .WithMany("Users")
+                        .HasForeignKey("FK_RoleID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Roles");
+                });
+
+            modelBuilder.Entity("PandaStore.Models.Phone", b =>
+                {
+                    b.HasOne("PandaStore.Models.PandaUser", "PandaUsers")
+                        .WithMany("Phones")
+                        .HasForeignKey("FK_PandaUserID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PandaUsers");
+                });
+
             modelBuilder.Entity("PandaStore.Models.Product", b =>
                 {
                     b.HasOne("PandaStore.Models.Category", "Categorys")
@@ -687,6 +765,8 @@ namespace PandaStore.Migrations
                     b.Navigation("CustomerProducts");
 
                     b.Navigation("OrderDetails");
+
+                    b.Navigation("Phones");
                 });
 
             modelBuilder.Entity("PandaStore.Models.Product", b =>
@@ -699,6 +779,11 @@ namespace PandaStore.Migrations
             modelBuilder.Entity("PandaStore.Models.Receipt", b =>
                 {
                     b.Navigation("OrderDetails");
+                });
+
+            modelBuilder.Entity("PandaStore.Models.Role", b =>
+                {
+                    b.Navigation("Users");
                 });
 #pragma warning restore 612, 618
         }

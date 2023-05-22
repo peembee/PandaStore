@@ -1,6 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using PandaStore.Data;
 using PandaStore.Models;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Identity;
+
 namespace PandaStore
 {
     public class Program
@@ -16,6 +19,9 @@ namespace PandaStore
             options.UseSqlServer(
                 builder.Configuration.GetConnectionString("SqlConnection")));
 
+            builder.Services.AddDefaultIdentity<PandaUser>(options =>
+                options.SignIn.RequireConfirmedAccount = true)
+                .AddEntityFrameworkStores<PandaStoreContext>();
 
             var app = builder.Build();
 
@@ -37,7 +43,7 @@ namespace PandaStore
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
-
+            app.MapRazorPages();
             app.Run();
         }
     }

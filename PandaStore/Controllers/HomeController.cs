@@ -10,11 +10,11 @@ namespace PandaStore.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly Repository<User> _pandaRepository;
+        private readonly Repository<PandaUser> _pandaRepository;
 
         public HomeController(PandaStoreContext context)
         {
-            _pandaRepository = new Repository<User>(context);
+            _pandaRepository = new Repository<PandaUser>(context);
         }
 
         public async Task <IActionResult> Index()
