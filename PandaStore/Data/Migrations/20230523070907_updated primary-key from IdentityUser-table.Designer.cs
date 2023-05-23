@@ -12,8 +12,8 @@ using PandaStore.Data;
 namespace PandaStore.Migrations
 {
     [DbContext(typeof(PandaStoreContext))]
-    [Migration("20230523063159_updated database V7. Primarykey-set")]
-    partial class updateddatabaseV7Primarykeyset
+    [Migration("20230523070907_updated primary-key from IdentityUser-table")]
+    partial class updatedprimarykeyfromIdentityUsertable
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -176,12 +176,12 @@ namespace PandaStore.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("FK_Id")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("FK_ProductID")
                         .HasColumnType("int");
+
+                    b.Property<string>("Id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -191,9 +191,9 @@ namespace PandaStore.Migrations
 
                     b.HasKey("CampaignID");
 
-                    b.HasIndex("FK_Id");
-
                     b.HasIndex("FK_ProductID");
+
+                    b.HasIndex("Id");
 
                     b.ToTable("Campaigns");
                 });
@@ -224,15 +224,15 @@ namespace PandaStore.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerProductID"));
 
-                    b.Property<string>("FK_Id")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("FK_ProductID")
                         .HasColumnType("int");
 
                     b.Property<int>("FK_ReceiptID")
                         .HasColumnType("int");
+
+                    b.Property<string>("Id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
@@ -245,11 +245,11 @@ namespace PandaStore.Migrations
 
                     b.HasKey("CustomerProductID");
 
-                    b.HasIndex("FK_Id");
-
                     b.HasIndex("FK_ProductID");
 
                     b.HasIndex("FK_ReceiptID");
+
+                    b.HasIndex("Id");
 
                     b.ToTable("CustomerProducts");
                 });
@@ -303,10 +303,6 @@ namespace PandaStore.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderDetailID"));
 
-                    b.Property<string>("FK_Id")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("FK_OrderID")
                         .HasColumnType("int");
 
@@ -316,15 +312,19 @@ namespace PandaStore.Migrations
                     b.Property<int>("FK_ReceiptID")
                         .HasColumnType("int");
 
-                    b.HasKey("OrderDetailID");
+                    b.Property<string>("Id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasIndex("FK_Id");
+                    b.HasKey("OrderDetailID");
 
                     b.HasIndex("FK_OrderID");
 
                     b.HasIndex("FK_OrderStatus");
 
                     b.HasIndex("FK_ReceiptID");
+
+                    b.HasIndex("Id");
 
                     b.ToTable("OrderDetails");
                 });
@@ -563,15 +563,15 @@ namespace PandaStore.Migrations
 
             modelBuilder.Entity("PandaStore.Models.Campaign", b =>
                 {
-                    b.HasOne("PandaStore.Models.PandaUser", "PandaUsers")
-                        .WithMany("Campaigns")
-                        .HasForeignKey("FK_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("PandaStore.Models.Product", "Products")
                         .WithMany("Campaigns")
                         .HasForeignKey("FK_ProductID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PandaStore.Models.PandaUser", "PandaUsers")
+                        .WithMany("Campaigns")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -582,12 +582,6 @@ namespace PandaStore.Migrations
 
             modelBuilder.Entity("PandaStore.Models.CustomerProduct", b =>
                 {
-                    b.HasOne("PandaStore.Models.PandaUser", "PandaUsers")
-                        .WithMany("CustomerProducts")
-                        .HasForeignKey("FK_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("PandaStore.Models.Product", "Products")
                         .WithMany()
                         .HasForeignKey("FK_ProductID")
@@ -597,6 +591,12 @@ namespace PandaStore.Migrations
                     b.HasOne("PandaStore.Models.Receipt", "Receipts")
                         .WithMany()
                         .HasForeignKey("FK_ReceiptID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PandaStore.Models.PandaUser", "PandaUsers")
+                        .WithMany("CustomerProducts")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -620,12 +620,6 @@ namespace PandaStore.Migrations
 
             modelBuilder.Entity("PandaStore.Models.OrderDetail", b =>
                 {
-                    b.HasOne("PandaStore.Models.PandaUser", "PandaUsers")
-                        .WithMany("OrderDetails")
-                        .HasForeignKey("FK_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("PandaStore.Models.Order", "Orders")
                         .WithMany("OrderDetails")
                         .HasForeignKey("FK_OrderID")
@@ -641,6 +635,12 @@ namespace PandaStore.Migrations
                     b.HasOne("PandaStore.Models.Receipt", "Receipts")
                         .WithMany("OrderDetails")
                         .HasForeignKey("FK_ReceiptID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PandaStore.Models.PandaUser", "PandaUsers")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

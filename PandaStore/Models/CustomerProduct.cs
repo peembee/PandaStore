@@ -8,9 +8,10 @@ namespace PandaStore.Models
         [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CustomerProductID { get; set; }
 
+
         [Required]
         [ForeignKey("PandaUsers")]
-        public string FK_Id { get; set; }
+        public string Id { get; set; }
         public virtual PandaUser PandaUsers { get; set; }
 
 
