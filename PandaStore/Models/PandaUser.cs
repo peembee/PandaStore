@@ -8,10 +8,8 @@ namespace PandaStore.Models
 {
     public class PandaUser : IdentityUser
     {
-        [Required]
-        public string PandaUserID { get; set; } = string.Empty;
 
-        public string FullName => $"ID #{PandaUserID} | {FirstName} {LastName}";
+        public string FullName => $"ID #{Id} | {FirstName} {LastName}";
 
         [Required]
         [StringLength(50)]
