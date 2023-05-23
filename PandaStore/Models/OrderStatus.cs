@@ -11,7 +11,7 @@ namespace PandaStore.Models
 
         [Required]
         [StringLength(50)]
-        public string StatusTitel { get; set;}
+        public string StatusTitel { get; set;} = string.Empty;
 
 
         [Required]
@@ -21,6 +21,6 @@ namespace PandaStore.Models
         [Required]
         public bool Shipped { get; set; }
 
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        public virtual ICollection<OrderDetail>? OrderDetails { get; set; }
     }
 }

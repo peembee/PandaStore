@@ -12,6 +12,6 @@ namespace PandaStore.Models
 
         public double OrderTotalPrice { get; set; }
 
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        public virtual ICollection<OrderDetail>? OrderDetails { get; set; }
     }
 }

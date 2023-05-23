@@ -12,7 +12,7 @@ namespace PandaStore.Models
         [Required]
         [ForeignKey("Products")]
         public int FK_ProductID { get; set; }
-        public virtual Product Products { get; set; }
+        public virtual Product? Products { get; set; }
 
 
         public string RateDescription { get; set; } = string.Empty;

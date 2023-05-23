@@ -17,9 +17,8 @@ namespace PandaStore.Controllers
             _pandaRepository = new Repository<PandaUser>(context);
         }
 
-        public async Task <IActionResult> Index()
-        {            
-            
+        public IActionResult Index()
+        {
             return View();
         }
 

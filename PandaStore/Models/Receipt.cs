@@ -15,6 +15,6 @@ namespace PandaStore.Models
         [Required]
         public int ReceiptNumber { get; set; }
 
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        public virtual ICollection<OrderDetail>? OrderDetails { get; set; }
     }
 }

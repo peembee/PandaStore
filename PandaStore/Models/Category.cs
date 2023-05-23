@@ -9,8 +9,8 @@ namespace PandaStore.Models
         public int CategoryId { get; set; }
 
         [StringLength(50)]
-        public string CategoryTitel { get; set; }
+        public string CategoryTitel { get; set; } = string.Empty;
 
-        public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<Product>? Products { get; set; }
     }
 }

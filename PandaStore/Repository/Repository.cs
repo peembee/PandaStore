@@ -23,43 +23,45 @@ namespace PandaStore.Repository
             await SaveAsync();
         }
 
-        public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>> filter = null)
+        public async Task<List<T>> GetAllAsync(Expression<Func<T, bool>>? filter = null)
         {
-            IQueryable<T> query = dbSet;
-
+            IQueryable<T> temp = dbSet;
             if (filter != null)
             {
-                query = query.Where(filter);
+                temp = temp.Where(filter);
             }
-
-            return await query.ToListAsync();
+            return await temp.ToListAsync();
         }
 
-        public async Task<T> GetAsync(Expression<Func<T, bool>> filter = null, bool tracked = true)
+        public async Task<T> GetAsync(Expression<Func<T, bool>>? filter = null, bool tracked = true)
         {
-            IQueryable<T> query = dbSet;
-
-            if (!tracked)
+            IQueryable<T> temp = dbSet;
+            if (!tracked == true)
             {
-                query = query.AsNoTracking();
+                temp = temp.AsNoTracking();
             }
-
             if (filter != null)
             {
-                query = query.Where(filter);
+                temp = temp.Where(filter);
             }
-
-            return await query.FirstOrDefaultAsync();
+            return await temp.FirstOrDefaultAsync() ?? default!;
         }
 
-        public void Remove(T entity)
+        public async Task RemoveAsync(T entity)
         {
             dbSet.Remove(entity);
+            await SaveAsync();
         }
 
         public async Task SaveAsync()
         {
             await _pandaContext.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(T entity)
+        {
+            dbSet.Update(entity);
+            await SaveAsync();
         }
     }
 }

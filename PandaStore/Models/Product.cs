@@ -12,20 +12,20 @@ namespace PandaStore.Models
         [Required]
         [ForeignKey("Categorys")]
         public int FK_CategoryID { get; set; }
-        public virtual Category Categorys { get; set; }
+        public virtual Category? Categorys { get; set; }
 
 
         [Required]
         [StringLength(50)]
-        public string ProductTitel { get; set; }
+        public string ProductTitel { get; set; } = string.Empty;
 
         [Required]
         [StringLength(500)]
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
         [Required]
         [StringLength(500)]
-        public string Specification { get; set; }
+        public string Specification { get; set; } = string.Empty;
 
 
         [Required]
@@ -41,8 +41,8 @@ namespace PandaStore.Models
         public DateTime NextDelivery { get; set; }
 
 
-        public virtual ICollection<CustomerRate> CustomerRates { get; set; }
-        public virtual ICollection<Campaign> Campaigns { get; set; }
+        public virtual ICollection<CustomerRate>? CustomerRates { get; set; }
+        public virtual ICollection<Campaign>? Campaigns { get; set; }
 
     }
 }

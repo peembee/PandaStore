@@ -10,15 +10,15 @@ namespace PandaStore.Models.DTO
 
         [Required]
         [StringLength(50)]
-        public string ProductTitel { get; set; }
+        public string ProductTitel { get; set; } = string.Empty;
 
         [Required]
         [StringLength(500)]
-        public string Description { get; set; }
+        public string Description { get; set; } = string.Empty;
 
         [Required]
         [StringLength(500)]
-        public string Specification { get; set; }
+        public string Specification { get; set; } = string.Empty;
 
 
         [Required]

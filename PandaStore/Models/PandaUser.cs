@@ -34,8 +34,8 @@ namespace PandaStore.Models
         [StringLength(5)]
         public string ZipCode { get; set; } = string.Empty;
 
-        public virtual ICollection<CustomerProduct> CustomerProducts { get; set; }
-        public virtual ICollection<Campaign> Campaigns { get; set; }
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        public virtual ICollection<CustomerProduct>? CustomerProducts { get; set; }
+        public virtual ICollection<Campaign>? Campaigns { get; set; }
+        public virtual ICollection<OrderDetail>? OrderDetails { get; set; }
     }
 }

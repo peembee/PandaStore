@@ -11,20 +11,20 @@ namespace PandaStore.Models
 
         [Required]
         [ForeignKey("PandaUsers")]
-        public string Id { get; set; }
-        public virtual PandaUser PandaUsers { get; set; }
+        public string Id { get; set; } = string.Empty;
+        public virtual PandaUser? PandaUsers { get; set; }
 
 
         [Required]
         [ForeignKey("Products")]
         public int FK_ProductID { get; set; }
-        public virtual Product Products { get; set; }
+        public virtual Product? Products { get; set; }
 
 
         [Required]
         [ForeignKey("Receipts")]
         public int FK_ReceiptID { get; set; }
-        public virtual Receipt Receipts { get; set; }
+        public virtual Receipt? Receipts { get; set; }
 
 
         [Required]
