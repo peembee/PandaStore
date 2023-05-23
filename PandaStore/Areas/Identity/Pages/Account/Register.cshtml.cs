@@ -140,14 +140,24 @@ namespace PandaStore.Areas.Identity.Pages.Account
             {
                 var user = CreateUser();
 
-                await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
-                await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
-                user.FirstName = Input.FirstName;
-                user.LastName = Input.LastName;
-                user.Adress = Input.Address;
-                user.ZipCode = Input.ZipCode;
-                user.City = Input.City;
-                user.PhoneNumber = Input.PhoneNumber;
+                await _userStore.SetUserNameAsync(user, Input.Email.Trim(), CancellationToken.None);
+                await _emailStore.SetEmailAsync(user, Input.Email.Trim(), CancellationToken.None);
+
+                user.FirstName = Input.FirstName.Trim();
+                user.FirstName = user.FirstName = char.ToUpper(user.FirstName[0]) + user.FirstName.Substring(1);
+
+                user.LastName = Input.LastName.Trim();
+                user.LastName = user.LastName = char.ToUpper(user.LastName[0]) + user.LastName.Substring(1);
+
+                user.Adress = Input.Address.Trim();
+                user.Adress = user.Adress = char.ToUpper(user.Adress[0]) + user.Adress.Substring(1);
+
+                user.ZipCode = Input.ZipCode.Trim();
+
+                user.City = Input.City.Trim();
+                user.City = user.City = char.ToUpper(user.City[0]) + user.City.Substring(1);
+
+                user.PhoneNumber = Input.PhoneNumber.Trim();
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
