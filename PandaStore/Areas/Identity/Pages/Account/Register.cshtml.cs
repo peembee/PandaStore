@@ -4,6 +4,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -18,6 +19,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using NuGet.Packaging.Rules;
 using PandaStore.Models;
 
 namespace PandaStore.Areas.Identity.Pages.Account
@@ -71,6 +73,29 @@ namespace PandaStore.Areas.Identity.Pages.Account
         /// </summary>
         public class InputModel
         {
+            [Required]
+            [StringLength(50)]
+            [DisplayName("First name")]
+            public string FirstName { get; set; }
+
+            [Required]
+            [StringLength(50)]
+            [DisplayName("Last name")]
+            public string LastName { get; set; }
+            [Required]
+            [StringLength(70)]
+            public string Address { get; set; }
+
+            [Required]
+            [StringLength(5)]
+            public string ZipCode { get; set; }
+
+            [Required]
+            [StringLength(50)]
+            public string City { get; set; }
+            [Required]
+            [StringLength(20)]
+            public string PhoneNumber { get; set; }
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
@@ -117,6 +142,12 @@ namespace PandaStore.Areas.Identity.Pages.Account
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
+                user.FirstName = Input.FirstName;
+                user.LastName = Input.LastName;
+                user.Adress = Input.Address;
+                user.ZipCode = Input.ZipCode;
+                user.City = Input.City;
+                user.PhoneNumber = Input.PhoneNumber;
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
