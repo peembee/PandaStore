@@ -1,11 +1,12 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
-
+@*Fixa klickbara länkar på bilderna i carousel*@
 <div id="carouselExampleIndicators" class="carousel slide mx-auto" data-ride="carousel" style="background-color:#e8ded1;">
     <ol class="carousel-indicators">
         <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
@@ -38,43 +39,144 @@
 <div class="row">
     <div class="col-md-2">
         <a href="...." class="text-center" style="text-decoration:none;">
-            <img src="/images/wepik-export-20230523182928IuyA.png" alt="Link Page" style="border-radius: 50%; width: 150px; height: 150px; margin-top: 20px;" />
-            <p style="color: black;">Kläder 1</p>
-        </a>
-    </div>
-    <div class="col-md-2">
-        <a href="...." class="text-center" style="text-decoration:none;">
             <img src="/images/wepik-export-20230523182928IuyA.png" alt="Link Page" style="border-radius: 50%; width: 150px; height: 150px; margin-top: 20px;"
-                 onmouseover="this.style.opacity = '0.5';"
+                 onmouseover="this.style.opacity = '0.65';"
                  onmouseout="this.style.opacity = '1';" />
-            <p style="color: black;">Kläder 2</p>
+            <p style="color: black;">Kläder</p>
         </a>
     </div>
     <div class="col-md-2">
         <a href="...." class="text-center" style="text-decoration:none;">
-            <img src="/images/wepik-export-20230523182928IuyA.png" alt="Link Page" style="border-radius: 50%; width: 150px; height: 150px; margin-top: 20px;" />
-            <p style="color: black;">Kläder 3</p>
+            <img src="/images/picture-frame-with-abstract-art-by-pink-velvet-armchair.jpg" alt="Link Page" style="border-radius: 50%; width: 150px; height: 150px; margin-top: 20px;"
+                 onmouseover="this.style.opacity = '0.65';"
+                 onmouseout="this.style.opacity = '1';" />
+            <p style="color: black;">Möbler</p>
         </a>
     </div>
     <div class="col-md-2">
         <a href="...." class="text-center" style="text-decoration:none;">
-            <img src="/images/wepik-export-20230523182928IuyA.png" alt="Link Page" style="border-radius: 50%; width: 150px; height: 150px; margin-top: 20px;" />
-            <p style="color: black;">Kläder 4</p>
+            <img src="/images/close-up-different-digital-devices.jpg" alt="Link Page" style="border-radius: 50%; width: 150px; height: 150px; margin-top: 20px;"
+                 onmouseover="this.style.opacity = '0.65';"
+                 onmouseout="this.style.opacity = '1';" />
+            <p style="color: black;">Elektronik</p>
         </a>
     </div>
     <div class="col-md-2">
         <a href="...." class="text-center" style="text-decoration:none;">
-            <img src="/images/wepik-export-20230523182928IuyA.png" alt="Link Page" style="border-radius: 50%; width: 150px; height: 150px; margin-top: 20px;" />
-            <p style="color: black;">Kläder 5</p>
+            <img src="/images/female-cyclist-wearing-helmet-posing-with-bicycle.jpg" alt="Link Page" style="border-radius: 50%; width: 150px; height: 150px; margin-top: 20px;"
+                 onmouseover="this.style.opacity = '0.65';"
+                 onmouseout="this.style.opacity = '1';" />
+            <p style="color: black;">Sport & Fritid</p>
         </a>
     </div>
     <div class="col-md-2">
         <a href="...." class="text-center" style="text-decoration:none;">
-            <img src="/images/wepik-export-20230523182928IuyA.png" alt="Link Page" style="border-radius: 50%; width: 150px; height: 150px; margin-top: 20px;" />
-            <p style="color: black;">Kläder 6</p>
+            <img src="/images/creamy-mushroom-dish-topped-with-green-salad-with-tomato.jpg" alt="Link Page" style="border-radius: 50%; width: 150px; height: 150px; margin-top: 20px;"
+                 onmouseover="this.style.opacity = '0.65';"
+                 onmouseout="this.style.opacity = '1';" />
+            <p style="color: black;">Mat</p>
+        </a>
+    </div>
+    <div class="col-md-2">
+        <a href="...." class="text-center" style="text-decoration:none;">
+            <img src="/images/wine.png" alt="Link Page" style="border-radius: 50%; width: 150px; height: 150px; margin-top: 20px;"
+                 onmouseover="this.style.opacity = '0.65';"
+                 onmouseout="this.style.opacity = '1';" />
+            <p style="color: black;">Öl, Vin & Sprit</p>
         </a>
     </div>
 </div>
+
+
+
+<style>
+    .message-ticker .alert {
+        background-color: #e8ded1;
+        color: rgb(0, 0, 0);
+    }
+</style>
+
+<div id="messageTicker" class="carousel slide message-ticker" data-ride="carousel">
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <div class="alert" role="alert">
+                <div class="row">
+                    <div class="col">
+                        Handla nu. <strong>Betala när du vill.</strong> Läs mer i kassan.
+                    </div>
+                    <div class="col">
+                        Handla nu. <strong>Betala när du vill.</strong> Läs mer i kassan.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="alert" role="alert">
+                <div class="row">
+                    <div class="col">
+                        Handla nu. <strong>Betala när du vill.</strong> Läs mer i kassan.
+                    </div>
+                    <div class="col">
+                        Handla nu. <strong>Betala när du vill.</strong> Läs mer i kassan.
+                    </div>
+                    <div class="col">
+                        Handla nu. <strong>Betala när du vill.</strong> Läs mer i kassan.
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="alert" role="alert">
+                <div class="row">
+                    <div class="col">
+                        Handla nu. <strong>Betala när du vill.</strong> Läs mer i kassan.
+                    </div>
+                    <div class="col">
+                        Handla nu. <strong>Betala när du vill.</strong> Läs mer i kassan.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="alert" role="alert">
+                <div class="row">
+                    <div class="col">
+                        Handla nu. <strong>Betala när du vill.</strong> Läs mer i kassan.
+                    </div>
+                    <div class="col">
+                        Handla nu. <strong>Betala när du vill.</strong> Läs mer i kassan.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <div class="alert" role="alert">
+                <div class="row">
+                    <div class="col">
+                        Handla nu. <strong>Betala när du vill.</strong> Läs mer i kassan.
+                    </div>
+                    <div class="col">
+                        Handla nu. <strong>Betala när du vill.</strong> Läs mer i kassan.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
