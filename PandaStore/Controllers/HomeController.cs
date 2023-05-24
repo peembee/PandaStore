@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using PandaStore.Data;
 using PandaStore.Models;
 using PandaStore.Repository;
 using System.Diagnostics;
-
 
 
 namespace PandaStore.Controllers
@@ -11,7 +11,6 @@ namespace PandaStore.Controllers
     public class HomeController : Controller
     {
         private readonly Repository<PandaUser> _pandaRepository;
-
         public HomeController(PandaStoreContext context)
         {
             _pandaRepository = new Repository<PandaUser>(context);
@@ -19,8 +18,10 @@ namespace PandaStore.Controllers
 
         public IActionResult Index()
         {
+ 
             return View();
         }
+
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

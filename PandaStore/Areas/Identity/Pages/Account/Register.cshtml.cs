@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using NuGet.Packaging.Rules;
 using PandaStore.Models;
@@ -32,14 +33,17 @@ namespace PandaStore.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<PandaUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IServiceProvider serviceProvider;
 
         public RegisterModel(
+            IServiceProvider serviceProvider,
             UserManager<PandaUser> userManager,
             IUserStore<PandaUser> userStore,
             SignInManager<PandaUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
+            this.serviceProvider = serviceProvider;
             _userManager = userManager;
             _userStore = userStore;
             _emailStore = GetEmailStore();
@@ -158,6 +162,7 @@ namespace PandaStore.Areas.Identity.Pages.Account
                 user.City = user.City = char.ToUpper(user.City[0]) + user.City.Substring(1);
 
                 user.PhoneNumber = Input.PhoneNumber.Trim();
+
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
                 if (result.Succeeded)
@@ -176,8 +181,12 @@ namespace PandaStore.Areas.Identity.Pages.Account
                     await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
                         $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
+                    /////////////////////////////////////////////
+                    // Tilldela rollen "customer" till användaren
+                   //// await _userManager.AddToRoleAsync(user, "Customer");
+
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
-                    {
+                    {                     
                         return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
                     }
                     else
@@ -186,6 +195,7 @@ namespace PandaStore.Areas.Identity.Pages.Account
                         return LocalRedirect(returnUrl);
                     }
                 }
+
                 foreach (var error in result.Errors)
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
@@ -194,7 +204,7 @@ namespace PandaStore.Areas.Identity.Pages.Account
 
             // If we got this far, something failed, redisplay form
             return Page();
-        }
+        }     
 
         private PandaUser CreateUser()
         {

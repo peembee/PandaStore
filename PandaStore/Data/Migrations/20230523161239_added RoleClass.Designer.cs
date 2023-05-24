@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PandaStore.Data;
 
@@ -11,9 +12,11 @@ using PandaStore.Data;
 namespace PandaStore.Migrations
 {
     [DbContext(typeof(PandaStoreContext))]
-    partial class PandaStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20230523161239_added RoleClass")]
+    partial class addedRoleClass
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

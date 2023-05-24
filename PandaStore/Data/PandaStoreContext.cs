@@ -4,7 +4,7 @@ using PandaStore.Models;
 
 namespace PandaStore.Data
 {
-    public class PandaStoreContext : IdentityDbContext<PandaUser>
+    public class PandaStoreContext : IdentityDbContext<PandaUser, PandaRole, string>
     {
         public PandaStoreContext(DbContextOptions<PandaStoreContext> options)
             :base(options)
@@ -22,5 +22,6 @@ namespace PandaStore.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<Receipt> Receipts { get; set; }
         public DbSet<PandaUser> PandaUsers { get; set; }
+        public DbSet<PandaRole> PandaRoles { get; set; }
     }
 }

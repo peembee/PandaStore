@@ -105,7 +105,7 @@ namespace PandaStore.Areas.Identity.Pages.Account.Manage
                 LastName = user.LastName,
                 City = user.City,
                 Address = user.Adress,
-                ZipCode = user.ZipCode
+                ZipCode = user.ZipCode                
             };
         }
 
