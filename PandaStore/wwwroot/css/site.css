@@ -22,21 +22,16 @@ body {
 }
 
 
-.shoppingCart {
-    border: 3px solid black;
-    position: fixed;
-    top: 120px; /* Justera detta värde beroende på höjden på navigeringsfältet */
-    right: -0px; /* Justera detta värde för att placera längst åt höger */
-    transform: translate(-50%, -50%);
-    z-index: 9999;
-    overflow-y: auto;
-    color: black;
-    text-align: center;
-    background: linear-gradient(112.1deg, rgb(32, 38, 57) 11.4%, rgb(63, 76, 119) 70.2%);
-    opacity: 0.9;
-    border-radius: 10px;
-    transition: 1s;
-    cursor: pointer; /* Visar att elementet är klickbart */
+.shoppingCartIconCount {
+    position: absolute;
+    top: 5px;
+    right: -5px;
+    padding: 3px 6px;
+    background-color: red;
+    color: white;
+    border-radius: 50%;
+    font-size: 10px;
+    transform: scale(0.8);
 }
 .shoppingCartIcon {
     transform: scale(2);

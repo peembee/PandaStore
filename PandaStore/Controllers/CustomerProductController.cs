@@ -1,15 +1,111 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using PandaStore.Models;
 
 namespace PandaStore.Controllers
 {
-    public class CustomerProductController : BaseController
+    public class CustomerProductController : Controller
     {
+        private List<CustomerProduct> shoppingCart { get; set; } = new List<CustomerProduct>();
+
+     
+
+
+
+
+        protected void AddToCart(CustomerProduct product)
+        {
+            // Lägg till produkten i kundkorgen
+            shoppingCart.Add(product);
+        }
+
+        protected void UpdateCart(CustomerProduct product)
+        {
+            // Uppdatera kundkorgen
+            // ... kod för att uppdatera kundkorgen baserat på produkten
+        }
+
+        protected void RemoveFromCart(CustomerProduct product)
+        {
+            // Ta bort produkten från kundkorgen
+            shoppingCart.Remove(product);
+        }
+
+        protected List<CustomerProduct> GetShoppingCart()
+        {
+            // Returnera hela kundkorgen
+            return shoppingCart;
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
         // GET: CustomerProductController
         public ActionResult Index()
         {
             return View(GetShoppingCart());
         }
+
+
+
+        public IActionResult AddAutoProducts(CustomerProduct product)
+        {
+            Random rand = new Random();
+
+            CustomerProduct tests = new CustomerProduct()
+            {
+                Id = rand.Next(0, 100).ToString(),
+                FK_ProductID = rand.Next(0, 100),
+                Quantity = rand.Next(0, 100),
+                Price = rand.Next(0, 100),
+            };
+
+            AddToCart(tests);
+
+            return RedirectToAction("Index");
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         // GET: CustomerProductController/Details/5
         public ActionResult Details(int id)

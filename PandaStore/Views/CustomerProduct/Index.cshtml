@@ -6,55 +6,63 @@
 
 @if (Model != null)
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.Id)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FK_ProductID)
-                </th>               
-                <th>
-                    @Html.DisplayNameFor(model => model.Quantity)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.Price)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.ReceiptNumber)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+    <div>
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Id)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.FK_ProductID)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Quantity)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Price)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ReceiptNumber)
-                    </td>
-                                <td>
-                <a asp-action="Edit" asp-route-id="@item.CustomerProductID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CustomerProductID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CustomerProductID">Delete</a>
-            </td>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Id)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FK_ProductID)
+                    </th>               
+                    <th>
+                        @Html.DisplayNameFor(model => model.Quantity)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Price)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.ReceiptNumber)
+                    </th>
+                    <th></th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Id)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FK_ProductID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Quantity)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Price)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ReceiptNumber)
+                        </td>
+                                    <td>
+                    <a asp-action="Edit" asp-route-id="@item.CustomerProductID">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.CustomerProductID">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.CustomerProductID">Delete</a>
+                </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <a class="" asp-controller="" asp-action="">
+            <button>Vidare till kassan</button>
+        </a> 
+        <a class="" asp-controller="CustomerProduct" asp-action="AddAutoProducts">
+            <button>lägg till varor (testis)</button>
+        </a>
+    </div>
 }
 else
 

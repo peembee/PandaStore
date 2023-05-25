@@ -9,19 +9,19 @@
 <div class="row">
     <div class="col-md-4">
         <form id="registerForm" asp-route-returnUrl="@Model.ReturnUrl" method="post">
-            <h2>Skapa ett nytt konto.</h2>
+            <h2>Skapa ett nytt konto</h2>
             <hr />
             <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
 
             <div class="form-floating mb-3">                
-                <input asp-for="Input.FirstName" class="form-control"  aria-required="true" placeholder="Förnamn" />
-                <label asp-for="Input.FirstName"></label>
+                <input asp-for="Input.FirstName" class="form-control"  aria-required="true" placeholder="First Name" />
+                <label asp-for="Input.FirstName">Förnamn</label>
                 <span asp-validation-for="Input.FirstName" class="text-danger"></span>
             </div>
 
             <div class="form-floating mb-3">                
-                <input asp-for="Input.LastName" class="form-control"  aria-required="true" placeholder="Efternamn" />
-                <label asp-for="Input.LastName"></label>
+                <input asp-for="Input.LastName" class="form-control"  aria-required="true" placeholder="Last Name" />
+                <label asp-for="Input.LastName">Efternamn</label>
                 <span asp-validation-for="Input.LastName" class="text-danger"></span>
             </div>
 
@@ -32,14 +32,14 @@
             </div>
 
             <div class="form-floating mb-3">                
-                <input asp-for="Input.ZipCode" class="form-control"  aria-required="true" placeholder="Postnummer" />
-                <label asp-for="Input.ZipCode"></label>
+                <input asp-for="Input.ZipCode" class="form-control"  aria-required="true" placeholder="Zip Code" />
+                <label asp-for="Input.ZipCode">Postnummer</label>
                 <span asp-validation-for="Input.ZipCode" class="text-danger"></span>
             </div>
 
             <div class="form-floating mb-3">                
-                <input asp-for="Input.City" class="form-control"  aria-required="true" placeholder="Stad" />
-                <label asp-for="Input.City"></label>
+                <input asp-for="Input.City" class="form-control"  aria-required="true" placeholder="City" />
+                <label asp-for="Input.City">Stad</label>
                 <span asp-validation-for="Input.City" class="text-danger"></span>
             </div>
 
@@ -67,7 +67,7 @@
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
 
-            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Register</button>
+            <button id="registerSubmit" type="submit" class="w-100 btn btn-lg btn-primary">Ny kund</button>
         </form>
     </div>
     <div class="col-md-6 col-md-offset-2">

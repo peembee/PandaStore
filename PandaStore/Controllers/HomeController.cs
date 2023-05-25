@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 namespace PandaStore.Controllers
 {
-    public class HomeController : BaseController
+    public class HomeController : Controller
     {
         private readonly Repository<PandaUser> _pandaRepository;
         public HomeController(PandaStoreContext context)
