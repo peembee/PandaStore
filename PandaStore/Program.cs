@@ -23,6 +23,8 @@ namespace PandaStore
                 options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<PandaStoreContext>();
 
+            builder.Services.AddSession();
+
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
@@ -37,6 +39,8 @@ namespace PandaStore
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseSession();
 
             app.UseAuthorization();
 

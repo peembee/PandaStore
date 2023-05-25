@@ -1,63 +1,44 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Build.Tasks.Deployment.Bootstrapper;
 using PandaStore.Models;
+using System.Text.Json;
 
 namespace PandaStore.Controllers
 {
+    [Authorize]
     public class CustomerProductController : Controller
     {
-        private List<CustomerProduct> shoppingCart { get; set; } = new List<CustomerProduct>();
-
-     
-
-
-
-
-        protected void AddToCart(CustomerProduct product)
-        {
-            // Lägg till produkten i kundkorgen
-            shoppingCart.Add(product);
-        }
-
-        protected void UpdateCart(CustomerProduct product)
-        {
-            // Uppdatera kundkorgen
-            // ... kod för att uppdatera kundkorgen baserat på produkten
-        }
-
-        protected void RemoveFromCart(CustomerProduct product)
-        {
-            // Ta bort produkten från kundkorgen
-            shoppingCart.Remove(product);
-        }
-
-        protected List<CustomerProduct> GetShoppingCart()
-        {
-            // Returnera hela kundkorgen
-            return shoppingCart;
-        }
-
-
-
-
-
-
-
-
-
-
-
-
+        private const string ShoppingCartSessionKey = "ShoppingCart";
 
         // GET: CustomerProductController
         public ActionResult Index()
         {
-            return View(GetShoppingCart());
+            var shoppingCart = GetShoppingCart();
+            return View(shoppingCart);
+        }
+        protected List<CustomerProduct> GetShoppingCart()
+        {
+            // Returnera hela kundkorgen
+            var shoppingCart = HttpContext.Session.GetObject<List<CustomerProduct>>(ShoppingCartSessionKey);
+            if (shoppingCart == null)
+            {
+                shoppingCart = new List<CustomerProduct>();
+                SaveShoppingCart(shoppingCart);
+            }
+
+            return shoppingCart;
         }
 
-
-
-        public IActionResult AddAutoProducts(CustomerProduct product)
+        protected void AddToCart(CustomerProduct product)
+        {
+            // Lägg till produkten i kundkorgen
+            var shoppingCart = GetShoppingCart();
+            shoppingCart.Add(product);
+            SaveShoppingCart(shoppingCart);
+        }
+        public async Task<IActionResult> AddAutoProducts(CustomerProduct product)
         {
             Random rand = new Random();
 
@@ -74,106 +55,39 @@ namespace PandaStore.Controllers
             return RedirectToAction("Index");
         }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        // GET: CustomerProductController/Details/5
-        public ActionResult Details(int id)
+        protected void UpdateCart(CustomerProduct product)
         {
-            return View();
+            // Uppdatera kundkorgen
+            // ... kod för att uppdatera kundkorgen baserat på produkten
         }
 
-        // GET: CustomerProductController/Create
-        public ActionResult Create()
+        protected ActionResult RemoveFromCart(CustomerProduct product)
         {
-            return View();
+            // Ta bort produkten från kundkorgen
+            var shoppingCart = GetShoppingCart();
+            shoppingCart.Remove(product);
+            SaveShoppingCart(shoppingCart);
+            return View("Index", shoppingCart);
+        }       
+
+        private void SaveShoppingCart(List<CustomerProduct> shoppingCart)
+        {
+            HttpContext.Session.SetObject(ShoppingCartSessionKey, shoppingCart);
+        }            
+    }
+
+    // Konfigurera session
+    public static class SessionExtensions
+    {
+        public static void SetObject<T>(this ISession session, string key, T value)
+        {
+            session.SetString(key, JsonSerializer.Serialize(value));
         }
 
-        // POST: CustomerProductController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public static T GetObject<T>(this ISession session, string key)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: CustomerProductController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: CustomerProductController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
-
-        // GET: CustomerProductController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: CustomerProductController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            var value = session.GetString(key);
+            return value == null ? default : JsonSerializer.Deserialize<T>(value);
         }
     }
 }

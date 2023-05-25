@@ -5,6 +5,7 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -17,16 +18,18 @@ namespace PandaStore.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<PandaUser> _signInManager;
         private readonly ILogger<LogoutModel> _logger;
-
-        public LogoutModel(SignInManager<PandaUser> signInManager, ILogger<LogoutModel> logger)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        public LogoutModel(SignInManager<PandaUser> signInManager, ILogger<LogoutModel> logger, IHttpContextAccessor httpContextAccessor)
         {
             _signInManager = signInManager;
             _logger = logger;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public async Task<IActionResult> OnPost(string returnUrl = null)
         {
             await _signInManager.SignOutAsync();
+            _httpContextAccessor.HttpContext.Session.Clear(); // Rensa sessionen
             _logger.LogInformation("User logged out.");
             if (returnUrl != null)
             {
