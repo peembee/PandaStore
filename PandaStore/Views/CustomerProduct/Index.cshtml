@@ -3,6 +3,10 @@
 @{
     ViewData["Title"] = "Index";
 }
+@{
+    double totalPrice = 0; // Flytta totalPrice till en överordnad scopingskontext
+}
+
 
 @if (Model != null)
 {
@@ -25,7 +29,6 @@
                     <th>
                         @Html.DisplayNameFor(model => model.ReceiptNumber)
                     </th>
-                    <th></th>
                 </tr>
             </thead>
             <tbody>
@@ -47,19 +50,23 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.ReceiptNumber)
                         </td>
-                                    <td>
-                    <a asp-action="Edit" asp-route-id="@item.CustomerProductID">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.CustomerProductID">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.CustomerProductID">Delete</a>
-                </td>
+                        @{totalPrice += item.Price * item.Quantity;}
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.CustomerProductID">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.CustomerProductID">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.CustomerProductID">Delete</a>
+                     </td>
                     </tr>
                 }
             </tbody>
         </table>
-        <a class="" asp-controller="" asp-action="">
-            Vidare till kassan
+        <div>
+            <h3>Totalt belopp: @totalPrice kr</h3>
+        </div>
+        <a class="btn btn-primary" asp-controller="" asp-action="">
+            Vidare till kassan, nu ska det skickas till checkout klassen där betalning sker
         </a> 
-        <a class="" asp-controller="CustomerProduct" asp-action="AddAutoProducts">
+        <a class="btn btn-primary" asp-controller="CustomerProduct" asp-action="AddAutoProducts">
             lägg till varor (testis)
         </a>
     </div>
