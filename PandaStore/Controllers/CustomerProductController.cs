@@ -31,7 +31,7 @@ namespace PandaStore.Controllers
             return shoppingCart;
         }
 
-        protected void AddToCart(CustomerProduct product)
+        protected async Task AddToCart(CustomerProduct product)
         {
             // Lägg till produkten i kundkorgen
             var shoppingCart = GetShoppingCart();
@@ -50,7 +50,7 @@ namespace PandaStore.Controllers
                 Price = rand.Next(0, 100),
             };
 
-            AddToCart(tests);
+            await AddToCart(tests);
 
             return RedirectToAction("Index");
         }
