@@ -38,37 +38,9 @@ body {
     transition: 1s;
     cursor: pointer; /* Visar att elementet är klickbart */
 }
-
-.shoppingCartTextColor {
-    color: whitesmoke;
-}
-.shoppingCart.minimized {
-    transition: 1s;
-    transform: scale(1.5) translate(-50%, -50%);
-    border-radius: 50%; /* Använder en border-radius på 50% för att skapa en cirkelform */
-    width: 100px; /* Ställer in en specifik bredd för att upprätthålla cirkelformen */
-    height: 100px; /* Ställer in en specifik höjd för att upprätthålla cirkelformen */
-    right: 10%;
-    font-size: 1px;
-}
-.shoppingCart.minimized table,
-.shoppingCart.minimized h3 + hr {
-    display: none; /* Döljer tabellen och hr-elementet när kundvagnsrutan är förminskad */
-}
-.shoppingCart.minimized h3 {
-    font-size: 12px; /* Ange den önskade textstorleken för förminskat tillstånd */
-    margin-top: 40%;
-}
-.shoppingCartEmpty {
-    margin-top: 30%;
-    
-}
-
-@media (max-width: 768px) {
-    .shoppingCart {
-        top: 100px; /* Justera detta värde för att anpassa placeringen på mindre skärmar */
-        right: -80px; /* Justera detta värde för att anpassa placeringen på mindre skärmar */
-    }
+.shoppingCartIcon {
+    transform: scale(2);
+    margin-left: 20px;  
 }
 
 

@@ -14,20 +14,12 @@ namespace PandaStore.Controllers
         public HomeController(PandaStoreContext context)
         {
             _pandaRepository = new Repository<PandaUser>(context);
-            CustomerProduct newItem = new CustomerProduct
-            {
-                Id = "2",
-                FK_ProductID = 3,
-                Quantity = 4,
-                Price = 5
-            };
-            shoppingCartList.Add(newItem);
         }
 
         public IActionResult Index()
         {
  
-            return View("Index", shoppingCartList);
+            return View();
         }
 
 
