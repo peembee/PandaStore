@@ -6,6 +6,9 @@ html {
   html {
     font-size: 16px;
   }
+    .image-wrapper {
+        flex: 1 1 100%;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
@@ -37,6 +40,17 @@ body {
     transform: scale(2);
     margin-left: 20px;  
 }
+
+
+/*Hovereffekt på kampanjbilderna*/
+.image-wrapper img {
+    transition: transform 0.2s ease;
+}
+
+.image-wrapper:hover img {
+    transform: scale(1.1);
+}
+
 
 
 
