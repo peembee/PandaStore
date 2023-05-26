@@ -51,6 +51,12 @@ body {
     transform: scale(1.1);
 }
 
+.main-content {
+    background-image: url(../images/Admin/cyber-monday-retail-sales.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 
 
 

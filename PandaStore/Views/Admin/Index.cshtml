@@ -1,10 +1,30 @@
 ﻿
-<div>
-    <h4>Inloggad som admin</h4>
+<div class="main-content">
+    <h6>Inloggad som admin</h6>
     <hr />
-    <h2>Välkommen!</h2>
-    <p>
-         <a asp-area="" asp-controller="Product" asp-action="Index">Produkter</a>
-         <a asp-area="" asp-controller="Campaign" asp-action="Index">Kampanjer</a>
-    </p>
+    <h2>Välkommen till adminsidorna!</h2>
+
+    <p>Här kan du hittar du alla funktioner för att sköta webbshoppen, allt i från lägga till produkter och kampanjer eller editera produkter.</p>
+
+    <div class="card-content" img="">
+        
+        <div class="card border-dark mb-3" style="max-width: 18rem;">
+            <div class="card-header">
+                <a class="admin-card" asp-area="" asp-controller="Product" asp-action="Index">Gå till Produkter</a>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Produkter</h5>
+                <p class="card-text">Här lägger du till, raderar eller editerar produkter i webbshoppen.</p>
+            </div>
+        </div>
+        <div class="card border-dark mb-3" style="max-width: 18rem;">
+            <div class="card-header">
+                <a class="admin-card" asp-area="" asp-controller="Campaign" asp-action="Index">Gå till Kampanjer</a>
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">Kampanjer</h5>
+                <p class="card-text">Här lägger du till, raderar eller editerar kampanjer i webbshoppen.</p>
+            </div>
+        </div>
+    </div>
 </div>
