@@ -1,77 +1,10 @@
-﻿@model IEnumerable<PandaStore.Models.Product>
-
-@{
-    ViewData["Title"] = "Index";
-}
-
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Categorys)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductTitel)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Specification)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.InventoryQuantity)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ProductIsActive)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.NextDelivery)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Categorys.CategoryId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductTitel)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Specification)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.InventoryQuantity)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.ProductIsActive)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.NextDelivery)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.ProductID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.ProductID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.ProductID">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+﻿
+<div>
+    <h4>Inloggad som admin</h4>
+    <hr />
+    <h2>Välkommen!</h2>
+    <p>
+         <a asp-area="" asp-controller="Product" asp-action="Index">Produkter</a>
+         <a asp-area="" asp-controller="Campaign" asp-action="Index">Kampanjer</a>
+    </p>
+</div>

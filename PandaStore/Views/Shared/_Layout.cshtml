@@ -24,10 +24,11 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Startsida</a>
                         </li> 
-                                                
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Admin</a>
-                        </li>       
+                        </li> 
+                                                
+                               
 
                          <li class="nav-item">
                             <a class="nav-link text-dark shoppingCartIcon" asp-area="" asp-controller="CustomerProduct" asp-action="Index">
@@ -37,7 +38,7 @@
                             </a>
                         </li>  
                     </ul>
-
+                    <partial name="_AdminView" />
                     <partial name="_LoginPartial" />
                 </div>
             </div>
