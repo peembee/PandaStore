@@ -1,0 +1,20 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using PandaStore.Models
+
+@inject SignInManager<PandaUser> SignInManager
+@inject UserManager<PandaUser> UserManager
+
+<ul class="navbar-nav">
+    @if (SignInManager.IsSignedIn(User))
+    {
+        var user = await UserManager.GetUserAsync(User);
+        var isAdmin = await UserManager.IsInRoleAsync(user, "Admin");
+        @if (isAdmin)
+        {
+            <li class="nav-item">
+                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Admin</a>
+            </li>
+        }
+        
+    }
+</ul>
