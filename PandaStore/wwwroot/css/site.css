@@ -58,6 +58,9 @@ body {
     background-size: cover;
 }
 
+.form-group {
+    padding-bottom: 10px;
+}
 
 
 
