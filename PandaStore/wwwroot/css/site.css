@@ -44,7 +44,7 @@ body {
 }
 
 
-/*Hovereffekt pÂ kampanjbilderna*/
+/*Hovereffekt p√• kampanjbilderna*/
 .image-wrapper img {
     transition: transform 0.2s ease;
 }
@@ -52,8 +52,19 @@ body {
 .image-wrapper:hover img {
     transform: scale(1.1);
 }
+.main-content {
+    background-image: url(../images/Admin/cyber-monday-retail-sales.jpg);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 
-/*Hoveffekt pÂ kl‰dessidan*/
+.form-group {
+    padding-bottom: 10px;
+}
+
+
+/*Hovereffekt p√• kl√§dessidan*/
 .card {
     transition: transform 0.2s;
 }
@@ -61,3 +72,4 @@ body {
 .card:hover {
     transform: scale(1.1);
 }
+
