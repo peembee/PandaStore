@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Build.Tasks.Deployment.Bootstrapper;
+using Nest;
+using PandaStore.Data;
 using PandaStore.Models;
 using System.Text.Json;
 
@@ -12,10 +14,27 @@ namespace PandaStore.Controllers
     {
         private const string ShoppingCartSessionKey = "ShoppingCart";
 
+        private readonly PandaStoreContext context;
+        public CustomerProductController(PandaStoreContext context)
+        {
+            this.context = context;
+        }
+
         // GET: CustomerProductController
-        public ActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
             var shoppingCart = GetShoppingCart();
+
+
+            foreach (var item in shoppingCart)
+            {
+                var product = context.Products.FirstOrDefault(p => p.ProductID == item.FK_ProductID);
+                if (product != null)
+                {
+                    item.ProductName = product.ProductTitel;
+                }
+            }
             return View(shoppingCart);
         }
         protected List<CustomerProduct> GetShoppingCart()
@@ -45,7 +64,7 @@ namespace PandaStore.Controllers
             CustomerProduct tests = new CustomerProduct()
             {
                 Id = rand.Next(0, 100).ToString(),
-                FK_ProductID = rand.Next(0, 100),
+                FK_ProductID = rand.Next(1, 4),
                 Quantity = rand.Next(0, 100),
                 Price = rand.Next(0, 100),
             };
@@ -61,19 +80,25 @@ namespace PandaStore.Controllers
             // ... kod för att uppdatera kundkorgen baserat på produkten
         }
 
-        protected ActionResult RemoveFromCart(CustomerProduct product)
+        [HttpPost]
+        public async Task<IActionResult> RemoveFromCart(int id)
         {
             // Ta bort produkten från kundkorgen
             var shoppingCart = GetShoppingCart();
-            shoppingCart.Remove(product);
-            SaveShoppingCart(shoppingCart);
-            return View("Index", shoppingCart);
-        }       
+            var product = shoppingCart.FirstOrDefault(p => p.CustomerProductID == id);
+            if (product != null)
+            {
+                shoppingCart.Remove(product);
+                await SaveShoppingCart(shoppingCart);
+            }
 
-        private void SaveShoppingCart(List<CustomerProduct> shoppingCart)
+            return RedirectToAction("Index");
+        }
+
+        private async Task SaveShoppingCart(List<CustomerProduct> shoppingCart)
         {
             HttpContext.Session.SetObject(ShoppingCartSessionKey, shoppingCart);
-        }            
+        }
     }
 
     // Konfigurera session

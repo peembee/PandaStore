@@ -8,26 +8,26 @@
 }
 
 
-@if (Model != null)
+@if (Model != null && Model.Any())
 {
     <div>
         <table class="table">
             <thead>
                 <tr>
                     <th>
-                        @Html.DisplayNameFor(model => model.Id)
+                        @Html.DisplayName("CustomerProduct ID")
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.FK_ProductID)
+                         @Html.DisplayName("Produkt")
                     </th>               
                     <th>
-                        @Html.DisplayNameFor(model => model.Quantity)
+                        @Html.DisplayName("Antal")
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Price)
+                        @Html.DisplayName("Styckepris")
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.ReceiptNumber)
+                        @Html.DisplayName("Kvittonummer")
                     </th>
                 </tr>
             </thead>
@@ -38,8 +38,8 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Id)
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.FK_ProductID)
+                         <td>
+                            @Html.DisplayFor(modelItem => item.ProductName)
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Quantity)
@@ -51,11 +51,12 @@
                             @Html.DisplayFor(modelItem => item.ReceiptNumber)
                         </td>
                         @{totalPrice += item.Price * item.Quantity;}
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.CustomerProductID">Edit</a> |
-                        <a asp-action="Details" asp-route-id="@item.CustomerProductID">Details</a> |
-                        <a asp-action="Delete" asp-route-id="@item.CustomerProductID">Delete</a>
-                     </td>
+                        <td>
+                            <form asp-controller="CustomerProduct" asp-action="RemoveFromCart" method="post">
+                                <input type="hidden" name="id" value="@item.CustomerProductID" />
+                                <button class="btn btn-primary"  type="submit">Radera</button>
+                            </form>
+                        </td>
                     </tr>
                 }
             </tbody>
@@ -74,5 +75,14 @@
 else
 
 {
-    <h3>Varukorgen är tom</h3>
+    <div>
+        <h3>Varukorgen är tom</h3>
+        <p>När du lägger till något i din varukorg så dyker det upp här</p>
+        <a class="btn btn-primary" asp-controller="Home" asp-action="Index">
+                Börja Handla
+        </a>
+         <a class="btn btn-primary" asp-controller="CustomerProduct" asp-action="AddAutoProducts">
+                lägg till varor (testis)
+        </a>
+    </div>
 }
