@@ -32,7 +32,8 @@ namespace PandaStore.Models
         [Required]
         public double Price { get; set; }
 
-      
+
+        [StringLength(80)]
         public string? ImgUrl { get; set; }
 
 
