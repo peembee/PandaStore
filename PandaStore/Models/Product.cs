@@ -20,6 +20,10 @@ namespace PandaStore.Models
         public string ProductTitel { get; set; } = string.Empty;
 
         [Required]
+        [StringLength(50)]
+        public string ProductInfo { get; set; }
+
+        [Required]
         [StringLength(500)]
         public string Description { get; set; } = string.Empty;
 
