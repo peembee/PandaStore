@@ -31,6 +31,9 @@ namespace PandaStore.Models
         [Required]
         public double Price { get; set; }
 
+        [Required]
+        public string ImgUrl { get; set; }
+
 
         public int InventoryQuantity { get; set; }
 
