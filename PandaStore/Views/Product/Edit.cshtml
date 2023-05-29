@@ -54,6 +54,11 @@
                 <span asp-validation-for="NextDelivery" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="ImgUrl" class="control-label">Produktbild</label>
+                <input asp-for="ImgUrl" type="file" class="form-control-file" />
+                <span asp-validation-for="ImgUrl" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Spara" class="btn btn-primary" />
                 <a asp-action="Index" class="btn btn-secondary">Gå tillbaka</a>
             </div>

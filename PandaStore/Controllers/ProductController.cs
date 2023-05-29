@@ -57,7 +57,7 @@ namespace PandaStore.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ProductID,FK_CategoryID,ProductTitel,Description,Specification,Price,InventoryQuantity,ProductIsActive,NextDelivery")] Product product)
+        public async Task<IActionResult> Create([Bind("ProductID,FK_CategoryID,ProductTitel,Description,Specification,Price,InventoryQuantity,ProductIsActive,NextDelivery, ImgUrl")] Product product)
         {
             if (ModelState.IsValid)
             {
@@ -91,7 +91,7 @@ namespace PandaStore.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ProductID,FK_CategoryID,ProductTitel,Description,Specification,Price,InventoryQuantity,ProductIsActive,NextDelivery")] Product product)
+        public async Task<IActionResult> Edit(int id, [Bind("ProductID,FK_CategoryID,ProductTitel,Description,Specification,Price,InventoryQuantity,ProductIsActive,NextDelivery, ImgUrl")] Product product)
         {
             if (id != product.ProductID)
             {
