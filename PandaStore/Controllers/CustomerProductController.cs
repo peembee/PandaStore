@@ -12,7 +12,7 @@ using System.Text.Json;
 
 namespace PandaStore.Controllers
 {
-    
+
     public class CustomerProductController : Controller
     {
         private const string ShoppingCartSessionKey = "ShoppingCart";
@@ -160,40 +160,112 @@ namespace PandaStore.Controllers
             SaveShoppingCart(shoppingCart);
             return View(shoppingCart);
         }
-        
+
 
         public async Task<IActionResult> sendOrder(int receiptNumber)
         {
             // Hämta användarens UserId
             string userId = userManager.GetUserId(User);
-
+            double totalOrderPrice = 0;
             var addShoppingCartToDb = await GetShoppingCart();
-   
 
+            // adding receipt to database
             Receipt receipt = new Receipt();
             receipt.ReceiptNumber = receiptNumber;
             receipt.PaymentSucceeded = true;
+            context.Receipts.Add(receipt);
 
-            context.Receipts.Add(receipt); // adding receipt to database
 
-          
             foreach (var item in addShoppingCartToDb)
             {
                 item.Id = userManager.GetUserId(User);
+                totalOrderPrice += item.Price * item.Quantity;
                 context.CustomerProducts.Add(item);
             }
             SaveShoppingCart(addShoppingCartToDb);
 
+
+
+            
+
+
+
             await context.SaveChangesAsync();
+
+            await createOrder(totalOrderPrice, receiptNumber);
+
             _httpContextAccessor.HttpContext.Session.Clear();
+
             return RedirectToAction(nameof(Index));
         }
 
+        private async Task createOrder(double totalOrderPrice, int receiptNumber)
+        {
+            // adding order to database
 
 
 
 
+            Order order = new Order();
+            order.OrderTotalPrice = totalOrderPrice;
+            context.Orders.Add(order);
+            await context.SaveChangesAsync();
 
+           await createOrderStatuses(receiptNumber);
+
+        }
+
+        private async Task createOrderStatuses(int receiptNumber)
+        {
+            // adding orderStatus to database
+            Random rand = new Random();
+
+            
+
+            OrderStatus orderStatus = new OrderStatus();
+            orderStatus.StatusTitel = "Beställt";
+            orderStatus.Shipped = rand.Next(2) == 0;
+            if (orderStatus.Shipped == true) // randomize shipped
+            {
+                orderStatus.Delivered = rand.Next(2) == 0;
+            }
+            else
+            {
+                orderStatus.Delivered = false;
+            }
+            context.OrderStatuses.Add(orderStatus);
+
+            await context.SaveChangesAsync();
+
+            await createOrderDetails(receiptNumber);
+
+        }
+        private async Task createOrderDetails(int receiptNumber)
+        {
+            // adding orderDetails to database
+         
+    
+            OrderDetail orderDetails = new OrderDetail();
+            
+            var orderId = await context.Orders.OrderByDescending(o => o.OrderID).Select(o => o.OrderID).FirstOrDefaultAsync();
+
+            var orderstatusId = await context.OrderStatuses.OrderByDescending(o => o.OrderStatusID).Select(o => o.OrderStatusID).FirstOrDefaultAsync();
+
+            var reciptId = await context.Receipts.Where(r => r.ReceiptNumber == receiptNumber).Select(r => r.ReceiptID).FirstOrDefaultAsync();
+
+
+
+
+            orderDetails.FK_OrderID = orderId;
+            orderDetails.FK_OrderStatus = orderstatusId;
+            orderDetails.FK_ReceiptID = reciptId;
+            orderDetails.Id = userManager.GetUserId(User);
+
+
+            context.OrderDetails.Add(orderDetails);
+
+            await context.SaveChangesAsync();
+        }
 
 
         ////////Not in use for the moment
