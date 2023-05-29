@@ -33,7 +33,7 @@ namespace PandaStore.Models
         public double Price { get; set; }
 
       
-        public string ImgUrl { get; set; }
+        public string? ImgUrl { get; set; }
 
 
         public int InventoryQuantity { get; set; }
