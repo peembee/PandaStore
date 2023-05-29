@@ -7,14 +7,14 @@
 <div>
     <div class="container" style="height:fit-content; padding:0px;">
         <div class="row" style="height:500px; margin:0px;">
-            <div class="col" style="background-color:brown; width:55%; padding:0px;">
+            <div class="col">
                 <!-- bild på produkten ska centreras -->
-                <div id="topImageContainer" style="width:90%; margin:auto;;">
+                <div class="topimagecontainer" style="width:90%; margin:auto;">
                     <img id="topImage" src="./images/black-t-shirts-with-copy-space-removebg-preview.png" style="width:100%;" alt="Top Image" />
                 </div>
 
             </div>
-            <div class="col" style="background-color:aqua;  padding:0px;">
+            <div class="col" style="padding:0px;">
                 <!-- Lägg till produkten i varukorgen -->
                 <div class="verticalalign">
                     <div class="centerbasket">
@@ -29,7 +29,13 @@
                             <button class="addbasket">Lägg i varukorg</button>
                         </div>
                         <div>
-                            <p>Lager status</p>
+                            <p style="margin-top: 10px;">Lager status</p>
+                            <div>
+                                <div class="inventorycontainer">
+                                </div>
+                                <div class="inventorycontainer">
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -55,6 +61,10 @@
 
 
 <style>
+    .topimagecontainer{
+        padding-top:25px;
+        width: 55%;
+    }
     .addbasket {
         height: 50px;
         width: 150px;
@@ -106,7 +116,13 @@
     .number {
         margin: 0 10px;
     }
-
+    .inventorycontainer{
+        height:175px;
+        width:75px;
+        border:solid;
+        display:flex;
+        flex-direction:row;
+    }
     .desc {
         /*background-color: yellow;*/
         height: 300px;
