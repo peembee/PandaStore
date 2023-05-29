@@ -22,12 +22,6 @@ namespace PandaStore.Models
 
 
         [Required]
-        [ForeignKey("Receipts")]
-        public int FK_ReceiptID { get; set; }
-        public virtual Receipt? Receipts { get; set; }
-
-
-        [Required]
         public int Quantity { get; set; }
 
 

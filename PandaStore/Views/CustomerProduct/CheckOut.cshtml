@@ -5,6 +5,7 @@
 }
 @{
     double totalPrice = 0; // Flytta totalPrice till en överordnad scopingskontext
+    int receiptNumber = 0;
 }
 
     <div>
@@ -54,6 +55,7 @@
                             @Html.DisplayFor(modelItem => item.ReceiptNumber)
                         </td>
                         @{totalPrice += item.Price * item.Quantity;}
+                        @{receiptNumber = item.ReceiptNumber;}
                     </tr>
                 }
             </tbody>
@@ -61,7 +63,7 @@
         <div>
             <h3>Totalt belopp: @totalPrice kr</h3>
         </div>
-        <a class="btn btn-primary" asp-action="sendOrder">
+        <a class="btn btn-primary" asp-action="sendOrder" asp-route-receiptNumber="@receiptNumber">
             Betala idag
         </a> 
         <a class="btn btn-primary" asp-action="">

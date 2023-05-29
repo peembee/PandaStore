@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Build.Tasks.Deployment.Bootstrapper;
 using Microsoft.EntityFrameworkCore;
@@ -18,9 +19,15 @@ namespace PandaStore.Controllers
 
         private readonly PandaStoreContext context;
 
-        public CustomerProductController(PandaStoreContext context)
+        private readonly UserManager<PandaUser> userManager;
+
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public CustomerProductController(PandaStoreContext context, UserManager<PandaUser> userManager, IHttpContextAccessor httpContextAccessor)
         {
             this.context = context;
+            this.userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
         }
 
 
@@ -74,7 +81,7 @@ namespace PandaStore.Controllers
             {
                 Id = rand.Next(0, 100).ToString(),
                 FK_ProductID = rand.Next(1, 4),
-                Quantity = rand.Next(0, 100),
+                Quantity = rand.Next(1, 5),
                 Price = rand.Next(0, 100),
             };
 
@@ -155,21 +162,32 @@ namespace PandaStore.Controllers
         }
         
 
-        private async Task<IActionResult> sendOrder()
+        public async Task<IActionResult> sendOrder(int receiptNumber)
         {
-            var addShoppingCartToDb = await GetShoppingCart();
+            // Hämta användarens UserId
+            string userId = userManager.GetUserId(User);
 
+            var addShoppingCartToDb = await GetShoppingCart();
+   
+
+            Receipt receipt = new Receipt();
+            receipt.ReceiptNumber = receiptNumber;
+            receipt.PaymentSucceeded = true;
+
+            context.Receipts.Add(receipt); // adding receipt to database
+
+          
             foreach (var item in addShoppingCartToDb)
             {
-                await context.CustomerProducts.AddAsync(item);
+                item.Id = userManager.GetUserId(User);
+                context.CustomerProducts.Add(item);
             }
-
+            SaveShoppingCart(addShoppingCartToDb);
 
             await context.SaveChangesAsync();
-
-            return View();
+            _httpContextAccessor.HttpContext.Session.Clear();
+            return RedirectToAction(nameof(Index));
         }
-
 
 
 

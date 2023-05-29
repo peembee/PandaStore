@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PandaStore.Data;
 
@@ -11,9 +12,11 @@ using PandaStore.Data;
 namespace PandaStore.Migrations
 {
     [DbContext(typeof(PandaStoreContext))]
-    partial class PandaStoreContextModelSnapshot : ModelSnapshot
+    [Migration("20230529090250_added missing pk-key in Receipt")]
+    partial class addedmissingpkkeyinReceipt
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -197,6 +200,9 @@ namespace PandaStore.Migrations
                     b.Property<int>("FK_ProductID")
                         .HasColumnType("int");
 
+                    b.Property<int>("FK_ReceiptID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Id")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
@@ -213,6 +219,8 @@ namespace PandaStore.Migrations
                     b.HasKey("CustomerProductID");
 
                     b.HasIndex("FK_ProductID");
+
+                    b.HasIndex("FK_ReceiptID");
 
                     b.HasIndex("Id");
 
@@ -584,6 +592,12 @@ namespace PandaStore.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("PandaStore.Models.Receipt", "Receipts")
+                        .WithMany("CustomerProducts")
+                        .HasForeignKey("FK_ReceiptID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("PandaStore.Models.PandaUser", "PandaUsers")
                         .WithMany("CustomerProducts")
                         .HasForeignKey("Id")
@@ -593,6 +607,8 @@ namespace PandaStore.Migrations
                     b.Navigation("PandaUsers");
 
                     b.Navigation("Products");
+
+                    b.Navigation("Receipts");
                 });
 
             modelBuilder.Entity("PandaStore.Models.CustomerRate", b =>
@@ -685,6 +701,8 @@ namespace PandaStore.Migrations
 
             modelBuilder.Entity("PandaStore.Models.Receipt", b =>
                 {
+                    b.Navigation("CustomerProducts");
+
                     b.Navigation("OrderDetails");
                 });
 #pragma warning restore 612, 618
