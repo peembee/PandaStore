@@ -37,7 +37,6 @@ namespace PandaStore.Controllers
         {
             var shoppingCart = await GetShoppingCart();
 
-
             foreach (var item in shoppingCart)
             {
                 var product = context.Products.FirstOrDefault(p => p.ProductID == item.FK_ProductID);
@@ -59,7 +58,6 @@ namespace PandaStore.Controllers
                 shoppingCart = new List<CustomerProduct>();
                 SaveShoppingCart(shoppingCart);
             }
-
             return shoppingCart;
         }
 
@@ -84,7 +82,6 @@ namespace PandaStore.Controllers
                 Quantity = rand.Next(1, 5),
                 Price = rand.Next(0, 100),
             };
-
             await AddToCart(tests);
 
             return RedirectToAction("Index");
@@ -104,7 +101,6 @@ namespace PandaStore.Controllers
             }
 
             return RedirectToAction("Index");
-
         }
 
         private void SaveShoppingCart(List<CustomerProduct> shoppingCart)
@@ -175,7 +171,6 @@ namespace PandaStore.Controllers
             receipt.PaymentSucceeded = true;
             context.Receipts.Add(receipt);
 
-
             foreach (var item in addShoppingCartToDb)
             {
                 item.Id = userManager.GetUserId(User);
@@ -183,12 +178,6 @@ namespace PandaStore.Controllers
                 context.CustomerProducts.Add(item);
             }
             SaveShoppingCart(addShoppingCartToDb);
-
-
-
-            
-
-
 
             await context.SaveChangesAsync();
 
@@ -202,25 +191,20 @@ namespace PandaStore.Controllers
         private async Task createOrder(double totalOrderPrice, int receiptNumber)
         {
             // adding order to database
-
-
-
-
             Order order = new Order();
             order.OrderTotalPrice = totalOrderPrice;
             context.Orders.Add(order);
+
             await context.SaveChangesAsync();
 
-           await createOrderStatuses(receiptNumber);
-
+            await createOrderStatuses(receiptNumber);
         }
+
 
         private async Task createOrderStatuses(int receiptNumber)
         {
             // adding orderStatus to database
             Random rand = new Random();
-
-            
 
             OrderStatus orderStatus = new OrderStatus();
             orderStatus.StatusTitel = "Beställt";
@@ -238,29 +222,23 @@ namespace PandaStore.Controllers
             await context.SaveChangesAsync();
 
             await createOrderDetails(receiptNumber);
-
         }
         private async Task createOrderDetails(int receiptNumber)
         {
             // adding orderDetails to database
-         
-    
+
             OrderDetail orderDetails = new OrderDetail();
-            
+
             var orderId = await context.Orders.OrderByDescending(o => o.OrderID).Select(o => o.OrderID).FirstOrDefaultAsync();
 
             var orderstatusId = await context.OrderStatuses.OrderByDescending(o => o.OrderStatusID).Select(o => o.OrderStatusID).FirstOrDefaultAsync();
 
             var reciptId = await context.Receipts.Where(r => r.ReceiptNumber == receiptNumber).Select(r => r.ReceiptID).FirstOrDefaultAsync();
 
-
-
-
             orderDetails.FK_OrderID = orderId;
             orderDetails.FK_OrderStatus = orderstatusId;
             orderDetails.FK_ReceiptID = reciptId;
             orderDetails.Id = userManager.GetUserId(User);
-
 
             context.OrderDetails.Add(orderDetails);
 
