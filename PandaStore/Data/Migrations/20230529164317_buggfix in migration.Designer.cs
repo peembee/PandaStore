@@ -12,8 +12,8 @@ using PandaStore.Data;
 namespace PandaStore.Migrations
 {
     [DbContext(typeof(PandaStoreContext))]
-    [Migration("20230529093132_delted unneccacery variables in recipt n customerproducts")]
-    partial class deltedunneccaceryvariablesinreciptncustomerproducts
+    [Migration("20230529164317_buggfix in migration")]
+    partial class buggfixinmigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

@@ -1,10 +1,30 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using PandaStore.Data;
+using PandaStore.Models;
 
 namespace PandaStore.Controllers
 {
     public class MyPageController : Controller
     {
+        private readonly PandaStoreContext context;
+
+        private readonly UserManager<PandaUser> userManager;
+
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public MyPageController(PandaStoreContext context, UserManager<PandaUser> userManager, IHttpContextAccessor httpContextAccessor)
+        {
+            this.context = context;
+            this.userManager = userManager;
+            _httpContextAccessor = httpContextAccessor;
+        }
+
+
+
+
+
         // GET: MyPageController
         public ActionResult Index()
         {

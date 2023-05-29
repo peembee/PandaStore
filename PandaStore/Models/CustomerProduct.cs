@@ -15,6 +15,7 @@ namespace PandaStore.Models
         public virtual PandaUser? PandaUsers { get; set; }
 
 
+
         [Required]
         [ForeignKey("Products")]
         public int FK_ProductID { get; set; }
