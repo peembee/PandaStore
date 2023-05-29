@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Build.Tasks.Deployment.Bootstrapper;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Identity.Client;
 using Nest;
 using PandaStore.Data;
 using PandaStore.Models;
@@ -9,22 +11,24 @@ using System.Text.Json;
 
 namespace PandaStore.Controllers
 {
-    [Authorize]
+    
     public class CustomerProductController : Controller
     {
         private const string ShoppingCartSessionKey = "ShoppingCart";
 
         private readonly PandaStoreContext context;
+
         public CustomerProductController(PandaStoreContext context)
         {
             this.context = context;
         }
 
+
         // GET: CustomerProductController
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var shoppingCart = GetShoppingCart();
+            var shoppingCart = await GetShoppingCart();
 
 
             foreach (var item in shoppingCart)
@@ -37,7 +41,9 @@ namespace PandaStore.Controllers
             }
             return View(shoppingCart);
         }
-        protected List<CustomerProduct> GetShoppingCart()
+
+
+        public async Task<List<CustomerProduct>> GetShoppingCart()
         {
             // Returnera hela kundkorgen
             var shoppingCart = HttpContext.Session.GetObject<List<CustomerProduct>>(ShoppingCartSessionKey);
@@ -50,13 +56,16 @@ namespace PandaStore.Controllers
             return shoppingCart;
         }
 
+
         protected async Task AddToCart(CustomerProduct product)
         {
             // Lägg till produkten i kundkorgen
-            var shoppingCart = GetShoppingCart();
+            var shoppingCart = await GetShoppingCart();
             shoppingCart.Add(product);
             SaveShoppingCart(shoppingCart);
         }
+
+
         public async Task<IActionResult> AddAutoProducts(CustomerProduct product)
         {
             Random rand = new Random();
@@ -74,30 +83,106 @@ namespace PandaStore.Controllers
             return RedirectToAction("Index");
         }
 
-        protected void UpdateCart(CustomerProduct product)
-        {
-            // Uppdatera kundkorgen
-            // ... kod för att uppdatera kundkorgen baserat på produkten
-        }
 
         [HttpPost]
         public async Task<IActionResult> RemoveFromCart(int id)
         {
             // Ta bort produkten från kundkorgen
-            var shoppingCart = GetShoppingCart();
-            var product = shoppingCart.FirstOrDefault(p => p.CustomerProductID == id);
+            var shoppingCart = await GetShoppingCart();
+            var product = shoppingCart.FirstOrDefault(p => p.FK_ProductID == id);
             if (product != null)
             {
                 shoppingCart.Remove(product);
-                await SaveShoppingCart(shoppingCart);
+                SaveShoppingCart(shoppingCart);
             }
 
             return RedirectToAction("Index");
+
         }
 
-        private async Task SaveShoppingCart(List<CustomerProduct> shoppingCart)
+        private void SaveShoppingCart(List<CustomerProduct> shoppingCart)
         {
             HttpContext.Session.SetObject(ShoppingCartSessionKey, shoppingCart);
+        }
+
+
+        // Payment-handler
+        [Authorize]
+        public async Task<IActionResult> CheckOut()
+        {
+            Random rand = new Random();
+            string collectReceiptNumber = "";
+            bool isUnique = true;
+            int receiptNumber;
+
+            var shoppingCart = await GetShoppingCart();
+
+            /// Getting unique receipt-number.
+            do
+            {
+                for (int i = 0; i < 6; i++)
+                {
+                    int randomNumber = rand.Next(1, 10);
+                    collectReceiptNumber += randomNumber.ToString();
+                }
+
+                foreach (var item in shoppingCart)
+                {
+                    if (collectReceiptNumber == item.ReceiptNumber.ToString())
+                    {
+                        isUnique = false;
+                        break;
+                    }
+                }
+
+            } while (isUnique == false);
+
+            receiptNumber = Convert.ToInt32(collectReceiptNumber);
+
+
+            ///insert the receipt-number in the shoppingchart
+            foreach (var item in shoppingCart)
+            {
+                var product = context.Products.FirstOrDefault(p => p.ProductID == item.FK_ProductID);
+                if (product != null)
+                {
+                    item.ProductName = product.ProductTitel;
+                    item.ReceiptNumber = receiptNumber;
+                }
+            }
+            SaveShoppingCart(shoppingCart);
+            return View(shoppingCart);
+        }
+        
+
+        private async Task<IActionResult> sendOrder()
+        {
+            var addShoppingCartToDb = await GetShoppingCart();
+
+            foreach (var item in addShoppingCartToDb)
+            {
+                await context.CustomerProducts.AddAsync(item);
+            }
+
+
+            await context.SaveChangesAsync();
+
+            return View();
+        }
+
+
+
+
+
+
+
+
+
+        ////////Not in use for the moment
+        protected void UpdateCart(CustomerProduct product)
+        {
+            // Uppdatera kundkorgen
+            // ... kod för att uppdatera kundkorgen baserat på produkten
         }
     }
 

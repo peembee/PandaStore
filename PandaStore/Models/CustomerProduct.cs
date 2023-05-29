@@ -38,6 +38,7 @@ namespace PandaStore.Models
         [Required]
         public int ReceiptNumber { get; set; }
 
-        public string ProductName { get; set; } = string.Empty;
+        [NotMapped]
+        public string? ProductName { get; set; } = string.Empty;
     }
 }
