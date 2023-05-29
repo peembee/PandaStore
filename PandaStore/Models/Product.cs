@@ -19,6 +19,7 @@ namespace PandaStore.Models
         [StringLength(50)]
         public string ProductTitel { get; set; } = string.Empty;
 
+
         [Required]
         [StringLength(500)]
         public string Description { get; set; } = string.Empty;
@@ -31,8 +32,8 @@ namespace PandaStore.Models
         [Required]
         public double Price { get; set; }
 
-        [Required]
-        public string ImgUrl { get; set; }
+      
+        public string? ImgUrl { get; set; }
 
 
         public int InventoryQuantity { get; set; }
