@@ -36,10 +36,14 @@
                     <img src="@item.ImgUrl" class="card-img-top" alt="">
                     <div class="card-body">
                         <h5 class="card-title">@item.ProductTitel</h5>
-                        <p class="card-text"></p>
-                        <h6 class="card-title">@item.Price</h6>
-                        <button class="btn btn-primary buy-button" data-product-id="@item.ProductID">Köp</button>
-
+                        <p class="card-text">@item.Description</p>
+                        <h6 class="card-title"><b>@item.Price SEK</b></h6>
+                        <form method="post" asp-controller="CustomerProduct" asp-action="AddToCart">
+                            <input type="hidden" name="productId" value="@item.ProductID" />
+                            <input type="hidden" name="quantity" value=1 />
+                            <input type="hidden" name="price" value="@item.Price" />
+                            <button type="submit" class="btn btn-primary buy-button">Köp</button>
+                        </form>
                         @foreach (var campaign in item.Campaigns)
                         {
                             <p>Rabatt: @campaign.Discount</p>
