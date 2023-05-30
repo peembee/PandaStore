@@ -36,7 +36,7 @@ namespace PandaStore.Controllers
         public async Task<IActionResult> Index()
         {
             var shoppingCart = await GetShoppingCart();
-
+            int CartItemCount = shoppingCart.Count;
             foreach (var item in shoppingCart)
             {
                 var product = context.Products.FirstOrDefault(p => p.ProductID == item.FK_ProductID);
@@ -45,6 +45,7 @@ namespace PandaStore.Controllers
                     item.ProductName = product.ProductTitel;
                 }
             }
+            ViewBag.CartItemCount = CartItemCount; // Lägg till detta för att skicka antalet till vyn
             return View(shoppingCart);
         }
 
