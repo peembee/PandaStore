@@ -8,8 +8,9 @@ namespace PandaStore.Models
 {
     public class PandaUser : IdentityUser
     {
+        [NotMapped]
+        public string FullName => $"{FirstName} {LastName}<br/>{Email}";
 
-        public string FullName => $"ID #{Id} | {FirstName} {LastName}";
 
         [Required]
         [StringLength(50)]
