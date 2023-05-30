@@ -16,7 +16,7 @@ namespace PandaStore.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Details()
+        public async Task<IActionResult> Details ()
         {
             var products = await _context.Products
                 .Include(c => c.Campaigns)
