@@ -12,6 +12,9 @@ namespace PandaStore.Models
 
         public double OrderTotalPrice { get; set; }
 
+        //[NotMapped]
+        //public string? ReceiptNumber { get; set; } = string.Empty;
+
         public virtual ICollection<OrderDetail>? OrderDetails { get; set; }
     }
 }

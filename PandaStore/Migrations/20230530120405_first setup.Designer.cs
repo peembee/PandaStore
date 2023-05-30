@@ -12,8 +12,8 @@ using PandaStore.Data;
 namespace PandaStore.Migrations
 {
     [DbContext(typeof(PandaStoreContext))]
-    [Migration("20230529073516_added ImgUrl to Product")]
-    partial class addedImgUrltoProduct
+    [Migration("20230530120405_first setup")]
+    partial class firstsetup
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -200,19 +200,12 @@ namespace PandaStore.Migrations
                     b.Property<int>("FK_ProductID")
                         .HasColumnType("int");
 
-                    b.Property<int>("FK_ReceiptID")
-                        .HasColumnType("int");
-
                     b.Property<string>("Id")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
-
-                    b.Property<string>("ProductName")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
@@ -223,8 +216,6 @@ namespace PandaStore.Migrations
                     b.HasKey("CustomerProductID");
 
                     b.HasIndex("FK_ProductID");
-
-                    b.HasIndex("FK_ReceiptID");
 
                     b.HasIndex("Id");
 
@@ -244,7 +235,8 @@ namespace PandaStore.Migrations
 
                     b.Property<string>("RateDescription")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("CustomerRateID");
 
@@ -460,15 +452,15 @@ namespace PandaStore.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("FK_CategoryID")
                         .HasColumnType("int");
 
                     b.Property<string>("ImgUrl")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
 
                     b.Property<int>("InventoryQuantity")
                         .HasColumnType("int");
@@ -489,8 +481,8 @@ namespace PandaStore.Migrations
 
                     b.Property<string>("Specification")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("ProductID");
 
@@ -596,12 +588,6 @@ namespace PandaStore.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PandaStore.Models.Receipt", "Receipts")
-                        .WithMany()
-                        .HasForeignKey("FK_ReceiptID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("PandaStore.Models.PandaUser", "PandaUsers")
                         .WithMany("CustomerProducts")
                         .HasForeignKey("Id")
@@ -611,8 +597,6 @@ namespace PandaStore.Migrations
                     b.Navigation("PandaUsers");
 
                     b.Navigation("Products");
-
-                    b.Navigation("Receipts");
                 });
 
             modelBuilder.Entity("PandaStore.Models.CustomerRate", b =>

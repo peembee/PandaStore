@@ -3,7 +3,6 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using PandaStore.Data;
 
@@ -12,11 +11,9 @@ using PandaStore.Data;
 namespace PandaStore.Migrations
 {
     [DbContext(typeof(PandaStoreContext))]
-    [Migration("20230522134938_Testing Id-connections")]
-    partial class TestingIdconnections
+    partial class PandaStoreContextModelSnapshot : ModelSnapshot
     {
-        /// <inheritdoc />
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,33 +21,6 @@ namespace PandaStore.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
-                {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedName")
-                        .IsUnique()
-                        .HasDatabaseName("RoleNameIndex")
-                        .HasFilter("[NormalizedName] IS NOT NULL");
-
-                    b.ToTable("AspNetRoles", (string)null);
-                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
@@ -176,12 +146,12 @@ namespace PandaStore.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("FK_Id")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("FK_ProductID")
                         .HasColumnType("int");
+
+                    b.Property<string>("Id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
@@ -191,9 +161,9 @@ namespace PandaStore.Migrations
 
                     b.HasKey("CampaignID");
 
-                    b.HasIndex("FK_Id");
-
                     b.HasIndex("FK_ProductID");
+
+                    b.HasIndex("Id");
 
                     b.ToTable("Campaigns");
                 });
@@ -224,15 +194,12 @@ namespace PandaStore.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CustomerProductID"));
 
-                    b.Property<string>("FK_Id")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("FK_ProductID")
                         .HasColumnType("int");
 
-                    b.Property<int>("FK_ReceiptID")
-                        .HasColumnType("int");
+                    b.Property<string>("Id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<double>("Price")
                         .HasColumnType("float");
@@ -245,11 +212,9 @@ namespace PandaStore.Migrations
 
                     b.HasKey("CustomerProductID");
 
-                    b.HasIndex("FK_Id");
-
                     b.HasIndex("FK_ProductID");
 
-                    b.HasIndex("FK_ReceiptID");
+                    b.HasIndex("Id");
 
                     b.ToTable("CustomerProducts");
                 });
@@ -267,7 +232,8 @@ namespace PandaStore.Migrations
 
                     b.Property<string>("RateDescription")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("CustomerRateID");
 
@@ -303,10 +269,6 @@ namespace PandaStore.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("OrderDetailID"));
 
-                    b.Property<string>("FK_Id")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(450)");
-
                     b.Property<int>("FK_OrderID")
                         .HasColumnType("int");
 
@@ -316,15 +278,19 @@ namespace PandaStore.Migrations
                     b.Property<int>("FK_ReceiptID")
                         .HasColumnType("int");
 
-                    b.HasKey("OrderDetailID");
+                    b.Property<string>("Id")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
-                    b.HasIndex("FK_Id");
+                    b.HasKey("OrderDetailID");
 
                     b.HasIndex("FK_OrderID");
 
                     b.HasIndex("FK_OrderStatus");
 
                     b.HasIndex("FK_ReceiptID");
+
+                    b.HasIndex("Id");
 
                     b.ToTable("OrderDetails");
                 });
@@ -351,6 +317,33 @@ namespace PandaStore.Migrations
                     b.HasKey("OrderStatusID");
 
                     b.ToTable("OrderStatuses");
+                });
+
+            modelBuilder.Entity("PandaStore.Models.PandaRole", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedName")
+                        .IsUnique()
+                        .HasDatabaseName("RoleNameIndex")
+                        .HasFilter("[NormalizedName] IS NOT NULL");
+
+                    b.ToTable("AspNetRoles", (string)null);
                 });
 
             modelBuilder.Entity("PandaStore.Models.PandaUser", b =>
@@ -456,11 +449,15 @@ namespace PandaStore.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<int>("FK_CategoryID")
                         .HasColumnType("int");
+
+                    b.Property<string>("ImgUrl")
+                        .HasMaxLength(80)
+                        .HasColumnType("nvarchar(80)");
 
                     b.Property<int>("InventoryQuantity")
                         .HasColumnType("int");
@@ -481,8 +478,8 @@ namespace PandaStore.Migrations
 
                     b.Property<string>("Specification")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.HasKey("ProductID");
 
@@ -512,7 +509,7 @@ namespace PandaStore.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("PandaStore.Models.PandaRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -539,7 +536,7 @@ namespace PandaStore.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserRole<string>", b =>
                 {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
+                    b.HasOne("PandaStore.Models.PandaRole", null)
                         .WithMany()
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -563,48 +560,40 @@ namespace PandaStore.Migrations
 
             modelBuilder.Entity("PandaStore.Models.Campaign", b =>
                 {
-                    b.HasOne("PandaStore.Models.PandaUser", "Id")
-                        .WithMany("Campaigns")
-                        .HasForeignKey("FK_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("PandaStore.Models.Product", "Products")
                         .WithMany("Campaigns")
                         .HasForeignKey("FK_ProductID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Id");
+                    b.HasOne("PandaStore.Models.PandaUser", "PandaUsers")
+                        .WithMany("Campaigns")
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PandaUsers");
 
                     b.Navigation("Products");
                 });
 
             modelBuilder.Entity("PandaStore.Models.CustomerProduct", b =>
                 {
-                    b.HasOne("PandaStore.Models.PandaUser", "Id")
-                        .WithMany("CustomerProducts")
-                        .HasForeignKey("FK_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("PandaStore.Models.Product", "Products")
                         .WithMany()
                         .HasForeignKey("FK_ProductID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("PandaStore.Models.Receipt", "Receipts")
-                        .WithMany()
-                        .HasForeignKey("FK_ReceiptID")
+                    b.HasOne("PandaStore.Models.PandaUser", "PandaUsers")
+                        .WithMany("CustomerProducts")
+                        .HasForeignKey("Id")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Id");
+                    b.Navigation("PandaUsers");
 
                     b.Navigation("Products");
-
-                    b.Navigation("Receipts");
                 });
 
             modelBuilder.Entity("PandaStore.Models.CustomerRate", b =>
@@ -620,12 +609,6 @@ namespace PandaStore.Migrations
 
             modelBuilder.Entity("PandaStore.Models.OrderDetail", b =>
                 {
-                    b.HasOne("PandaStore.Models.PandaUser", "Id")
-                        .WithMany("OrderDetails")
-                        .HasForeignKey("FK_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("PandaStore.Models.Order", "Orders")
                         .WithMany("OrderDetails")
                         .HasForeignKey("FK_OrderID")
@@ -644,11 +627,17 @@ namespace PandaStore.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Id");
+                    b.HasOne("PandaStore.Models.PandaUser", "PandaUsers")
+                        .WithMany("OrderDetails")
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.Navigation("OrderStatuses");
 
                     b.Navigation("Orders");
+
+                    b.Navigation("PandaUsers");
 
                     b.Navigation("Receipts");
                 });

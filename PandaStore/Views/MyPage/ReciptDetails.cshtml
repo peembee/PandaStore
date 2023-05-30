@@ -1,16 +1,15 @@
 ﻿@model IEnumerable<PandaStore.Models.CustomerProduct>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "ReciptDetails";
 }
 @{
-    double totalPrice = 0; {}
+    double totalPrice = 0;
 }
 
-
-@if (Model != null && Model.Any())
-{
-    <div>
+<h3>Kvitto detlajer:</h3>
+ 
+   <div>
         <table class="table">
             <thead>
                 <tr>
@@ -51,12 +50,6 @@
                             @Html.DisplayFor(modelItem => item.ReceiptNumber)
                         </td>
                         @{totalPrice += item.Price * item.Quantity;}
-                        <td>
-                            <form asp-controller="CustomerProduct" asp-action="RemoveFromCart" method="post">
-                                <input type="hidden" name="id" value="@item.FK_ProductID" />
-                                <button class="btn btn-primary"  type="submit">Radera</button>
-                            </form>
-                        </td>
                     </tr>
                 }
             </tbody>
@@ -64,24 +57,3 @@
         <div>
             <h3>Totalt belopp: @totalPrice kr</h3>
         </div>
-        <a class="btn btn-primary" asp-action="CheckOut">
-            Vidare till kassan, nu ska det skickas till checkout klassen där betalning sker
-        </a> 
-        <a class="btn btn-primary" asp-controller="CustomerProduct" asp-action="AddAutoProducts">
-            lägg till varor (testis)
-        </a>
-    </div>
-}
-else
-{
-    <div>
-        <h3>Varukorgen är tom</h3>
-        <p>När du lägger till något i din varukorg så dyker det upp här</p>
-        <a class="btn btn-primary" asp-controller="Home" asp-action="Index">
-                Börja Handla
-        </a>
-         <a class="btn btn-primary" asp-controller="CustomerProduct" asp-action="AddAutoProducts">
-                lägg till varor (testis)
-        </a>
-    </div>
-}

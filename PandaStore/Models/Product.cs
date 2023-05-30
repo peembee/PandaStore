@@ -21,11 +21,11 @@ namespace PandaStore.Models
 
 
         [Required]
-        [StringLength(500)]
+        [StringLength(200)]
         public string Description { get; set; } = string.Empty;
 
         [Required]
-        [StringLength(500)]
+        [StringLength(200)]
         public string Specification { get; set; } = string.Empty;
 
 

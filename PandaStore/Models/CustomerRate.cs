@@ -14,7 +14,7 @@ namespace PandaStore.Models
         public int FK_ProductID { get; set; }
         public virtual Product? Products { get; set; }
 
-
+       [StringLength(200)]
         public string RateDescription { get; set; } = string.Empty;
 
     }

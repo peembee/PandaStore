@@ -1,4 +1,4 @@
-﻿@*@model IEnumerable<PandaStore.Models.Order>
+﻿@model IEnumerable<PandaStore.Models.Order>
 
 @{
     ViewData["Title"] = "Index";
@@ -13,12 +13,14 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.PurchaseDate)
+                @Html.DisplayName("Inköpsdatum")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.OrderTotalPrice)
+                @Html.DisplayName("Totalt belopp")
             </th>
-            <th></th>
+@*            <th>
+                @Html.DisplayName("Kvittonummer")
+            </th>*@
         </tr>
     </thead>
     <tbody>
@@ -28,14 +30,18 @@
                 @Html.DisplayFor(modelItem => item.PurchaseDate)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.OrderTotalPrice)
+                @Html.DisplayFor(modelItem => item.OrderTotalPrice)KR
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.OrderID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.OrderID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.OrderID">Delete</a>
+                @Html.DisplayFor(modelItem => item.OrderTotalPrice)KR
+            </td>
+@*            <td>
+                @Html.DisplayFor(modelItem => item.ReceiptNumber)
+            </td>*@
+            <td>
+                <a class="btn btn-primary" asp-controller="MyPage" asp-action="Details" asp-route-id="@item.OrderID">Details</a>
             </td>
         </tr>
 }
     </tbody>
-</table>*@
+</table>

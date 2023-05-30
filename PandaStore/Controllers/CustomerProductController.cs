@@ -62,6 +62,7 @@ namespace PandaStore.Controllers
         }
 
 
+        [HttpPost]
         protected async Task AddToCart(CustomerProduct product)
         {
             // Lägg till produkten i kundkorgen

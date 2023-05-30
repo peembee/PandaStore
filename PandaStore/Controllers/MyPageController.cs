@@ -1,103 +1,66 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using PandaStore.Data;
 using PandaStore.Models;
 
 namespace PandaStore.Controllers
 {
+    [Authorize]
     public class MyPageController : Controller
     {
         private readonly PandaStoreContext context;
 
         private readonly UserManager<PandaUser> userManager;
 
-        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public MyPageController(PandaStoreContext context, UserManager<PandaUser> userManager, IHttpContextAccessor httpContextAccessor)
+        public MyPageController(PandaStoreContext context, UserManager<PandaUser> userManager)
         {
             this.context = context;
             this.userManager = userManager;
-            _httpContextAccessor = httpContextAccessor;
         }
 
-
-
-
-
         // GET: MyPageController
-        public ActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            string userId = userManager.GetUserId(User);
+
+            // Getting all users orders into a list.
+            var orderList = await context.Orders
+                .Include(o => o.OrderDetails)
+                .ThenInclude(od => od.PandaUsers)
+                .Where(o => o.OrderDetails.Any(od => od.Id == userId && od.FK_OrderID == o.OrderID))
+                .ToListAsync();
+
+            return View(orderList);
         }
 
         // GET: MyPageController/Details/5
-        public ActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
-            return View();
-        }
+            var reciptId = await context.OrderDetails
+                .Where(r => r.FK_OrderID == id)
+                .Select(r => r.FK_ReceiptID).FirstOrDefaultAsync();
 
-        // GET: MyPageController/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+            var reciptNumber = await context.Receipts.Where(r => r.ReceiptID == reciptId)
+                .Select(r => r.ReceiptNumber).FirstOrDefaultAsync();
 
-        // POST: MyPageController/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+            var reciptDetails = await context.CustomerProducts
+                .Where(r => r.ReceiptNumber == reciptNumber).ToListAsync();
 
-        // GET: MyPageController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
+            foreach (var item in reciptDetails)
+            {
+                var product = context.Products.FirstOrDefault(p => p.ProductID == item.FK_ProductID);
+                if (product != null)
+                {
+                    item.ProductName = product.ProductTitel;
+                }
+            }
 
-        // POST: MyPageController/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
 
-        // GET: MyPageController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
-
-        // POST: MyPageController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+            return View(reciptDetails);
+        } 
     }
 }
