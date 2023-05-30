@@ -27,6 +27,9 @@
 <br />
 
 @*Första raden med produkter*@
+
+<div id="confirmationMessage" style="display:none;"></div>
+
 <div class="container">
     <div class="row justify-content-center">
         @foreach (var item in Model)
@@ -38,12 +41,11 @@
                         <h5 class="card-title">@item.ProductTitel</h5>
                         <p class="card-text">@item.Description</p>
                         <h6 class="card-title"><b>@item.Price SEK</b></h6>
-                        @*<button class="btn btn-primary buy-button" data-product-id="@item.ProductID">Köp</button>*@
 
-                        <form method="post" action="/customerProduct/AddToCart">
-                            <input type="hidden" name="ProductId" value="@item.ProductID" />
-                            <input type="hidden" name="Quantity" value=@item.Price />
-                            <input type="hidden" name="Price" value="@item.Price" />
+                        <form method="post" asp-controller="CustomerProduct" asp-action="AddToCart">
+                            <input type="hidden" name="productId" value="@item.ProductID" />
+                            <input type="hidden" name="quantity" value=1 />
+                            <input type="hidden" name="price" value="@item.Price" />
                             <button type="submit" class="btn btn-primary buy-button">Köp</button>
                         </form>
 

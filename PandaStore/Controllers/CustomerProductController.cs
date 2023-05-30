@@ -64,7 +64,7 @@ namespace PandaStore.Controllers
 
 
         [HttpPost]
-        protected async Task AddToCart(int productId, int quantity, double price)
+        public async Task<IActionResult> AddToCart(int productId, int quantity, double price)
         {
             // Lägg till produkten i kundkorgen
             CustomerProduct product = new CustomerProduct()
@@ -76,6 +76,7 @@ namespace PandaStore.Controllers
             var shoppingCart = await GetShoppingCart();
             shoppingCart.Add(product);
             SaveShoppingCart(shoppingCart);
+            return RedirectToAction("Index");
         }
 
 
