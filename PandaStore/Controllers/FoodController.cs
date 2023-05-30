@@ -16,12 +16,12 @@ namespace PandaStore.Controllers
             return View();
         }
 
-        public async Task<IActionResult> Details()
+        public async Task<IActionResult> Details ()
         {
             var products = await _context.Products
                 .Include(c => c.Campaigns)
                 .Include(p => p.Categorys)
-                .Where(p => p.FK_CategoryID == 5)
+                .Where(p => p.FK_CategoryID == 6)
                 .ToListAsync();
 
             return View(products);

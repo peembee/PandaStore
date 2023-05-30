@@ -1,0 +1,59 @@
+﻿@model IEnumerable<PandaStore.Models.CustomerProduct>
+
+@{
+    ViewData["Title"] = "Details";
+}
+@{
+    double totalPrice = 0;
+    double rowPrice = 0;
+    double receiptNumber = 0;
+    foreach (var item in Model)
+    {
+        receiptNumber = item.ReceiptNumber;
+        break;
+    }
+}
+
+<h3>Kvitto: @receiptNumber</h3>
+
+<table class="table table-dark table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayName("Produkt")
+            </th>
+            <th>
+                @Html.DisplayName("Antal")
+            </th>
+            <th>
+                @Html.DisplayName("Styckepris")
+            </th>
+            <th>
+                @Html.DisplayName("Belopp per rad")
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Products.ProductTitel)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+            <td>
+                @{rowPrice = item.Price * item.Quantity;}
+                @rowPrice KR
+            </td>
+             @{totalPrice += item.Price * item.Quantity;}
+        </tr>
+}
+    </tbody>
+</table>
+<div>
+    <h3>Totalt belopp: @totalPrice kr</h3>
+</div>

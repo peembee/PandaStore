@@ -1,7 +1,25 @@
-﻿
+﻿@model IEnumerable<PandaStore.Models.Product>
 @{
     ViewData["Title"] = "Kläder";
 }
+<style>
+    .card {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .card-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+
+    .row.cards-row {
+        margin-top: 100px;
+    }
+</style>
 
 <h1 style="text-align:center;">Kläder</h1>
 
@@ -9,74 +27,6 @@
 <br />
 
 @*Första raden med produkter*@
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-lg-2 col-md-4 col-sm-6 col-12">
-            <div class="card">
-                <img src="/images/clothes/3ptshirt.png" class="card-img-top" alt="T-shirt">
-                <div class="card-body">
-                    <h5 class="card-title">Adidas</h5>
-                    <p class="card-text">3p t-shirts</p>
-                    <h6 class="card-title">449 SEK</h6>
-                    <button class="btn btn-primary buy-button">Köp</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-2 col-md-4 col-sm-6 col-12">
-            <div class="card">
-                <img src="/images/clothes/jeansrea.png" class="card-img-top" alt="Jeans Sale">
-                <div class="card-body">
-                    <h5 class="card-title">Dolce & Gabbana</h5>
-                    <p class="card-text">Lyxiga jeans för Herr</p>
-                    <h6 class="card-title"><del>3199 SEK</del> 2499 SEK</h6>
-                    <button class="btn btn-primary buy-button">Köp</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-2 col-md-4 col-sm-6 col-12">
-            <div class="card">
-                <img src="/images/clothes/jeansforgirl.png" class="card-img-top" alt="Jeans Girl">
-                <div class="card-body">
-                    <h5 class="card-title">Panda</h5>
-                    <p class="card-text">Jeans för Dam</p>
-                    <h6 class="card-title">699 SEK</h6>
-                    <button class="btn btn-primary buy-button">Köp</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-2 col-md-4 col-sm-6 col-12">
-            <div class="card">
-                <img src="/images/clothes/whitetshirt.png" class="card-img-top" alt="White T-shirt">
-                <div class="card-body">
-                    <h5 class="card-title">Nike</h5>
-                    <p class="card-text">Vit t-shirt för Herr</p>
-                    <h6 class="card-title">249 SEK</h6>
-                    <button class="btn btn-primary buy-button">Köp</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-2 col-md-4 col-sm-6 col-12">
-            <div class="card">
-                <img src="/images/clothes/womendress.png" class="card-img-top" alt="Women Dress">
-                <div class="card-body">
-                    <h5 class="card-title">Mystery Brand</h5>
-                    <p class="card-text">Klänning</p>
-                    <h6 class="card-title">179 SEK</h6>
-                    <button class="btn btn-primary buy-button">Köp</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<br />
-<br />
-
-@*Andra raden med produkter*@
 <div class="container">
     <div class="row justify-content-center">
         @foreach (var item in Model)
@@ -109,19 +59,7 @@
             </div>
         }
 
-        <div class="col-lg-2 col-md-4 col-sm-6 col-12">
-            <div class="card">
-                <img src="/images/clothes/tracksuit.png" class="card-img-top" alt="Tracksuit">
-                <div class="card-body">
-                    <h5 class="card-title">The Tracksuits</h5>
-                    <p class="card-text">Tracksuit / Herr&Dam</p>
-                    <h6 class="card-title">399 SEK</h6>
-                    <button class="btn btn-primary buy-button">Köp</button>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
-
 
 

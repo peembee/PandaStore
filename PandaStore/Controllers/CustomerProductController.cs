@@ -64,7 +64,7 @@ namespace PandaStore.Controllers
 
 
         [HttpPost]
-        protected async Task AddToCart(int productId, int quantity, double price)
+        public async Task<IActionResult> AddToCart(int productId, int quantity, double price)
         {
             bool enoughProducts = CheckIfEnoughProducts(productId, quantity);
 
@@ -83,11 +83,13 @@ namespace PandaStore.Controllers
             shoppingCart.Add(product);
             SaveShoppingCart(shoppingCart);
 
+
             UpdateProductQuantity(productId, quantity);
             return RedirectToAction("Index");
 
             
             
+
         }
 
         private bool CheckIfEnoughProducts(int productId, int quantity)

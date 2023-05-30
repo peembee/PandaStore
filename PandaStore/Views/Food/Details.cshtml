@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<PandaStore.Models.Product>
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Mat";
 }
 <style>
     .card {
@@ -33,17 +33,19 @@
         {
             <div class="col-lg-2 col-md-4 col-sm-6 col-12">
                 <div class="card">
-                    <img src="/images/Electronics/wepik-export-20230526135134DFqR.png" class="card-img-top" alt="">
+                    <img src="@item.ImgUrl" class="card-img-top" alt="">
                     <div class="card-body">
                         <h5 class="card-title">@item.ProductTitel</h5>
                         <p class="card-text">@item.Description</p>
                         <h6 class="card-title"><b>@item.Price SEK</b></h6>
+
                         <form method="post" asp-controller="CustomerProduct" asp-action="AddToCart">
                             <input type="hidden" name="productId" value="@item.ProductID" />
                             <input type="hidden" name="quantity" value=1 />
                             <input type="hidden" name="price" value="@item.Price" />
                             <button type="submit" class="btn btn-primary buy-button">Köp</button>
                         </form>
+
                         @foreach (var campaign in item.Campaigns)
                         {
                             <p>Rabatt: @campaign.Discount</p>

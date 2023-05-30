@@ -1,0 +1,60 @@
+﻿@model IEnumerable<PandaStore.Models.OrderDetail>
+
+<table class="table table-dark table-hover">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayName("Kund")
+            </th>
+            <th>
+                @Html.DisplayName("Orderdatum")
+            </th>
+            <th>
+                @Html.DisplayName("Skickad")
+            </th>
+            <th>
+                @Html.DisplayName("Levererad")
+            </th>
+            <th>
+                @Html.DisplayName("Kvittonummer")
+            </th>
+            <th>
+                @Html.DisplayName("Totalt Belopp")
+            </th>
+            <th>
+                @Html.DisplayName("Betalt")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                 @Html.Raw(item.PandaUsers.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Orders.PurchaseDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderStatuses.Shipped)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OrderStatuses.Delivered)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Receipts.ReceiptNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Orders.OrderTotalPrice)KR
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Receipts.PaymentSucceeded)
+            </td>
+            <td>
+                <a class="btn btn-primary" asp-action="Details" asp-route-receiptNumber="@item.Receipts.ReceiptNumber">Details</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

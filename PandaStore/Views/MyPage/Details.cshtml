@@ -6,17 +6,21 @@
 
 @{
     double totalPrice = 0;
+    double rowPrice = 0;
+    double receiptNumber = 0;
+    foreach (var item in Model)
+    {
+        receiptNumber = item.ReceiptNumber;
+        break;
+    }
 }
 
-<h3>Kvitto detlajer:</h3>
+<h3>Kvitto: @receiptNumber</h3>
  
    <div>
-        <table class="table">
+        <table class="table table-dark table-hover">
             <thead>
                 <tr>
-                    <th>
-                        @Html.DisplayName("CustomerProduct ID")
-                    </th>
                     <th>
                          @Html.DisplayName("Produkt")
                     </th>               
@@ -27,7 +31,7 @@
                         @Html.DisplayName("Styckepris")
                     </th>
                     <th>
-                        @Html.DisplayName("Kvittonummer")
+                        @Html.DisplayName("Belopp per rad")
                     </th>
                 </tr>
             </thead>
@@ -35,9 +39,6 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CustomerProductID)
-                        </td>
                          <td>
                             @Html.DisplayFor(modelItem => item.ProductName)
                         </td>
@@ -48,9 +49,10 @@
                             @Html.DisplayFor(modelItem => item.Price)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.ReceiptNumber)
+                             @{rowPrice = item.Price * item.Quantity;}
+                             @rowPrice KR
                         </td>
-                        @{totalPrice += item.Price * item.Quantity;}
+                        @{totalPrice += item.Price * item.Quantity;}                       
                     </tr>
                 }
             </tbody>

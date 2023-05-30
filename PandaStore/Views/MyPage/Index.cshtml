@@ -9,7 +9,7 @@
 <p>
     <a asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table class="table table-dark table-hover">
     <thead>
         <tr>
             <th>
@@ -18,9 +18,6 @@
             <th>
                 @Html.DisplayName("Totalt belopp")
             </th>
-@*            <th>
-                @Html.DisplayName("Kvittonummer")
-            </th>*@
         </tr>
     </thead>
     <tbody>
@@ -33,15 +30,8 @@
                 @Html.DisplayFor(modelItem => item.OrderTotalPrice)KR
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.OrderTotalPrice)KR
-            </td>
-@*            <td>
-                @Html.DisplayFor(modelItem => item.ReceiptNumber)
-            </td>*@
-            <td>
                 <a class="btn btn-primary" asp-controller="MyPage" asp-action="Details" asp-route-id="@item.OrderID">Details</a>
             </td>
-        </tr>
-}
+        </tr>}
     </tbody>
 </table>

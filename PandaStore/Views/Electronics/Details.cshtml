@@ -1,6 +1,6 @@
 ﻿@model IEnumerable<PandaStore.Models.Product>
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Elektronik";
 }
 <style>
     .card {
@@ -27,6 +27,7 @@
 <br />
 
 @*Första raden med produkter*@
+
 <div class="container">
     <div class="row justify-content-center">
         @foreach (var item in Model)
@@ -38,6 +39,7 @@
                         <h5 class="card-title">@item.ProductTitel</h5>
                         <p class="card-text">@item.Description</p>
                         <h6 class="card-title"><b>@item.Price SEK</b></h6>
+
                         <form method="post" asp-controller="CustomerProduct" asp-action="AddToCart">
                             <input type="hidden" name="productId" value="@item.ProductID" />
                             <input type="hidden" name="quantity" value=1 />
@@ -52,7 +54,6 @@
                     </div>
                 </div>
             </div>
-        }
-        
+        }        
     </div>
 </div>
