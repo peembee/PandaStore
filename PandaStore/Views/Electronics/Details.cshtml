@@ -46,9 +46,6 @@
                             <input type="hidden" name="price" value="@item.Price" />
                             <button type="submit" class="btn btn-primary buy-button">Köp</button>
                         </form>
-
-
-
                         @foreach (var campaign in item.Campaigns)
                         {
                             <p>Rabatt: @campaign.Discount</p>

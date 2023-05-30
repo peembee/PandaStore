@@ -66,6 +66,12 @@ namespace PandaStore.Controllers
         [HttpPost]
         public async Task<IActionResult> AddToCart(int productId, int quantity, double price)
         {
+            bool enoughProducts = CheckIfEnoughProducts(productId, quantity);
+
+            if (!enoughProducts)
+            {
+                return RedirectToAction("Slut såld");
+            }
             // Lägg till produkten i kundkorgen
             CustomerProduct product = new CustomerProduct()
             {
@@ -76,9 +82,36 @@ namespace PandaStore.Controllers
             var shoppingCart = await GetShoppingCart();
             shoppingCart.Add(product);
             SaveShoppingCart(shoppingCart);
+
+
+            UpdateProductQuantity(productId, quantity);
             return RedirectToAction("Index");
+
+            
+            
+
         }
 
+        private bool CheckIfEnoughProducts(int productId, int quantity)
+        {
+            var product = context.Products.FirstOrDefault(p => p.ProductID == productId);
+            if (product != null && product.InventoryQuantity >= quantity)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        private void UpdateProductQuantity(int productId, int quantity)
+        {
+            var product = context.Products.FirstOrDefault(p => p.ProductID == productId);
+
+            if (product != null)
+            {
+                product.InventoryQuantity -= quantity;
+                context.SaveChanges();
+            }
+        }
 
         //public async Task<IActionResult> AddAutoProducts(CustomerProduct product)
         //{
