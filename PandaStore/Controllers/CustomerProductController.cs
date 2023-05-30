@@ -64,30 +64,36 @@ namespace PandaStore.Controllers
 
 
         [HttpPost]
-        protected async Task AddToCart(CustomerProduct product)
+        protected async Task AddToCart(int productId, int quantity, double price)
         {
             // Lägg till produkten i kundkorgen
+            CustomerProduct product = new CustomerProduct()
+            {
+                FK_ProductID = productId,
+                Quantity = quantity,
+                Price = price,
+            };
             var shoppingCart = await GetShoppingCart();
             shoppingCart.Add(product);
             SaveShoppingCart(shoppingCart);
         }
 
 
-        public async Task<IActionResult> AddAutoProducts(CustomerProduct product)
-        {
-            Random rand = new Random();
+        //public async Task<IActionResult> AddAutoProducts(CustomerProduct product)
+        //{
+        //    Random rand = new Random();
 
-            CustomerProduct tests = new CustomerProduct()
-            {
-                Id = rand.Next(0, 100).ToString(),
-                FK_ProductID = rand.Next(1, 4),
-                Quantity = rand.Next(1, 5),
-                Price = rand.Next(0, 100),
-            };
-            await AddToCart(tests);
+        //    CustomerProduct tests = new CustomerProduct()
+        //    {
+        //        Id = rand.Next(0, 100).ToString(),
+        //        FK_ProductID = rand.Next(1, 4),
+        //        Quantity = rand.Next(1, 5),
+        //        Price = rand.Next(0, 100),
+        //    };
+        //    await AddToCart(tests);
 
-            return RedirectToAction("Index");
-        }
+        //    return RedirectToAction("Index");
+        //}
 
 
         [HttpPost]
