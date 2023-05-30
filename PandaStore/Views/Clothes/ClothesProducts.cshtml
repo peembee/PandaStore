@@ -1,7 +1,25 @@
-﻿
+﻿@model IEnumerable<PandaStore.Models.Product>
 @{
     ViewData["Title"] = "Kläder";
 }
+<style>
+    .card {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    .card-body {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+
+    .row.cards-row {
+        margin-top: 100px;
+    }
+</style>
 
 <h1 style="text-align:center;">Kläder</h1>
 
@@ -11,135 +29,36 @@
 @*Första raden med produkter*@
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-lg-2 col-md-4 col-sm-6 col-12">
-            <div class="card">
-                <img src="/images/clothes/3ptshirt.png" class="card-img-top" alt="T-shirt">
-                <div class="card-body">
-                    <h5 class="card-title">Adidas</h5>
-                    <p class="card-text">3p t-shirts</p>
-                    <h6 class="card-title">449 SEK</h6>
-                    <button class="btn btn-primary buy-button">Köp</button>
-                </div>
-            </div>
-        </div>
+        @foreach (var item in Model)
+        {
+            <div class="col-lg-2 col-md-4 col-sm-6 col-12">
+                <div class="card">
+                    <img src="@item.ImgUrl" class="card-img-top" alt="Product picture">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.ProductTitel</h5>
+                        <p class="card-text">@item.Description</p>
+                        <h6 class="card-title"><b>@item.Price SEK</b></h6>
+                        <button class="btn btn-primary buy-button" data-product-id="@item.ProductID">Köp</button>
+                        @*
+                    <form method="post" action="/customerProduct/AddToCart">
+                    <input type="hidden" name="ProductId" value="@item.ProductID" />
+                    <input type="hidden" name="Quantity" value="1" /> <!-- Default quantity, you can modify this as needed -->
+                    <input type="hidden" name="Price" value="@item.Price" />
+                    <button type="submit" class="btn btn-primary buy-button">Köp</button>
+                    </form>*@
 
-        <div class="col-lg-2 col-md-4 col-sm-6 col-12">
-            <div class="card">
-                <img src="/images/clothes/jeansrea.png" class="card-img-top" alt="Jeans Sale">
-                <div class="card-body">
-                    <h5 class="card-title">Dolce & Gabbana</h5>
-                    <p class="card-text">Lyxiga jeans för Herr</p>
-                    <h6 class="card-title"><del>3199 SEK</del> 2499 SEK</h6>
-                    <button class="btn btn-primary buy-button">Köp</button>
-                </div>
-            </div>
-        </div>
 
-        <div class="col-lg-2 col-md-4 col-sm-6 col-12">
-            <div class="card">
-                <img src="/images/clothes/jeansforgirl.png" class="card-img-top" alt="Jeans Girl">
-                <div class="card-body">
-                    <h5 class="card-title">Panda</h5>
-                    <p class="card-text">Jeans för Dam</p>
-                    <h6 class="card-title">699 SEK</h6>
-                    <button class="btn btn-primary buy-button">Köp</button>
-                </div>
-            </div>
-        </div>
 
-        <div class="col-lg-2 col-md-4 col-sm-6 col-12">
-            <div class="card">
-                <img src="/images/clothes/whitetshirt.png" class="card-img-top" alt="White T-shirt">
-                <div class="card-body">
-                    <h5 class="card-title">Nike</h5>
-                    <p class="card-text">Vit t-shirt för Herr</p>
-                    <h6 class="card-title">249 SEK</h6>
-                    <button class="btn btn-primary buy-button">Köp</button>
+                        @foreach (var campaign in item.Campaigns)
+                        {
+                            <p>Rabatt: @campaign.Discount</p>
+                            <p>Giltig till: @campaign.EndDate</p>
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
+        }
 
-        <div class="col-lg-2 col-md-4 col-sm-6 col-12">
-            <div class="card">
-                <img src="/images/clothes/womendress.png" class="card-img-top" alt="Women Dress">
-                <div class="card-body">
-                    <h5 class="card-title">Mystery Brand</h5>
-                    <p class="card-text">Klänning</p>
-                    <h6 class="card-title">179 SEK</h6>
-                    <button class="btn btn-primary buy-button">Köp</button>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
-
-<br />
-<br />
-
-@*Andra raden med produkter*@
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-lg-2 col-md-4 col-sm-6 col-12">
-            <div class="card">
-                <img src="/images/clothes/strumpor.png" class="card-img-top" alt="Socks">
-                <div class="card-body">
-                    <h5 class="card-title">Happy Socks</h5>
-                    <p class="card-text">Ett par strumpor</p>
-                    <h6 class="card-title">29 SEK</h6>
-                    <button class="btn btn-primary buy-button">Köp</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-2 col-md-4 col-sm-6 col-12">
-            <div class="card">
-                <img src="/images/clothes/grayblazer.png" class="card-img-top" alt="Blazer">
-                <div class="card-body">
-                    <h5 class="card-title">Tiger of Sweden</h5>
-                    <p class="card-text">Lyxig kavaj för Herr</p>
-                    <h6 class="card-title"><del>2499 SEK</del> 1199 SEK</h6>
-                    <button class="btn btn-primary buy-button">Köp</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-2 col-md-4 col-sm-6 col-12">
-            <div class="card">
-                <img src="/images/clothes/suit.png" class="card-img-top" alt="Suit">
-                <div class="card-body">
-                    <h5 class="card-title">Suit Company</h5>
-                    <p class="card-text">Kostym för Herr<p>
-                    <h6 class="card-title">5499 SEK</h6>
-                        <button class="btn btn-primary buy-button">Köp</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-2 col-md-4 col-sm-6 col-12">
-            <div class="card">
-                <img src="/images/clothes/jeansjacket.png" class="card-img-top" alt="Denim Jacket">
-                <div class="card-body">
-                    <h5 class="card-title">Denim .CO</h5>
-                    <p class="card-text">Jeansjacka för Dam</p>
-                    <h6 class="card-title">799 SEK</h6>
-                    <button class="btn btn-primary buy-button">Köp</button>
-                </div>
-            </div>
-        </div>
-
-        <div class="col-lg-2 col-md-4 col-sm-6 col-12">
-            <div class="card">
-                <img src="/images/clothes/tracksuit.png" class="card-img-top" alt="Tracksuit">
-                <div class="card-body">
-                    <h5 class="card-title">The Tracksuits</h5>
-                    <p class="card-text">Tracksuit / Herr&Dam</p>
-                    <h6 class="card-title">399 SEK</h6>
-                    <button class="btn btn-primary buy-button">Köp</button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-
 

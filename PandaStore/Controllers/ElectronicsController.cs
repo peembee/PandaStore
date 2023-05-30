@@ -21,7 +21,7 @@ namespace PandaStore.Controllers
             var products = await _context.Products
                 .Include(c => c.Campaigns)
                 .Include(p => p.Categorys)
-                .Where(p => p.FK_CategoryID == 2)
+                .Where(p => p.FK_CategoryID == 1)
                 .ToListAsync();
 
             return View(products);
