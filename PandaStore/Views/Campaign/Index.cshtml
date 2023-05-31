@@ -4,31 +4,28 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Kampanjer</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn btn-primary" asp-action="Create">Skapa Kampanj</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.PandaUsers)
+                @Html.DisplayName("Skapad av")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Products)
+                @Html.DisplayName("Produkt")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.StartDate)
+                @Html.DisplayName("Startdatum")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EndDate)
+                @Html.DisplayName("Slutdatum")
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Discount)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsActive)
+                @Html.DisplayName("Rabatt")
             </th>
             <th></th>
         </tr>
@@ -37,10 +34,10 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.PandaUsers.Id)
+                @Html.Raw(item.PandaUsers.FullName)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Products.Description)
+                @Html.DisplayFor(modelItem => item.Products.ProductTitel)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.StartDate)
@@ -52,12 +49,8 @@
                 @Html.DisplayFor(modelItem => item.Discount)%
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IsActive)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.CampaignID">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.CampaignID">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.CampaignID">Delete</a>
+                <a asp-action="Details" asp-route-id="@item.CampaignID">Detaljer</a> |
+                <a asp-action="Delete" asp-route-id="@item.CampaignID">Radera</a>
             </td>
         </tr>
 }

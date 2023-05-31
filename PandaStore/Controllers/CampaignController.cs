@@ -75,60 +75,7 @@ namespace PandaStore.Controllers
             return View(campaign);
         }
 
-        // GET: Campaign/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null || _context.Campaigns == null)
-            {
-                return NotFound();
-            }
-
-            var campaign = await _context.Campaigns.FindAsync(id);
-            if (campaign == null)
-            {
-                return NotFound();
-            }
-            ViewData["Id"] = new SelectList(_context.PandaUsers, "Id", "Id", campaign.Id);
-            ViewData["FK_ProductID"] = new SelectList(_context.Products, "ProductID", "ProductTitel", campaign.FK_ProductID);
-            return View(campaign);
-        }
-
-        // POST: Campaign/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CampaignID,Id,FK_ProductID,StartDate,EndDate,Discount,IsActive")] Campaign campaign)
-        {
-            if (id != campaign.CampaignID)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(campaign);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CampaignExists(campaign.CampaignID))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            ViewData["Id"] = new SelectList(_context.PandaUsers, "Id", "Id", campaign.Id);
-            ViewData["FK_ProductID"] = new SelectList(_context.Products, "ProductID", "ProductTitel", campaign.FK_ProductID);
-            return View(campaign);
-        }
+        
 
         // GET: Campaign/Delete/5
         public async Task<IActionResult> Delete(int? id)
