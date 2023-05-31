@@ -64,9 +64,8 @@
         <div>
             <h3>Totalt belopp: @totalPrice kr</h3>
         </div>
-        <a class="btn btn-primary" asp-action="CheckOut">
-            Vidare till kassan, nu ska det skickas till checkout klassen där betalning sker
-        </a> 
+        <a class="btn btn-primary" asp-action="CheckOut">Vidare till kassan</a> 
+        <a class="btn btn-secondary" href="@Context.Request.Headers["Referer"]">Fortsätt handla</a>
         </div>
 }
 else
