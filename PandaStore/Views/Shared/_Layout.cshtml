@@ -12,24 +12,42 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
+
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PandaStore</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+
+                <button class="navbar-offcanvas" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" aria-controls="offcanvas"
                                                aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-
+                <div class="navbar-nav">
+                    <a class="nav-link text-dark shoppingCartIcon" asp-area="" asp-controller="CustomerProduct" asp-action="Index">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-heart" viewBox="0 0 16 16">
+                            <path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5v-.5Zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0ZM14 14V5H2v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1ZM8 7.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132Z" />
+                        </svg>
+                        <span class="badge bg-primary">@ViewBag.CartItemCount</span>
+                    </a>
+                    <partial name="_AdminView" />
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+            <div class="offcanvas offcanvas-start" tabinex="-1" id="offcanvas" aria-labelledby="offcanvasLabel" >
+                <div class="offcanvas-header">
+                    <h5 class="offcanvas-title" id="offcanvasLabel">Meny</h5>
+                    <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Stäng"></button>
+                </div>
+                <div class="offcanvas-body">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">Om Oss</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="MyPage" asp-action="Index">Min Sida</a>
-                        </li> 
+                        </li>
 
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Startsida</a>
-                        </li> 
+                        </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Admin</a>
                         </li>
@@ -52,17 +70,13 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Clothes" asp-action="ClothesProducts">Kläder</a>
                         </li>
 
-                         <li class="nav-item">
-                          <a class="nav-link text-dark shoppingCartIcon" asp-area="" asp-controller="CustomerProduct" asp-action="Index">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag-heart" viewBox="0 0 16 16">
-                              <path fill-rule="evenodd" d="M10.5 3.5a2.5 2.5 0 0 0-5 0V4h5v-.5Zm1 0V4H15v10a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V4h3.5v-.5a3.5 3.5 0 1 1 7 0ZM14 14V5H2v9a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1ZM8 7.993c1.664-1.711 5.825 1.283 0 5.132-5.825-3.85-1.664-6.843 0-5.132Z"/>
-                            </svg>
-                            <span class="badge bg-primary">@ViewBag.CartItemCount</span>
-                          </a>
+                        <li class="nav-item">
+                            
                         </li>
                     </ul>
-                    <partial name="_AdminView" />
-                    <partial name="_LoginPartial" />
+                </div>
+                    
+                    
                 </div>
             </div>
         </nav>

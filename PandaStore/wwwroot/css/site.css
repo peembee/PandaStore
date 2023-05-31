@@ -70,3 +70,44 @@ body {
     transform: scale(1.1);
 }
 
+
+/*OffcanvasMenu*/
+.offcanvas {
+    prosition: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    padding: 1rem;
+    width: 250px;
+    background-color: #f1f1f1;
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(-100%);
+}
+
+.offcanvas.show {
+    transform: translateX(0);
+}
+
+.offcanvas-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.offcanvas-title {
+    margin-bottom: 0;
+}
+
+.offcanvas-body {
+    padding-top: 1rem;
+}
+
+.navbar-offcanvas {
+    order: -1;
+}
+
+.navbar-brand {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
