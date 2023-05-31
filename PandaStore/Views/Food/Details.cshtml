@@ -2,6 +2,8 @@
 @{
     ViewData["Title"] = "Mat";
 }
+
+@*Style*@
 <style>
     .card {
         display: flex;
@@ -26,7 +28,7 @@
 <br />
 <br />
 
-@*Första raden med produkter*@
+@*Produkter*@
 <div class="container">
     <div class="row justify-content-center">
         @foreach (var item in Model)
@@ -37,13 +39,24 @@
                     <div class="card-body">
                         <h5 class="card-title">@item.ProductTitel</h5>
                         <p class="card-text">@item.Description</p>
+                        <p class="card-text">Lagerstatus (@item.InventoryQuantity)</p>
                         <h6 class="card-title"><b>@item.Price SEK</b></h6>
 
                         <form method="post" asp-controller="CustomerProduct" asp-action="AddToCart">
                             <input type="hidden" name="productId" value="@item.ProductID" />
-                            <input type="hidden" name="quantity" value=1 />
                             <input type="hidden" name="price" value="@item.Price" />
-                            <button type="submit" class="btn btn-primary buy-button">Köp</button>
+                            @if (item.InventoryQuantity > 0)
+                            {
+                                <div class="quantity-input">
+                                    <input type="number" name="quantity" value="1" min="1" max="@item.InventoryQuantity" step="1" inputmode="numeric" />
+                                </div>
+                                <button type="submit" class="btn btn-primary buy-button">Köp</button>
+                            }
+                            else
+                            {
+                                <h6>Slutsåld</h6>
+                                <button type="submit" class="btn btn-primary buy-button" disabled>Köp</button>
+                            }
                         </form>
 
                         @foreach (var campaign in item.Campaigns)
@@ -58,3 +71,23 @@
 
     </div>
 </div>
+<script>
+    // Lägg till händelselyssnare för plus- och minusknapparna
+    document.querySelectorAll('.quantity-minus').forEach(function (button) {
+        button.addEventListener('click', function () {
+            var input = this.nextElementSibling;
+            if (input.value > 1) {
+                input.value = parseInt(input.value) - 1;
+            }
+        });
+    });
+
+    document.querySelectorAll('.quantity-plus').forEach(function (button) {
+        button.addEventListener('click', function () {
+            var input = this.previousElementSibling;
+            if (input.value < input.getAttribute('max')) {
+                input.value = parseInt(input.value) + 1;
+            }
+        });
+    });
+</script>

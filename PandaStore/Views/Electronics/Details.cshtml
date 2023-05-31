@@ -2,6 +2,8 @@
 @{
     ViewData["Title"] = "Elektronik";
 }
+
+@*Style*@
 <style>
     .card {
         display: flex;
@@ -26,7 +28,7 @@
 <br />
 <br />
 
-@*Första raden med produkter*@
+@*Produkter*@
 
 <div class="container">
     <div class="row justify-content-center">
@@ -56,9 +58,8 @@
                                 <h6>Slutsåld</h6>
                                 <button type="submit" class="btn btn-primary buy-button" disabled>Köp</button>
                             }
-                            
-                            
                         </form>
+
                         @foreach (var campaign in item.Campaigns)
                         {
                             <p>Rabatt: @campaign.Discount</p>
