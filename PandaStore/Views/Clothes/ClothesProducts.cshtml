@@ -38,8 +38,8 @@
                     <img src="@item.ImgUrl" class="card-img-top" alt="Product picture">
                     <div class="card-body">
                         <h5 class="card-title">@item.ProductTitel</h5>
-                        <p class="card-text">@item.Description</p>
-                        <p class="card-text">Lagerstatus (@item.InventoryQuantity)</p>
+                        <p class="card-text" style="font-style: italic;">@item.Description</p>
+                        <p class="card-text">Lagerstatus <b>(@item.InventoryQuantity)</b></p>
                         <h6 class="card-title"><b>@item.Price SEK</b></h6>
 
                         <form method="post" asp-controller="CustomerProduct" asp-action="AddToCart">
