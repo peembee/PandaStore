@@ -45,7 +45,8 @@ namespace PandaStore.Models
 
         public DateTime NextDelivery { get; set; }
 
-
+        [NotMapped]
+        public double OriginalPrice { get; set; }
         public virtual ICollection<CustomerRate>? CustomerRates { get; set; }
         public virtual ICollection<Campaign>? Campaigns { get; set; }
 

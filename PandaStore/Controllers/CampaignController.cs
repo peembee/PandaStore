@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -14,10 +15,11 @@ namespace PandaStore.Controllers
     public class CampaignController : Controller
     {
         private readonly PandaStoreContext _context;
-
-        public CampaignController(PandaStoreContext context)
+        private readonly UserManager<PandaUser> userManager;
+        public CampaignController(PandaStoreContext context, UserManager<PandaUser> userManager)
         {
             _context = context;
+            this.userManager = userManager;
         }
 
         // GET: Campaign
@@ -51,7 +53,7 @@ namespace PandaStore.Controllers
         public IActionResult Create()
         {
             ViewData["Id"] = new SelectList(_context.PandaUsers, "Id", "Id");
-            ViewData["FK_ProductID"] = new SelectList(_context.Products, "ProductID", "Description");
+            ViewData["FK_ProductID"] = new SelectList(_context.Products, "ProductID", "ProductTitel");
             return View();
         }
 
@@ -69,7 +71,7 @@ namespace PandaStore.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["Id"] = new SelectList(_context.PandaUsers, "Id", "Id", campaign.Id);
-            ViewData["FK_ProductID"] = new SelectList(_context.Products, "ProductID", "Description", campaign.FK_ProductID);
+            ViewData["FK_ProductID"] = new SelectList(_context.Products, "ProductID", "ProductTitel", campaign.FK_ProductID);
             return View(campaign);
         }
 
@@ -87,7 +89,7 @@ namespace PandaStore.Controllers
                 return NotFound();
             }
             ViewData["Id"] = new SelectList(_context.PandaUsers, "Id", "Id", campaign.Id);
-            ViewData["FK_ProductID"] = new SelectList(_context.Products, "ProductID", "Description", campaign.FK_ProductID);
+            ViewData["FK_ProductID"] = new SelectList(_context.Products, "ProductID", "ProductTitel", campaign.FK_ProductID);
             return View(campaign);
         }
 
@@ -124,7 +126,7 @@ namespace PandaStore.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["Id"] = new SelectList(_context.PandaUsers, "Id", "Id", campaign.Id);
-            ViewData["FK_ProductID"] = new SelectList(_context.Products, "ProductID", "Description", campaign.FK_ProductID);
+            ViewData["FK_ProductID"] = new SelectList(_context.Products, "ProductID", "ProductTitel", campaign.FK_ProductID);
             return View(campaign);
         }
 

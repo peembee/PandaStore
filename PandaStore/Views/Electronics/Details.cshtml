@@ -2,8 +2,6 @@
 @{
     ViewData["Title"] = "Elektronik";
 }
-
-@*Style*@
 <style>
     .card {
         display: flex;
@@ -28,7 +26,7 @@
 <br />
 <br />
 
-@*Produkter*@
+@*Första raden med produkter*@
 
 <div class="container">
     <div class="row justify-content-center">
@@ -41,6 +39,20 @@
                         <h5 class="card-title">@item.ProductTitel</h5>
                         <p class="card-text">@item.Description</p>
                         <p class="card-text">Lagerstatus (@item.InventoryQuantity)</p>
+                        @foreach (var campaign in item.Campaigns)
+                        {
+                            if (campaign.FK_ProductID == item.ProductID && campaign.StartDate.Date <= DateTime.Now.Date && campaign.EndDate.Date >= DateTime.Now.Date)
+                            {
+                                <hr>
+                                <div>
+                                    <p>Rabatt: @campaign.Discount %</p>
+                                    <p>Du sparar @string.Format("{0:0.00}", (item.OriginalPrice - item.Price))KR</p>
+                                    <p>Giltig till: @campaign.EndDate.Date.ToString("yyyy-MM-dd")</p>
+                                </div>                                
+                                break;
+                            }
+                        }
+                        <hr>
                         <h6 class="card-title"><b>@item.Price SEK</b></h6>
 
                         <form method="post" asp-controller="CustomerProduct" asp-action="AddToCart">
@@ -58,13 +70,9 @@
                                 <h6>Slutsåld</h6>
                                 <button type="submit" class="btn btn-primary buy-button" disabled>Köp</button>
                             }
-                        </form>
-
-                        @foreach (var campaign in item.Campaigns)
-                        {
-                            <p>Rabatt: @campaign.Discount</p>
-                            <p>Giltig till: @campaign.EndDate</p>
-                        }
+                            
+                            
+                        </form>                        
                     </div>
                 </div>
             </div>
