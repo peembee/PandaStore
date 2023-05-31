@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Threading.Tasks;
@@ -14,13 +15,16 @@ namespace PandaStore.Models
 
         [Required]
         [StringLength(50)]
+        [DisplayName("Förnamn")]
         public string FirstName { get; set; } = string.Empty;
 
         [Required]
         [StringLength(50)]
+        [DisplayName("Efternamn")]
         public string LastName { get; set; } = string.Empty;
 
         [Required]
+        [DisplayName("Registrerings datum")]
         public DateTime RegistreredDate { get; set; } = DateTime.Now;
 
         [Required]
@@ -29,10 +33,12 @@ namespace PandaStore.Models
 
         [Required]
         [StringLength(50)]
+        [DisplayName("Stad")]
         public string City { get; set; } = string.Empty;
 
         [Required]
         [StringLength(5)]
+        [DisplayName("Postnummer")]
         public string ZipCode { get; set; } = string.Empty;
 
         public virtual ICollection<CustomerProduct>? CustomerProducts { get; set; }
