@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Build.Tasks.Deployment.Bootstrapper;
+using Microsoft.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Identity.Client;
 using Nest;
@@ -66,68 +67,49 @@ namespace PandaStore.Controllers
         [HttpPost]
         public async Task<IActionResult> AddToCart(int productId, int quantity, double price)
         {
-            bool enoughProducts = CheckIfEnoughProducts(productId, quantity);
-
-            if (!enoughProducts)
-            {
-                return RedirectToAction("Slut såld");
-            }
-            // Lägg till produkten i kundkorgen
-            CustomerProduct product = new CustomerProduct()
-            {
-                FK_ProductID = productId,
-                Quantity = quantity,
-                Price = price,
-            };
+            bool existedProduct = false;
             var shoppingCart = await GetShoppingCart();
-            shoppingCart.Add(product);
+            foreach (var item in shoppingCart)
+            {
+                if (item.FK_ProductID == productId)
+                {
+                    // Uppdatera kundkorgen
+                    item.Quantity += quantity;
+                    existedProduct = true;
+                    break;
+                }
+            }
+
+            if (existedProduct == false)
+            {
+                // Lägg till produkten i kundkorgen
+                CustomerProduct product = new CustomerProduct()
+                {
+                    FK_ProductID = productId,
+                    Quantity = quantity,
+                    Price = price,
+                };
+                shoppingCart.Add(product);
+            }
+
             SaveShoppingCart(shoppingCart);
 
+            // Uppdatera produktens lagersaldo
+            await UpdateProductQuantity(productId, -quantity);
 
-            UpdateProductQuantity(productId, quantity);
             return RedirectToAction("Index");
-
-            
-            
-
         }
 
-        private bool CheckIfEnoughProducts(int productId, int quantity)
+        private async Task UpdateProductQuantity(int productId, int quantity)
         {
-            var product = context.Products.FirstOrDefault(p => p.ProductID == productId);
-            if (product != null && product.InventoryQuantity >= quantity)
-            {
-                return true;
-            }
-            return false;
-        }
-
-        private void UpdateProductQuantity(int productId, int quantity)
-        {
-            var product = context.Products.FirstOrDefault(p => p.ProductID == productId);
-
+            var product = await context.Products
+                .FirstOrDefaultAsync(p => p.ProductID == productId);
             if (product != null)
             {
                 product.InventoryQuantity -= quantity;
-                context.SaveChanges();
+                await context.SaveChangesAsync();
             }
         }
-
-        //public async Task<IActionResult> AddAutoProducts(CustomerProduct product)
-        //{
-        //    Random rand = new Random();
-
-        //    CustomerProduct tests = new CustomerProduct()
-        //    {
-        //        Id = rand.Next(0, 100).ToString(),
-        //        FK_ProductID = rand.Next(1, 4),
-        //        Quantity = rand.Next(1, 5),
-        //        Price = rand.Next(0, 100),
-        //    };
-        //    await AddToCart(tests);
-
-        //    return RedirectToAction("Index");
-        //}
 
 
         [HttpPost]
@@ -138,6 +120,9 @@ namespace PandaStore.Controllers
             var product = shoppingCart.FirstOrDefault(p => p.FK_ProductID == id);
             if (product != null)
             {
+                // Öka kvantiteten för att återställa rätt antal i lagersaldot
+                await UpdateProductQuantity(id, product.Quantity);
+
                 shoppingCart.Remove(product);
                 SaveShoppingCart(shoppingCart);
             }
@@ -286,6 +271,7 @@ namespace PandaStore.Controllers
 
             await context.SaveChangesAsync();
         }
+
 
 
         ////////Not in use for the moment
