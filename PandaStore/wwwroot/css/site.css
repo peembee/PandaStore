@@ -111,3 +111,13 @@ body {
     left: 50%;
     transform: translateX(-50%);
 }
+
+
+
+.offcanvas-body .nav-item .nav-link {
+    transition: transform 0.2s;
+}
+
+.offcanvas-body .nav-item:hover .nav-link {
+    transform: scale(1.1);
+}
