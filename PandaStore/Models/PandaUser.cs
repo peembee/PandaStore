@@ -41,6 +41,11 @@ namespace PandaStore.Models
         [DisplayName("Postnummer")]
         public string ZipCode { get; set; } = string.Empty;
 
+
+        [StringLength(50)]
+        [DisplayName("Admin")]
+        public bool? isAdmin { get; set; }
+
         public virtual ICollection<CustomerProduct>? CustomerProducts { get; set; }
         public virtual ICollection<Campaign>? Campaigns { get; set; }
         public virtual ICollection<OrderDetail>? OrderDetails { get; set; }
