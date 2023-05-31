@@ -95,7 +95,7 @@ namespace PandaStore.Controllers
             SaveShoppingCart(shoppingCart);
 
             // Uppdatera produktens lagersaldo
-            await UpdateProductQuantity(productId, -quantity);
+            await UpdateProductQuantity(productId, quantity);
 
             return RedirectToAction("Index");
         }
@@ -121,7 +121,13 @@ namespace PandaStore.Controllers
             if (product != null)
             {
                 // Öka kvantiteten för att återställa rätt antal i lagersaldot
-                await UpdateProductQuantity(id, product.Quantity);
+                var increaseProduct = await context.Products
+                        .FirstOrDefaultAsync(p => p.ProductID == id);
+                if (product != null)
+                {
+                    increaseProduct.InventoryQuantity += product.Quantity;
+                    await context.SaveChangesAsync();
+                }
 
                 shoppingCart.Remove(product);
                 SaveShoppingCart(shoppingCart);
