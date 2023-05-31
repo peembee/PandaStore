@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations.Schema;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel;
 
 namespace PandaStore.Models
 {
@@ -18,22 +19,27 @@ namespace PandaStore.Models
 
         [Required]
         [ForeignKey("Products")]
+        [DisplayName("Produkt")]
         public int FK_ProductID { get; set; }
         public virtual Product? Products { get; set; }
 
 
         [Required]
+        [DisplayName("Antal")]
         public int Quantity { get; set; }
 
 
         [Required]
+        [DisplayName("Pris")]
         public double Price { get; set; }
 
 
         [Required]
+        [DisplayName("Kvittonummer")]
         public int ReceiptNumber { get; set; }
 
         [NotMapped]
+        [DisplayName("Produktnamn")]
         public string? ProductName { get; set; } = string.Empty;
     }
 }
