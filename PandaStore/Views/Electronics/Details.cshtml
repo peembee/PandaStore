@@ -45,9 +45,10 @@
                             {
                                 <hr>
                                 <div>
-                                    <p>Rabatt: @campaign.Discount %</p>
+                                    <p>Rabatt: @campaign.Discount %</p>                                    
                                     <p>Du sparar @string.Format("{0:0.00}", (item.OriginalPrice - item.Price))KR</p>
                                     <p>Giltig till: @campaign.EndDate.Date.ToString("yyyy-MM-dd")</p>
+                                    <p>Ordinariepris: @item.OriginalPrice KR</p>
                                 </div>                                
                                 break;
                             }
