@@ -10,24 +10,14 @@
 <br />
 <style>
     .card {
-       /* display: flex;
-        flex-direction: column;*/
+        display: flex;
+        flex-direction: column;
         height: 100%;
         /*min-width: 250px;*/
         max-width: 250px;
-        
+        justify-content: space-between;
     }
 
-    /*.card-body {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-    }*/
-
-    ./*row.cards-row{
-        margin-bottom: 20px;
-    }*/
     
     
 </style>
@@ -80,17 +70,19 @@
                         <form method="post" asp-controller="CustomerProduct" asp-action="AddToCart">
                             <input type="hidden" name="productId" value="@item.ProductID" />
                             <input type="hidden" name="price" value="@item.Price" />
-                            @if (item.InventoryQuantity > 0)
+                            
+                            @if (item.InventoryQuantity <= 0)
                             {
-                                <div class="quantity-input">
+                                @*<div class="quantity-input">
                                     <input type="number" class="amountOfProducts" name="quantity" value="1" min="1" max="@item.InventoryQuantity" step="1" inputmode="numeric" />
-                                </div>
-                                <button type="submit" class="btn btn-primary buy-button">Köp</button>
+                                </div>*@
+                                <h6>Slutsåld</h6>
+                                
                             }
                             else
                             {
-                                <h6>Slutsåld</h6>
-                                <button type="submit" class="btn btn-primary buy-button" disabled>Köp</button>
+                                <button type="submit" class="btn btn-primary buy-button">Handla</button>
+                                @*<button type="submit" class="btn btn-primary buy-button" disabled>Köp</button>*@
                             }                           
                         </form>                        
                     </div>

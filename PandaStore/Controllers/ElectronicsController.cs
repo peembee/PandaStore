@@ -75,14 +75,7 @@ namespace PandaStore.Controllers
             }
 
             return View(product);
-            //var product = _context.Products.Find(id);
-
-            //if (product == null)
-            //{
-            //    return NotFound();
-            //}
-
-            //return View(product);
+            
         }
     }
 }
