@@ -37,9 +37,24 @@
                 <div class="card">
                     <img src="@item.ImgUrl" class="card-img-top" alt="">
                     <div class="card-body">
-                        <h5 class="card-title">@item.ProductTitel</h5>
+                       <h5 class="card-title">@item.ProductTitel</h5>
                         <p class="card-text" style="font-style: italic;">@item.Description</p>
                         <p class="card-text">Lagerstatus <b>(@item.InventoryQuantity)</b></p>
+                        @foreach (var campaign in item.Campaigns)
+                        {
+                            if (campaign.FK_ProductID == item.ProductID && campaign.StartDate.Date <= DateTime.Now.Date && campaign.EndDate.Date >= DateTime.Now.Date)
+                            {
+                                <hr>
+                                <div style="color:red;">
+                                    <p>Rabatt: @campaign.Discount %</p>                                    
+                                    <h5>Du sparar @string.Format("{0:0.00}", (item.OriginalPrice - item.Price)) SEK</h5>
+                                    <h6>Ordinariepris: @item.OriginalPrice SEK</h6>
+                                    <p>Giltig till: @campaign.EndDate.Date.ToString("yyyy-MM-dd")</p>
+                                </div>                                
+                                break;
+                            }
+                        }
+                        <hr>
                         <h6 class="card-title"><b>@item.Price SEK</b></h6>
 
                         <form method="post" asp-controller="CustomerProduct" asp-action="AddToCart">
@@ -73,8 +88,8 @@
 </div>
 <script>
     // Lägg till händelselyssnare för plus- och minusknapparna
-    document.querySelectorAll('.quantity-minus').forEach(function (button) {
-        button.addEventListener('click', function () {
+    document.querySelectorAll('.quantity-minus').forEach(function(button) {
+        button.addEventListener('click', function() {
             var input = this.nextElementSibling;
             if (input.value > 1) {
                 input.value = parseInt(input.value) - 1;
@@ -82,8 +97,8 @@
         });
     });
 
-    document.querySelectorAll('.quantity-plus').forEach(function (button) {
-        button.addEventListener('click', function () {
+    document.querySelectorAll('.quantity-plus').forEach(function(button) {
+        button.addEventListener('click', function() {
             var input = this.previousElementSibling;
             if (input.value < input.getAttribute('max')) {
                 input.value = parseInt(input.value) + 1;
