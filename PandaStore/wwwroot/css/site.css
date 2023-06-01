@@ -70,7 +70,6 @@ body {
     transform: scale(1.1);
 }
 
-
 /*OffcanvasMenu*/
 .offcanvas {
     prosition: fixed;
@@ -106,6 +105,9 @@ body {
     order: -1;
 }
 
+.nav-item {
+    margin-bottom: 10px;
+}
 .navbar-brand {
     position: absolute;
     left: 50%;
@@ -121,3 +123,12 @@ body {
 .offcanvas-body .nav-item:hover .nav-link {
     transform: scale(1.1);
 }
+
+.navbar-offcanvas {
+    border: none;
+    background-color: transparent;
+    outline: none;
+}
+
+
+
