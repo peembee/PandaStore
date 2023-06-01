@@ -19,7 +19,11 @@
 
                     <button class="navbar-offcanvas" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" aria-controls="offcanvas"
                                                    aria-expanded="false" aria-label="Toggle navigation">
+
+                       
+
                         <span class="navbar-toggler-icon"></span>
+
                     </button>
                     <div class="navbar-nav">
                         <a class="nav-link text-dark shoppingCartIcon" asp-area="" asp-controller="CustomerProduct" asp-action="Index">
@@ -45,40 +49,42 @@
             </nav>
                 <div class="offcanvas offcanvas-start" tabinex="-1" id="offcanvas" aria-labelledby="offcanvasLabel" >
                     <div class="offcanvas-header">
-                        <h5 class="offcanvas-title" id="offcanvasLabel">Meny</h5>
+
+                        <h5 class="offcanvas-title" id="offcanvasLabel">Hej!</h5>
+
                         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Stäng"></button>
                     </div>
                     <div class="offcanvas-body">
                         <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">Om Oss</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="MyPage" asp-action="Index">Min Sida</a>
-                            </li>
 
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Clothes" asp-action="ClothesProducts">Kläder</a>
+                            </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Startsida</a>
-                            </li>                           
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Furniture" asp-action="Details">Möbler</a>
+
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Electronics" asp-action="Details">Elektronik</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Furniture" asp-action="Details">Möbler</a>
-                            </li>
-                            <li class="nav-item">
+
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Food" asp-action="Details">Mat</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Alcohol" asp-action="Details">Öl, Vin & Sprit</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Clothes" asp-action="ClothesProducts">Kläder</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="About">Om Oss</a>
+                            </li>
+                            
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="MyPage" asp-action="Index">Min Sida</a>
                             </li>
 
-                            <li class="nav-item">
+                           @* <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Startsida</a>
+                            </li> *@                         
                             
-                            </li>
                         </ul>
                     </div>                   
                     </div>
