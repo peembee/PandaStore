@@ -74,12 +74,6 @@
                                 <button type="submit" class="btn btn-primary buy-button" disabled>Köp</button>
                             }
                         </form>
-
-                        @foreach (var campaign in item.Campaigns)
-                        {
-                            <p>Rabatt: @campaign.Discount</p>
-                            <p>Giltig till: @campaign.EndDate</p>
-                        }
                     </div>
                 </div>
             </div>
