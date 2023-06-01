@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.Build.Evaluation;
 using Microsoft.EntityFrameworkCore;
 using Nest;
 using PandaStore.Data;
@@ -40,8 +41,48 @@ namespace PandaStore.Controllers
                     }
                 }
             }
-
+            
             return View(products);
+
+
+        }
+        [HttpGet]
+        public async Task<IActionResult> ProductDetails(int id)
+        {
+
+            var product = await _context.Products
+                .Include(c => c.Campaigns)
+                .Include(p => p.Categorys)
+                .Where(p => p.FK_CategoryID == 1)
+                .FirstOrDefaultAsync(p => p.ProductID == id);
+
+            if (product == null)
+            {
+                return NotFound();
+            }
+
+            var campaign = await _context.Campaigns.ToListAsync();
+            foreach (var campaignItem in campaign)
+            {
+                if (product.ProductID == campaignItem.FK_ProductID)
+                {
+                    if (campaignItem.StartDate.Date <= DateTime.Now.Date && campaignItem.EndDate.Date >= DateTime.Now.Date)
+                    {
+                        product.OriginalPrice = product.Price;
+                        product.Price = product.Price - (product.Price * (campaignItem.Discount / 100));
+                    }
+                }
+            }
+
+            return View(product);
+            //var product = _context.Products.Find(id);
+
+            //if (product == null)
+            //{
+            //    return NotFound();
+            //}
+
+            //return View(product);
         }
     }
 }
