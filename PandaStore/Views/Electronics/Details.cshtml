@@ -2,58 +2,67 @@
 @{
     ViewData["Title"] = "Elektronik";
 }
+
+
+<h1 style="text-align:center;">Elektronik</h1>
+
+<br />
+<br />
 <style>
     .card {
         display: flex;
         flex-direction: column;
         height: 100%;
+        min-width: 250px;
+        max-width: 250px;
+        margin: 10px;
     }
 
     .card-body {
         flex: 1;
         display: flex;
         flex-direction: column;
-        justify-content: space-around;
+        justify-content: space-between;
     }
 
-    .row.cards-row {
-        margin-bottom: 100px;
+    .row.cards-row{
+        margin-bottom: 20px;
     }
+    
+    
 </style>
 
-<h1 style="text-align:center;">Elektronik</h1>
-
-<br />
-<br />
-@*Första raden med produkter*@
-
-<div class="container">
-    <div class="row justify-content-center">
+<div @*class="container"*@>
+    <div class="row g-4 cards-row">
         @foreach (var item in Model)
         {
-            <div class="col-lg-2 col-md-4 col-sm-6 col-12">
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
                 <div class="card">
                     <img src="@item.ImgUrl" class="card-img-top" alt="Image">
-                    <div class="card-body">
+                    <div class="card-body" style="font-size:0.9rem;">
                         <h5 class="card-title">@item.ProductTitel</h5>
                         <p class="card-text" style="font-style: italic;">@item.Description</p>
-                        <p class="card-text">Lagerstatus <b>(@item.InventoryQuantity)</b></p>
+                        <p class="card-text" style="font-size: 0.9rem;">Lagerstatus <b>(@item.InventoryQuantity)</b></p>
                         @foreach (var campaign in item.Campaigns)
                         {
                             if (campaign.FK_ProductID == item.ProductID && campaign.StartDate.Date <= DateTime.Now.Date && campaign.EndDate.Date >= DateTime.Now.Date)
                             {
                                 <hr>
                                 <div style="color:red;">
-                                    <p>Rabatt: @campaign.Discount %</p>                                    
-                                    <h5>Du sparar @string.Format("{0:0.00}", (item.OriginalPrice - item.Price)) SEK</h5>
-                                    <h6>Ordinariepris: @item.OriginalPrice SEK</h6>
-                                    <p>Giltig till: @campaign.EndDate.Date.ToString("yyyy-MM-dd")</p>
+                                    <h6 class="card-title">
+                                        <b style="font-size: 1rem;">@item.Price SEK</b>
+                                        <del style="font-size: 0.9rem; color:gray;">@item.OriginalPrice SEK</del>
+                                        <span style="float: right;">-@campaign.Discount %</span>
+                                    </h6>
+                                    @*<h5>Du sparar @string.Format("{0:0.00}", (item.OriginalPrice - item.Price)) SEK</h5>*@
+                                    @*<h6>Ordinariepris: </h6>*@
+                                    @*<p>Giltig till: @campaign.EndDate.Date.ToString("yyyy-MM-dd")</p>*@
                                 </div>                                
                                 break;
                             }
                         }
                         <hr>
-                        <h6 class="card-title"><b>@item.Price SEK</b></h6>
+                        
 
                         <form method="post" asp-controller="CustomerProduct" asp-action="AddToCart">
                             <input type="hidden" name="productId" value="@item.ProductID" />
