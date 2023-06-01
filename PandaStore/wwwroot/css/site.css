@@ -28,7 +28,7 @@ body {
 
 .shoppingCartIcon {
     position: relative;
-
+    
 }
 
 .shoppingCartIcon .badge {
@@ -113,7 +113,6 @@ body {
     left: 50%;
     transform: translateX(-50%);
 }
-
 
 
 .offcanvas-body .nav-item .nav-link {
