@@ -14,9 +14,9 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>
+                    @*<th>
                         @Html.DisplayName("CustomerProduct ID")
-                    </th>
+                    </th>*@
                     <th>
                          @Html.DisplayName("Produkt")
                     </th>               
@@ -27,7 +27,10 @@
                         @Html.DisplayName("Styckepris")
                     </th>
                     <th>
-                        @Html.DisplayName("Kvittonummer")
+                        @Html.DisplayName("Totalbelopp")
+                    </th>
+                    <th>
+                        @*@Html.DisplayName("Kvittonummer")*@
                     </th>
                 </tr>
             </thead>
@@ -35,26 +38,52 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>
+                        @*<td>
                             @Html.DisplayFor(modelItem => item.CustomerProductID)
-                        </td>
+                        </td>*@
                          <td>
                             @Html.DisplayFor(modelItem => item.ProductName)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Quantity)
+                            @Html.DisplayFor(modelItem => item.Quantity) st
                         </td>
                         <td>
                             @Html.DisplayFor(modelItem => item.Price)
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.ReceiptNumber)
+                            
+                        </td>
+                        <td>
+                            <form method="post" asp-controller="CustomerProduct" asp-action="ChangeQuantity">
+                                <input type="hidden" name="productId" value="@item.FK_ProductID" />
+                                <input type="hidden" name="price" value="@item.Price" />
+                                @if (item.Quantity > 0)
+                                {
+                                    <div class="quantity-input quantity-form" name="quantity" onchange="updateCartItem(this, @item.CustomerProductID, @item.Quantity)">
+
+                                        <select class="quantity-dropdown" name="quantity">
+                                        @for (var i = 1; i <= 5; i++)
+                                        {
+                                                <option value="@i" max="@item.Quantity">@i st </option>
+                                        }
+                                        </select>
+                                        <button type="submit" class="btn btn-secondary buy-button">Ändra</button>
+                                    </div>
+                                    
+                                }
+                                else
+                                {
+                                    <h6>Slutsåld</h6>
+                                    <button type="submit" class="btn btn-primary buy-button" disabled>Köp</button>
+                                }
+                            </form>
+                            @*@Html.DisplayFor(modelItem => item.ReceiptNumber)*@
                         </td>
                         @{totalPrice += item.Price * item.Quantity;}
                         <td>
                             <form asp-controller="CustomerProduct" asp-action="RemoveFromCart" method="post">
                                 <input type="hidden" name="id" value="@item.FK_ProductID" />
-                                <button class="btn btn-primary"  type="submit">Radera</button>
+                                <button class="btn btn-danger"  type="submit">Radera</button>
                             </form>
                         </td>
                     </tr>
@@ -65,7 +94,8 @@
             <h3>Totalt belopp: @totalPrice kr</h3>
         </div>
         <a class="btn btn-primary" asp-action="CheckOut">Vidare till kassan</a> 
-        <a class="btn btn-secondary" href="@Context.Request.Headers["Referer"]">Fortsätt handla</a>
+        <button class="btn btn-secondary" onclick="goBack()">Fortsätt handla</button>
+        @*<a class="btn btn-secondary" href="@Context.Request.Headers["Referer"]">Fortsätt handla</a>*@
         </div>
 }
 else
@@ -78,3 +108,74 @@ else
         </a>
     </div>
 }
+
+@section Scripts {
+    <script>
+
+        function goBack() {
+            window.history.back();
+        }
+        function updateCartItem(selectElement, customerProductId, existingQuantity) {
+            var newQuantity = parseInt(selectElement.value);
+
+            // Kolla om det nya antalet är annorlunda än det befintliga antalet
+            if (newQuantity !== existingQuantity) {
+                // Uppdatera det dolda formulärfältet
+                var quantityInput = selectElement.closest('.quantity-input').querySelector('input[name="quantity"]');
+                quantityInput.value = newQuantity;
+
+                // Trigga formuläret för att skicka innehållet till servern
+                var form = selectElement.closest('form');
+                form.submit();
+
+            //// Kolla om det nya antalet är mindre än det befintliga antalet
+            //if (newQuantity < existingQuantity) {
+            //    // Anropa en metod på servern med AJAX för att uppdatera antalet i varukorgen
+            //    var url = "/CustomerProduct/UpdateCartItemQuantity";
+            //    var data = {
+            //        customerProductId: customerProductId,
+            //        quantity: newQuantity
+            //    };
+
+            //    fetch(url, {
+            //        method: "POST",
+            //        headers: {
+            //            "Content-Type": "application/json"
+            //        },
+            //        body: JSON.stringify(data)
+            //    })
+            //    .then(response => response.json())
+            //    .then(data => {
+            //        window.location.reload();
+            //    })
+            //    .catch(error => {
+            //        console.log(error);
+            //    });
+
+                //$.ajax({
+                //    url: url,
+                //    type: "POST",
+                //    data: data,
+                //    success: function (response) {
+                //        // Uppdatera sidan vid framgångsrikt svar
+                //        window.location.reload();
+                //    },
+                //    error: function (xhr, status, error) {
+                //        // Hantera felmeddelanden vid behov
+                //        console.log(error);
+                //    }
+                //});
+            }
+        }
+        
+        document.querySelectorAll('.quantity-plus').forEach(function (button) {
+            button.addEventListener('click', function () {
+                var input = this.previousElementSibling;
+                if (input.value < input.getAttribute('max')) {
+                    input.value = parseInt(input.value) + 1;
+                }
+            });
+        });
+    </script>
+}
+

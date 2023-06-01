@@ -38,6 +38,8 @@ namespace PandaStore.Controllers
         {
             var shoppingCart = await GetShoppingCart();
             int CartItemCount = shoppingCart.Count;
+            int totalItemCount = shoppingCart.Sum(item => item.Quantity);
+
             foreach (var item in shoppingCart)
             {
                 var product = context.Products.FirstOrDefault(p => p.ProductID == item.FK_ProductID);
@@ -47,6 +49,7 @@ namespace PandaStore.Controllers
                 }
             }
             ViewBag.CartItemCount = CartItemCount; // Lägg till detta för att skicka antalet till vyn
+            ViewBag.TotalItemCount = totalItemCount; // Kollar det totala antalet produkter i kundvagnen
             return View(shoppingCart);
         }
 
@@ -86,7 +89,7 @@ namespace PandaStore.Controllers
                 CustomerProduct product = new CustomerProduct()
                 {
                     FK_ProductID = productId,
-                    Quantity = quantity,
+                    Quantity = 1,
                     Price = price,
                 };
                 shoppingCart.Add(product);
@@ -96,10 +99,25 @@ namespace PandaStore.Controllers
 
             // Uppdatera produktens lagersaldo
             await UpdateProductQuantity(productId, quantity);
-
+            
             return RedirectToAction("Index");
         }
 
+        [HttpPost]
+        public async Task<IActionResult> ChangeQuantity(int productId, int quantity)
+        {
+            var shoppingCart = await GetShoppingCart();
+            var item = shoppingCart.FirstOrDefault(p => p.FK_ProductID == productId);
+            if (item != null)
+            {
+                var quantityDifference = quantity - item.Quantity;
+                item.Quantity = quantity;
+                await UpdateProductQuantity(productId, quantityDifference);
+            }
+            SaveShoppingCart(shoppingCart);
+
+            return RedirectToAction("Index");
+        }
         private async Task UpdateProductQuantity(int productId, int quantity)
         {
             var product = await context.Products
@@ -110,6 +128,8 @@ namespace PandaStore.Controllers
                 await context.SaveChangesAsync();
             }
         }
+
+        
 
 
         [HttpPost]
