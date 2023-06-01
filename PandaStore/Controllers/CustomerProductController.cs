@@ -279,7 +279,6 @@ namespace PandaStore.Controllers
         }
 
 
-
         ////////Not in use for the moment
         protected void UpdateCart(CustomerProduct product)
         {

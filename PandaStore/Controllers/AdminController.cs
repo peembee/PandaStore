@@ -50,12 +50,12 @@ namespace PandaStore.Controllers
                         p.PandaUsers.FirstName.ToLower().Contains(search) ||
                         p.PandaUsers.LastName.ToLower().Contains(search) ||
                         p.PandaUsers.PhoneNumber.Contains(search) ||
-                        search == p.PandaUsers.FirstName.TrimStart() + " " + p.PandaUsers.LastName.TrimEnd()                        
+                        search == p.PandaUsers.FirstName.TrimStart() + " " + p.PandaUsers.LastName.TrimEnd()
                     )
                     .ToListAsync();
 
                 return View("SearchOrder", orderList);
-            }            
+            }
         }
 
 
@@ -67,11 +67,55 @@ namespace PandaStore.Controllers
 
             var receipt = await context.CustomerProducts
                 .Where(r => r.ReceiptNumber == receiptNumber)
-                .Include(p => p.Products)                
+                .Include(p => p.Products)
                 .ToListAsync();
 
             return View(receipt);
         }
 
+
+        public async Task<IActionResult> AddAdmin()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> getAdmins(string search = "")
+        {
+            string userId = userManager.GetUserId(User);
+            search = search.Trim();
+            search = search.ToLower();
+            if (search == "")
+            {
+                var orderList = await context.PandaUsers.ToListAsync();
+                return View("AddAdmin", orderList);
+            }
+            else
+            {
+                var pandaUsers = await context.PandaUsers
+                    .Where(p => p.Email.ToLower().Contains(search) ||
+                        p.FirstName.ToLower().Contains(search) ||
+                        p.LastName.ToLower().Contains(search) ||
+                        p.PhoneNumber.Contains(search) ||
+                        search == p.FirstName.TrimStart() + " " + p.LastName.TrimEnd()
+                    )
+                    .ToListAsync();
+
+                return View("AddAdmin", pandaUsers);
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SetAdmin(string id, bool isAdmin)
+        {
+            var user = await context.PandaUsers.FirstOrDefaultAsync(p => p.Id == id);
+
+            if (user != null)
+            {
+                user.isAdmin = isAdmin;
+                await context.SaveChangesAsync();
+            }
+            await context.SaveChangesAsync();
+            return Ok();
+        }
     }
 }

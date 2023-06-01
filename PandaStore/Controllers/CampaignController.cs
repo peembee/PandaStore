@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PandaStore.Data;
 using PandaStore.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace PandaStore.Controllers
 {
@@ -52,9 +53,22 @@ namespace PandaStore.Controllers
         // GET: Campaign/Create
         public IActionResult Create()
         {
-            ViewData["Id"] = new SelectList(_context.PandaUsers, "Id", "Id");
+            var userId = userManager.GetUserId(User);
+            var campaign = new Campaign
+            {
+                Id = userId,
+                StartDate = DateTime.Today, // Sätt startdatum till dagens datum
+                EndDate = DateTime.Today // Sätt slutdatum till dagens datum
+            };
+
+            // Skapa en SelectList med en enda item som representerar den inloggades ID
+            var idList = new List<SelectListItem> { new SelectListItem { Value = userId, Text = userId } };
+
+            // Tilldela SelectList till ViewBag.Id
+            ViewBag.Id = new SelectList(idList, "Value", "Text");
+
             ViewData["FK_ProductID"] = new SelectList(_context.Products, "ProductID", "ProductTitel");
-            return View();
+            return View(campaign);
         }
 
         // POST: Campaign/Create

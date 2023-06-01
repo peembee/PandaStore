@@ -1,23 +1,29 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject UserManager<PandaUser> UserManager
+<!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - PandaStore</title>
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/PandaStoreWeb.styles.css" asp-append-version="true" />
-</head>
-<body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container-fluid">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>@ViewData["Title"] - PandaStore</title>
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/PandaStoreWeb.styles.css" asp-append-version="true" />
+    </head>
+    <body>
+        <header>
+            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+                <div class="container-fluid">
 
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PandaStore</a>
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PandaStore</a>
 
                     <button class="navbar-offcanvas" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas" aria-controls="offcanvas"
                                                    aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon rounded-circle"></span>
+
+                       
+
+                        <span class="navbar-toggler-icon"></span>
+
                     </button>
                     <div class="navbar-nav">
                         <a class="nav-link text-dark shoppingCartIcon" asp-area="" asp-controller="CustomerProduct" asp-action="Index">
@@ -43,21 +49,25 @@
             </nav>
                 <div class="offcanvas offcanvas-start" tabinex="-1" id="offcanvas" aria-labelledby="offcanvasLabel" >
                     <div class="offcanvas-header">
+
                         <h5 class="offcanvas-title" id="offcanvasLabel">Hej!</h5>
+
                         <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Stäng"></button>
                     </div>
                     <div class="offcanvas-body">
                         <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
+
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Clothes" asp-action="ClothesProducts">Kläder</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Furniture" asp-action="Details">Möbler</a>
-                            </li>
+
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Electronics" asp-action="Details">Elektronik</a>
                             </li>
                             <li class="nav-item">
+
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Food" asp-action="Details">Mat</a>
                             </li>
                             <li class="nav-item">
@@ -73,8 +83,7 @@
 
                            @* <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Startsida</a>
-                            </li> *@                          
-                            
+                            </li> *@                         
                             
                         </ul>
                     </div>                   

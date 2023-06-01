@@ -1,0 +1,26 @@
+﻿@model IEnumerable<PandaStore.Models.PandaUser>
+@{
+    ViewData["Title"] = "AddAdmin";
+}
+
+<h1>Hantera Behörigheter</h1>
+
+
+<h3>Sök Användare via Email, Namn & Telefonnummer</h3>
+
+<form asp-action="getAdmins">
+    <div class="input-group">
+        <div class="form-outline">
+            <label class="form-label" for="id">Vid tomt fält visas alla resultat</label>
+            <input type="text" name="search" id="id" class="form-control" placeholder="Sök Användare" />  
+            <button type="submit" class="btn btn-primary">Sök</button>
+        </div>     
+    </div>
+</form>
+@if(Model != null)
+{
+<div>
+    @await Html.PartialAsync("getAdmins.cshtml", Model)
+</div>
+}
+

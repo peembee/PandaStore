@@ -27,7 +27,21 @@ namespace PandaStore.Controllers
                 .Include(p => p.Categorys)
                 .Where(p => p.FK_CategoryID == 3)
                 .ToListAsync();
-
+            foreach (var productItem in products)
+            {
+                var campaign = await _context.Campaigns.ToListAsync();
+                foreach (var campaignItem in campaign)
+                {
+                    if (productItem.ProductID == campaignItem.FK_ProductID)
+                    {
+                        if (campaignItem.StartDate.Date <= DateTime.Now.Date && campaignItem.EndDate.Date >= DateTime.Now.Date)
+                        {
+                            productItem.OriginalPrice = productItem.Price;
+                            productItem.Price = productItem.Price - (productItem.Price * (campaignItem.Discount / 100));
+                        }
+                    }
+                }
+            }
             return View(products);
         }
     }

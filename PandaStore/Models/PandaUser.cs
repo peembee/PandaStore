@@ -5,6 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Threading.Tasks;
 
+
 namespace PandaStore.Models
 {
     public class PandaUser : IdentityUser
@@ -44,7 +45,7 @@ namespace PandaStore.Models
 
         [StringLength(50)]
         [DisplayName("Admin")]
-        public bool? isAdmin { get; set; }
+        public bool? isAdmin { get; set; } = false;
 
         public virtual ICollection<CustomerProduct>? CustomerProducts { get; set; }
         public virtual ICollection<Campaign>? Campaigns { get; set; }
