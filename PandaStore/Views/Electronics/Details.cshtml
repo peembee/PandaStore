@@ -61,7 +61,7 @@
                             @if (item.InventoryQuantity > 0)
                             {
                                 <div class="quantity-input">
-                                    <input type="number" name="quantity" value="1" min="1" max="@item.InventoryQuantity" step="1" inputmode="numeric" />
+                                    <input type="number" class="amountOfProducts" name="quantity" value="1" min="1" max="@item.InventoryQuantity" step="1" inputmode="numeric" />
                                 </div>
                                 <button type="submit" class="btn btn-primary buy-button">Köp</button>
                             }
