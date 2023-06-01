@@ -1,1 +1,1 @@
-# PandaStore
+# superpandastore.azurewebsites.net
