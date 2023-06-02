@@ -117,6 +117,9 @@ body {
     transform: translateX(-50%);
 }
 
+.navbar {
+    background-color: #faf7f4;
+}
 
 .offcanvas-body .nav-item .nav-link {
     transition: transform 0.2s;

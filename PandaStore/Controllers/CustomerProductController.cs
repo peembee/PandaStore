@@ -110,9 +110,18 @@ namespace PandaStore.Controllers
             var item = shoppingCart.FirstOrDefault(p => p.FK_ProductID == productId);
             if (item != null)
             {
-                var quantityDifference = quantity - item.Quantity;
-                item.Quantity = quantity;
-                await UpdateProductQuantity(productId, quantityDifference);
+                var product = await context.Products.FirstOrDefaultAsync(p => p.ProductID == productId);
+                if (product != null && quantity <= product.InventoryQuantity)
+                {
+                    var quantityDifference = quantity - item.Quantity;
+                    item.Quantity = quantity;
+                    await UpdateProductQuantity(productId, quantityDifference);
+                }
+                else
+                {
+                    return BadRequest("Det finns inte tillräckligt med produkter i lager, vänligen väl ett mindre antal");
+                }
+                
             }
             SaveShoppingCart(shoppingCart);
 
