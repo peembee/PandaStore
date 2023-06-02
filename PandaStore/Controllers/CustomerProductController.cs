@@ -70,37 +70,74 @@ namespace PandaStore.Controllers
         [HttpPost]
         public async Task<IActionResult> AddToCart(int productId, int quantity, double price)
         {
-            bool existedProduct = false;
-            var shoppingCart = await GetShoppingCart();
-            foreach (var item in shoppingCart)
+            var product = await context.Products.FirstOrDefaultAsync(p => p.ProductID == productId);
+            if(product == null)
             {
-                if (item.FK_ProductID == productId)
+                return NotFound();
+            }
+
+            if(product.InventoryQuantity > 0)
+            {
+                var shoppingCart = await GetShoppingCart();
+                var item = shoppingCart.FirstOrDefault(p => p.FK_ProductID == productId);
+
+                if(item != null)
                 {
-                    // Uppdatera kundkorgen
-                    item.Quantity += quantity;
-                    existedProduct = true;
-                    break;
+                    item.Quantity += 1;
                 }
-            }
-
-            if (existedProduct == false)
-            {
-                // Lägg till produkten i kundkorgen
-                CustomerProduct product = new CustomerProduct()
+                else
                 {
-                    FK_ProductID = productId,
-                    Quantity = 1,
-                    Price = price,
-                };
-                shoppingCart.Add(product);
+                    CustomerProduct customerProduct = new CustomerProduct()
+                    {
+                        FK_ProductID = productId,
+                        Quantity = 1,
+                        Price = price
+                    };
+
+                    shoppingCart.Add(customerProduct);
+                }
+
+                SaveShoppingCart(shoppingCart);
+
+                await UpdateProductQuantity(productId, 1);
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                return BadRequest("Det finns inte tillräckligt med produkter i lager");
             }
 
-            SaveShoppingCart(shoppingCart);
+            //bool existedProduct = false;
+            //var shoppingCart = await GetShoppingCart();
+            //foreach (var item in shoppingCart)
+            //{
+            //    if (item.FK_ProductID == productId)
+            //    {
+            //        // Uppdatera kundkorgen
+            //        item.Quantity += quantity;
+            //        existedProduct = true;
+            //        break;
+            //    }
+            //}
 
-            // Uppdatera produktens lagersaldo
-            await UpdateProductQuantity(productId, quantity);
+            //if (existedProduct == false)
+            //{
+            //    // Lägg till produkten i kundkorgen
+            //    CustomerProduct product = new CustomerProduct()
+            //    {
+            //        FK_ProductID = productId,
+            //        Quantity = 1,
+            //        Price = price,
+            //    };
+            //    shoppingCart.Add(product);
+            //}
+
+            //SaveShoppingCart(shoppingCart);
+
+            //// Uppdatera produktens lagersaldo
+            //await UpdateProductQuantity(productId, quantity);
             
-            return RedirectToAction("Index");
+            //return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -138,7 +175,7 @@ namespace PandaStore.Controllers
             }
         }
 
-        
+
 
 
         [HttpPost]
