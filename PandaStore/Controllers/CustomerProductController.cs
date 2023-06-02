@@ -145,24 +145,49 @@ namespace PandaStore.Controllers
         {
             var shoppingCart = await GetShoppingCart();
             var item = shoppingCart.FirstOrDefault(p => p.FK_ProductID == productId);
-            if (item != null)
+            if(item != null)
             {
                 var product = await context.Products.FirstOrDefaultAsync(p => p.ProductID == productId);
-                if (product != null && quantity <= product.InventoryQuantity)
+
+                if(product != null)
                 {
                     var quantityDifference = quantity - item.Quantity;
-                    item.Quantity = quantity;
-                    await UpdateProductQuantity(productId, quantityDifference);
+
+                    if(quantityDifference <= product.InventoryQuantity)
+                    {
+                        item.Quantity = quantity;
+                        await UpdateProductQuantity(productId, quantityDifference);
+                    }
+                    else
+                    {
+                        return BadRequest("Det finns inte tillräckligt med produkter i lagret");
+                    }
                 }
-                else
-                {
-                    return BadRequest("Det finns inte tillräckligt med produkter i lager, vänligen väl ett mindre antal");
-                }
-                
             }
             SaveShoppingCart(shoppingCart);
 
             return RedirectToAction("Index");
+           
+            //var shoppingCart = await GetShoppingCart();
+            //var item = shoppingCart.FirstOrDefault(p => p.FK_ProductID == productId);
+            //if (item != null)
+            //{
+            //    var product = await context.Products.FirstOrDefaultAsync(p => p.ProductID == productId);
+            //    if (product != null && quantity <= product.InventoryQuantity)
+            //    {
+            //        var quantityDifference = quantity - item.Quantity;
+            //        item.Quantity = quantity;
+            //        await UpdateProductQuantity(productId, quantityDifference);
+            //    }
+            //    else
+            //    {
+            //        return BadRequest("Det finns inte tillräckligt med produkter i lager, vänligen väl ett mindre antal");
+            //    }
+                
+            //}
+            //SaveShoppingCart(shoppingCart);
+
+            //return RedirectToAction("Index");
         }
         private async Task UpdateProductQuantity(int productId, int quantity)
         {
