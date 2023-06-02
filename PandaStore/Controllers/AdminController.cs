@@ -50,6 +50,7 @@ namespace PandaStore.Controllers
                         p.PandaUsers.FirstName.ToLower().Contains(search) ||
                         p.PandaUsers.LastName.ToLower().Contains(search) ||
                         p.PandaUsers.PhoneNumber.Contains(search) ||
+                        p.Receipts.ReceiptNumber.ToString() == search ||
                         search == p.PandaUsers.FirstName.TrimStart() + " " + p.PandaUsers.LastName.TrimEnd()
                     )
                     .ToListAsync();
