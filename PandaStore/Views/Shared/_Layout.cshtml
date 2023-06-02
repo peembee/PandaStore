@@ -11,8 +11,9 @@
         <link rel="stylesheet" href="~/PandaStoreWeb.styles.css" asp-append-version="true" />
     </head>
     <body>
-        <header>
-            <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+    <header class="header">
+
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
                 <div class="container-fluid">
 
                     <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">PandaStore</a>
@@ -46,7 +47,8 @@
                         <partial name="_LoginPartial" />
                     </div>
                 </div>
-            </nav>
+        </nav>
+        <nav>
                 <div class="offcanvas offcanvas-start" tabinex="-1" id="offcanvas" aria-labelledby="offcanvasLabel" >
                     <div class="offcanvas-header">
 
@@ -60,7 +62,7 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Clothes" asp-action="ClothesProducts">Kläder</a>
                             </li>
                             <li class="nav-item">
-                        <a class="nav-link text-dark" asp-area="" asp-controller="SportsAndLeisure" asp-action="Details">Sport & Fritid</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="SportsAndLeisure" asp-action="Details">Sport & Fritid</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Furniture" asp-action="Details">Möbler</a>
@@ -89,9 +91,8 @@
                             
                         </ul>
                     </div>                   
-                    </div>
                 </div>
-            </nav>
+        </nav>
         </header>
         <div class="container">
             <main role="main" class="pb-3">
