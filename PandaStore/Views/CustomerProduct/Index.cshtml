@@ -79,7 +79,7 @@
                             </form>
                             @*@Html.DisplayFor(modelItem => item.ReceiptNumber)*@
                         </td>
-                        @{totalPrice += item.Price * item.Quantity;}
+                        @{totalPrice += Math.Round(item.Price * item.Quantity, 2);}
                         <td>
                             <form asp-controller="CustomerProduct" asp-action="RemoveFromCart" method="post">
                                 <input type="hidden" name="id" value="@item.FK_ProductID" />
