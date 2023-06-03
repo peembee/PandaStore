@@ -108,6 +108,12 @@ body {
     order: -1;
 }
 
+.navbar {
+    height: 60px;
+    min-height: 60px;
+    background-color: #faf7f4;
+}
+
 .nav-item {
     margin-bottom: 10px;
 }
@@ -115,11 +121,11 @@ body {
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
+    font-weight: bold;
+    /*font-family:'Comic Sans MS';*/
+    font-family: "sofia", sans-serif;
 }
 
-.navbar {
-    background-color: #faf7f4;
-}
 
 .offcanvas-body .nav-item .nav-link {
     transition: transform 0.2s;
