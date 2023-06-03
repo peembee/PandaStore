@@ -33,18 +33,21 @@
                             </svg>
                             <span class="badge bg-primary">@ViewBag.totalItemCount</span>
                         </a>
-                        @if (User.Identity.IsAuthenticated)
-                        {
-                            var user = await UserManager.FindByNameAsync(User.Identity.Name);
-                            if (user.isAdmin == true)
+                        <div class="d-none d-lg-block">
+                            @if (User.Identity.IsAuthenticated)
                             {
-                                <li class="nav-item">
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Admin</a>
-                                </li>
+                                var user = await UserManager.FindByNameAsync(User.Identity.Name);
+                                if (user.isAdmin == true)
+                                {
+                                    <li class="nav-item">
+                                        <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Admin</a>
+                                    </li>
+                                }
                             }
-                        }
-                        <partial name="_AdminView" />
-                        <partial name="_LoginPartial" />
+                            <partial name="_AdminView" />
+                            <partial name="_LoginPartial" />
+                        </div>
+                        
                     </div>
                 </div>
         </nav>
@@ -90,6 +93,18 @@
                             </li> *@                         
                             
                         </ul>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        var user = await UserManager.FindByNameAsync(User.Identity.Name);
+                        if (user.isAdmin == true)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Admin</a>
+                            </li>
+                        }
+                    }
+                    <partial name="_AdminView" />
+                    <partial name="_LoginPartial" />
                     </div>                   
                 </div>
         </nav>
