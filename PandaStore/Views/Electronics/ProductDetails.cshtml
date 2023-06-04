@@ -53,9 +53,6 @@
                             <del style="font-size: 0.8rem; color:gray;">@Model.OriginalPrice SEK</del>
                             <span>-@campaign.Discount %</span>
                         </h6>
-                        @*<h5>Du sparar @string.Format("{0:0.00}", (item.OriginalPrice - item.Price)) SEK</h5>*@
-                        @*<h6>Ordinariepris: </h6>*@
-                        @*<p>Giltig till: @campaign.EndDate.Date.ToString("yyyy-MM-dd")</p>*@
                     </div>
                     break;
                 }
@@ -78,19 +75,14 @@
 
             @if (Model.InventoryQuantity > 0)
             {
-                @*<div class="quantity-input">
-                    <label for="quantity">Antal:</label>
-                    <input type="number" class="amountOfProducts" name="quantity" value="1" min="1" max="@Model.InventoryQuantity" step="1" inputmode="numeric" />
-                </div>*@
                 <div class="button-container">
                     <div class="button-group">
                         <button type="submit" class="btn btn-primary buy-button">Köp</button>
                         <button asp-action="Details" class="btn btn-secondary">Tillbaka</button>
                     </div>
-                </div>
-               
-                
+                </div>                           
             }
+
             else
             {
                 <h6>Slutsåld</h6>
@@ -98,17 +90,10 @@
                     <div class="button-group">
                         <button asp-action="Details" class="btn btn-secondary">Tillbaka</button>
                     </div>
-                </div>
-                
-               @* <button type="submit" class="btn btn-primary buy-button" disabled>Köp</button>*@
-                
+                </div>              
             }
-            @*<div class="button-container">
-                <div class="button-group">
-                    <button asp-action="Details" class="btn btn-secondary">Tillbaka</button>
-                </div>
-            </div>*@
         </form>
+
     </div>
 </div>
 

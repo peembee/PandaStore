@@ -40,15 +40,6 @@ body {
     font-size: 12px;
 }
 
-
-/*Hovereffekt på kampanjbilderna*/
-.image-wrapper img {
-    transition: transform 0.2s ease;
-}
-
-.image-wrapper:hover img {
-    transform: scale(1.1);
-}
 .main-content {
     background-image: url(../images/Admin/cyber-monday-retail-sales.jpg);
     background-position: center;
@@ -60,9 +51,15 @@ body {
     padding-bottom: 10px;
 }
 
-/*.card-title {
-    font-size: 12px;
-}*/
+
+/*Hovereffekt på kampanjbilderna*/
+.image-wrapper img {
+    transition: transform 0.2s ease;
+}
+
+.image-wrapper:hover img {
+    transform: scale(1.1);
+}
 
 /*Hovereffekt på klädessidan*/
 .card {
@@ -72,6 +69,7 @@ body {
 .card:hover {
     transform: scale(1.1);
 }
+
 
 /*OffcanvasMenu*/
 .offcanvas {
