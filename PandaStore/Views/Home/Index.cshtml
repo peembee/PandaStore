@@ -2,6 +2,7 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+
 @*Scripts och länkar*@
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> 
@@ -9,8 +10,6 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 
-
-@*Fixa klickbara länkar på bilderna i carousel*@
 @*Carousel*@
 <div id="carouselExampleIndicators" class="carousel slide mx-auto" data-ride="carousel" style="background-color:#e8ded1;">
     <ol class="carousel-indicators">
@@ -20,13 +19,19 @@
     </ol>
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img class="d-block w-75 mx-auto" src="/images/black-t-shirts-with-copy-space-removebg-preview.png" alt="First slide" style="height: 400px;">
+            <a href="/Clothes/ClothesProducts">
+                <img class="d-block w-75 mx-auto" src="/images/black-t-shirts-with-copy-space-removebg-preview.png" alt="First slide" style="height: 400px;">
+            </a>
         </div>
         <div class="carousel-item">
-            <img class="d-block w-75 mx-auto" src="/images/white-t-shirts-with-copy-space-gray-background-removebg-preview.png" alt="Second slide" style="height: 400px;">
+            <a href="/Furniture/Details">
+                <img class="d-block w-75 mx-auto" src="/images/chairfront.png" alt="Second slide" style="height: 400px;">
+            </a>
         </div>
         <div class="carousel-item">
-            <img class="d-block w-75 mx-auto" src="/images/black-t-shirts-with-copy-space-removebg-preview.png" alt="Third slide" style="height: 400px;">
+            <a href="/Electronics/Details">
+                <img class="d-block w-75 mx-auto" src="/images/mobilefront.png" alt="Third slide" style="height: 400px;">
+            </a>
         </div>
     </div>
     <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev" style="color: black;">
@@ -186,17 +191,17 @@
 @*Kampanjbilder*@
 <div class="image-container" style="display: flex; justify-content: center; flex-wrap: wrap;">
     <div class="image-wrapper" style="flex: 1; margin: 5px; display: flex; justify-content: center; align-items: center;">
-        <a href="länk-till-bild-1">
+        <a href="/Clothes/ClothesProducts">
             <img src="images/summersale.png" alt="Bild 1" width="300" height="450" style="transition: transform 0.2s ease;">
         </a>
     </div>
     <div class="image-wrapper" style="flex: 1; margin: 5px; display: flex; justify-content: center; align-items: center;">
-        <a href="länk-till-bild-2">
-            <img src="images/whiskykampanj.png" alt="Bild 2" width="300" height="450" style="transition: transform 0.2s ease;">
+        <a href="/Furniture/Details">
+            <img src="images/armchair.png" alt="Bild 2" width="300" height="450" style="transition: transform 0.2s ease;">
         </a>
     </div>
     <div class="image-wrapper" style="flex: 1; margin: 5px; display: flex; justify-content: center; align-items: center;">
-        <a href="länk-till-bild-3">
+        <a href="/SportsAndLeisure/Details">
             <img src="images/sportkampanj.png" alt="Bild 3" width="300" height="450" style="transition: transform 0.2s ease;">
         </a>
     </div>
