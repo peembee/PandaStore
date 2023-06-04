@@ -1,0 +1,114 @@
+﻿@model PandaStore.Models.Product
+@{
+    ViewData["Title"] = "ProductDetails";
+}
+
+<style>
+    .product-container {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+    }
+
+    .product-image {
+        max-width: 100%;
+        max-height: 400px;
+        height: auto;
+    }
+
+    .button-container {
+        margin-top: 10px;
+    }
+
+    .button-group {
+        display: flex;
+        gap: 10px;
+    }
+</style>
+
+<div class="product-container" style="background-color: #f3f3f3;">
+    <img src="@Model.ImgUrl" class="product-image" alt="Produktbild" />
+
+    <div>
+        <h1>@Model.ProductTitel</h1>
+
+        <p><strong>Beskrivning:</strong> @Model.Description</p>
+        <p><strong>Specifikation:</strong> @Model.Specification</p>
+
+        @if (Model.InventoryQuantity >= 1)
+        {
+            <p style="font-size: 0.9rem; font-style: italic"><strong>Lagerstatus:</strong> @Model.InventoryQuantity</p>
+        }
+
+
+        @if (Model.Campaigns.Any(c => c.FK_ProductID == Model.ProductID && c.StartDate.Date <= DateTime.Now.Date && c.EndDate.Date >= DateTime.Now.Date))
+        {
+            @foreach (var campaign in Model.Campaigns)
+            {
+                if (campaign.FK_ProductID == Model.ProductID && campaign.StartDate.Date <= DateTime.Now.Date && campaign.EndDate.Date >= DateTime.Now.Date)
+                {
+                    <div style="color:red;">
+                        <h6 class="card-title">
+                            <b style="font-size: 1rem;">@Model.Price SEK</b>
+                            <del style="font-size: 0.8rem; color:gray;">@Model.OriginalPrice SEK</del>
+                            <span>-@campaign.Discount %</span>
+                        </h6>
+                        @*<h5>Du sparar @string.Format("{0:0.00}", (item.OriginalPrice - item.Price)) SEK</h5>*@
+                        @*<h6>Ordinariepris: </h6>*@
+                        @*<p>Giltig till: @campaign.EndDate.Date.ToString("yyyy-MM-dd")</p>*@
+                    </div>
+                    break;
+                }
+
+            }
+        }
+
+        else
+        {
+            <h6 class="card-title">
+                <b style="font-size: 1rem;">@Model.Price SEK</b>
+            </h6>
+        }
+
+
+        <form method="post" asp-controller="CustomerProduct" asp-action="AddToCart">
+            <input type="hidden" name="productId" value="@Model.ProductID" />
+            <input type="hidden" name="price" value="@Model.Price" />
+
+
+            @if (Model.InventoryQuantity > 0)
+            {
+                @*<div class="quantity-input">
+            <label for="quantity">Antal:</label>
+            <input type="number" class="amountOfProducts" name="quantity" value="1" min="1" max="@Model.InventoryQuantity" step="1" inputmode="numeric" />
+            </div>*@
+                <div class="button-container">
+                    <div class="button-group">
+                        <button type="submit" class="btn btn-primary buy-button">Köp</button>
+                        <button asp-action="Details" class="btn btn-secondary">Tillbaka</button>
+                    </div>
+                </div>
+
+
+            }
+            else
+            {
+                <h6>Slutsåld</h6>
+                <div class="button-container">
+                    <div class="button-group">
+                        <button asp-action="Details" class="btn btn-secondary">Tillbaka</button>
+                    </div>
+                </div>
+
+                @* <button type="submit" class="btn btn-primary buy-button" disabled>Köp</button>*@
+
+            }
+            @*<div class="button-container">
+            <div class="button-group">
+            <button asp-action="Details" class="btn btn-secondary">Tillbaka</button>
+            </div>
+            </div>*@
+        </form>
+    </div>
+</div>
+

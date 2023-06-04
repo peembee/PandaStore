@@ -1,101 +1,94 @@
 ﻿@model IEnumerable<PandaStore.Models.Product>
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Möbler";
 }
 
-<style>
-    .card {
-        display: flex;
-        flex-direction: column;
-        height: 100%;
-    }
 
-    .card-body {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-around;
-    }
-
-    .row.cards-row {
-        margin-bottom: 100px;
-    }
-</style>
 
 <h1 style="text-align:center;">Sport & Fritid</h1>
 
 <br />
 <br />
 
-@*Första raden med produkter*@
-<div class="container">
-    <div class="row justify-content-center">
+@*Style*@
+<style>
+    .card {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        /*min-width: 250px;*/
+        max-width: 250px;
+        justify-content: space-between;
+    }
+
+</style>
+
+<div @*class="container"*@>
+    <div class="row g-4 cards-row">
         @foreach (var item in Model)
         {
-            <div class="col-lg-2 col-md-4 col-sm-6 col-12">
+            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+
                 <div class="card">
-                    <img src="@item.ImgUrl" class="card-img-top" alt="Image">
-                    <div class="card-body">
-                        <h5 class="card-title">@item.ProductTitel</h5>
+                    <a asp-action="ProductDetails" asp-route-id="@item.ProductID">
+                        <img src="@item.ImgUrl" class="card-img-top" alt="Image">
+                    </a>
+                    <div class="card-body" style="font-size:0.9rem;">
+                        <h5 class="card-title" style="font-size:1rem;"><strong>@item.ProductTitel</strong></h5>
                         <p class="card-text" style="font-style: italic;">@item.Description</p>
-                        <p class="card-text">Lagerstatus <b>(@item.InventoryQuantity)</b></p>
-                        @foreach (var campaign in item.Campaigns)
+                        @* <p class="card-text" style="font-size: 0.9rem;">Lagerstatus <b>(@item.InventoryQuantity)</b></p>*@
+                        @if (item.Campaigns.Any(c => c.FK_ProductID == item.ProductID && c.StartDate.Date <= DateTime.Now.Date && c.EndDate.Date >= DateTime.Now.Date))
                         {
-                            if (campaign.FK_ProductID == item.ProductID && campaign.StartDate.Date <= DateTime.Now.Date && campaign.EndDate.Date >= DateTime.Now.Date)
+                            @foreach (var campaign in item.Campaigns)
                             {
-                                <hr>
-                                <div style="color:red;">
-                                    <p>Rabatt: @campaign.Discount %</p>                                    
-                                    <h5>Du sparar @string.Format("{0:0.00}", (item.OriginalPrice - item.Price)) SEK</h5>
-                                    <h6>Ordinariepris: @item.OriginalPrice SEK</h6>
-                                    <p>Giltig till: @campaign.EndDate.Date.ToString("yyyy-MM-dd")</p>
-                                </div>                                
-                                break;
+                                if (campaign.FK_ProductID == item.ProductID && campaign.StartDate.Date <= DateTime.Now.Date && campaign.EndDate.Date >= DateTime.Now.Date)
+                                {
+                                    <div style="color:red;">
+                                        <h6 class="card-title">
+                                            <b style="font-size: 1rem;">@item.Price SEK</b>
+                                            <del style="font-size: 0.8rem; color:gray;">@item.OriginalPrice SEK</del>
+                                            <span style="float: right;">-@campaign.Discount%</span>
+                                        </h6>
+                                        @*<h5>Du sparar @string.Format("{0:0.00}", (item.OriginalPrice - item.Price)) SEK</h5>*@
+                                        @*<h6>Ordinariepris: </h6>*@
+                                        @*<p>Giltig till: @campaign.EndDate.Date.ToString("yyyy-MM-dd")</p>*@
+                                    </div>
+                                    break;
+                                }
+
                             }
                         }
-                        <hr>
-                        <h6 class="card-title"><b>@item.Price SEK</b></h6>
 
-                        <form method="post" asp-controller="CustomerProduct" asp-action="AddToCart">
-                            <input type="hidden" name="productId" value="@item.ProductID" />
-                            <input type="hidden" name="price" value="@item.Price" />
-                            @if (item.InventoryQuantity > 0)
-                            {
-                                <div class="quantity-input">
-                                    <input type="number" class="amountOfProducts" name="quantity" value="1" min="1" max="@item.InventoryQuantity" step="1" inputmode="numeric" />
-                                </div>
-                                <button type="submit" class="btn btn-primary buy-button">Köp</button>
-                            }
-                            else
-                            {
-                                <h6>Slutsåld</h6>
-                                <button type="submit" class="btn btn-primary buy-button" disabled>Köp</button>
-                            }                            
-                        </form>                        
+                        else
+                        {
+                            <h6 class="card-title">
+                                <b style="font-size: 1rem;">@item.Price SEK</b>
+                            </h6>
+                        }
+
+
+
+                        @*<form method="post" asp-controller="CustomerProduct" asp-action="AddToCart">
+                    <input type="hidden" name="productId" value="@item.ProductID" />
+                    <input type="hidden" name="price" value="@item.Price" />
+
+                    @if (item.InventoryQuantity <= 0)
+                    {
+                    <div class="quantity-input">
+                    <input type="number" class="amountOfProducts" name="quantity" value="1" min="1" max="@item.InventoryQuantity" step="1" inputmode="numeric" />
+                    </div>
+                    <h6>Slutsåld</h6>
+
+                    }
+                    else
+                    {
+                    <button type="submit" class="btn btn-primary buy-button">Handla</button>
+                    <button type="submit" class="btn btn-primary buy-button" disabled>Köp</button>
+                    }
+                    </form>    *@
                     </div>
                 </div>
             </div>
         }
-
     </div>
 </div>
-<script>
-    // Lägg till händelselyssnare för plus- och minusknapparna
-    document.querySelectorAll('.quantity-minus').forEach(function(button) {
-        button.addEventListener('click', function() {
-            var input = this.nextElementSibling;
-            if (input.value > 1) {
-                input.value = parseInt(input.value) - 1;
-            }
-        });
-    });
-
-    document.querySelectorAll('.quantity-plus').forEach(function(button) {
-        button.addEventListener('click', function() {
-            var input = this.previousElementSibling;
-            if (input.value < input.getAttribute('max')) {
-                input.value = parseInt(input.value) + 1;
-            }
-        });
-    });
-</script>
