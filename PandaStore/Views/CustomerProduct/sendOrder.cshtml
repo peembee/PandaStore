@@ -1,0 +1,22 @@
+﻿@model IEnumerable<PandaStore.Models.CustomerProduct>
+
+@{
+    ViewData["Title"] = "sendOrder";
+}
+
+<h1>Kvitto</h1>
+
+<p>Tack för din beställning! Produkten har skickats.</p>
+
+<h2>Orderinformation:</h2>
+@foreach (var item in Model)
+{
+    <p>Produktnamn: @item.ProductName</p>
+    <p>Antal: @item.Quantity</p>
+    <p>Pris: @item.Price</p>
+    <p>Total summa: @item.Sum</p>
+    <p>Kvittonummer: @item.ReceiptNumber</p>
+    <hr />
+}
+
+<p>Om du har några frågor, vänligen kontakta vår kundtjänst.</p>

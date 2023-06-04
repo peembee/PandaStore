@@ -145,4 +145,11 @@ body {
     border-radius: 3px;
 }
 
+.totalPrice {
+    font-size: 20px;
+    font-weight: bold;
+}
 
+.btn {
+    margin-top: 10px;
+}

@@ -18,19 +18,22 @@
                         @Html.DisplayName("CustomerProduct ID")
                     </th>*@
                     <th>
-                         @Html.DisplayName("Produkt")
+                         @Html.DisplayNameFor(model => model.ProductName)
                     </th>               
                     <th>
-                        @Html.DisplayName("Antal")
+                        @Html.DisplayNameFor(model => model.Quantity)
                     </th>
                     <th>
-                        @Html.DisplayName("Styckepris")
+                        @Html.DisplayNameFor(model => model.Price)
                     </th>
                     <th>
-                        @Html.DisplayName("Totalbelopp")
+                        @Html.DisplayNameFor(model => model.Sum)
                     </th>
                     <th>
-                        @*@Html.DisplayName("Kvittonummer")*@
+                       @Html.DisplayName("Lägg till")
+                    </th>
+                    <th>
+                       @Html.DisplayName("")
                     </th>
                 </tr>
             </thead>
@@ -48,10 +51,10 @@
                             @Html.DisplayFor(modelItem => item.Quantity) st
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Price)
+                            @Html.DisplayFor(modelItem => item.Price) SEK
                         </td>
                         <td>
-                            
+                            @Html.DisplayFor(modelItem => item.Sum) SEK
                         </td>
                         <td>
                             <form method="post" asp-controller="CustomerProduct" asp-action="ChangeQuantity">
@@ -91,7 +94,8 @@
             </tbody>
         </table>
         <div>
-            <h3>Totalt belopp: @totalPrice kr</h3>
+            @*<h3>Totalt belopp: @totalPrice kr</h3>*@
+            <h3>Totalt belopp: @totalPrice.ToString("N2", new System.Globalization.CultureInfo("sv-SE")) kr</h3>
         </div>
         <a class="btn btn-primary" asp-action="CheckOut">Vidare till kassan</a> 
         <button class="btn btn-secondary" onclick="goBack()">Fortsätt handla</button>
@@ -127,44 +131,6 @@ else
                 // Trigga formuläret för att skicka innehållet till servern
                 var form = selectElement.closest('form');
                 form.submit();
-
-            //// Kolla om det nya antalet är mindre än det befintliga antalet
-            //if (newQuantity < existingQuantity) {
-            //    // Anropa en metod på servern med AJAX för att uppdatera antalet i varukorgen
-            //    var url = "/CustomerProduct/UpdateCartItemQuantity";
-            //    var data = {
-            //        customerProductId: customerProductId,
-            //        quantity: newQuantity
-            //    };
-
-            //    fetch(url, {
-            //        method: "POST",
-            //        headers: {
-            //            "Content-Type": "application/json"
-            //        },
-            //        body: JSON.stringify(data)
-            //    })
-            //    .then(response => response.json())
-            //    .then(data => {
-            //        window.location.reload();
-            //    })
-            //    .catch(error => {
-            //        console.log(error);
-            //    });
-
-                //$.ajax({
-                //    url: url,
-                //    type: "POST",
-                //    data: data,
-                //    success: function (response) {
-                //        // Uppdatera sidan vid framgångsrikt svar
-                //        window.location.reload();
-                //    },
-                //    error: function (xhr, status, error) {
-                //        // Hantera felmeddelanden vid behov
-                //        console.log(error);
-                //    }
-                //});
             }
         }
         
