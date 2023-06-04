@@ -309,7 +309,7 @@ namespace PandaStore.Controllers
 
             _httpContextAccessor.HttpContext.Session.Clear();
 
-            return RedirectToAction(nameof(Index));
+            return View("sendOrder", addShoppingCartToDb);
         }
 
         private async Task createOrder(double totalOrderPrice, int receiptNumber)
@@ -368,7 +368,6 @@ namespace PandaStore.Controllers
 
             await context.SaveChangesAsync();
         }
-
 
         ////////Not in use for the moment
         protected void UpdateCart(CustomerProduct product)
