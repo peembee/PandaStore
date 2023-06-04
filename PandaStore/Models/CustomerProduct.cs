@@ -33,6 +33,9 @@ namespace PandaStore.Models
         [DisplayName("Pris")]
         public double Price { get; set; }
 
+        [NotMapped]
+        [DisplayName("Total summa")]
+        public double Sum => Price * Quantity;
 
         [Required]
         [DisplayName("Kvittonummer")]
